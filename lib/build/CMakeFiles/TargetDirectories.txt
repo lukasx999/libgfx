@@ -1,6 +1,0 @@
-/home/lukas/code/repos/libgfx/lib/build/CMakeFiles/gfx.dir
-/home/lukas/code/repos/libgfx/lib/build/CMakeFiles/tests.dir
-/home/lukas/code/repos/libgfx/lib/build/CMakeFiles/edit_cache.dir
-/home/lukas/code/repos/libgfx/lib/build/CMakeFiles/rebuild_cache.dir
-/home/lukas/code/repos/libgfx/lib/build/src/CMakeFiles/edit_cache.dir
-/home/lukas/code/repos/libgfx/lib/build/src/CMakeFiles/rebuild_cache.dir
