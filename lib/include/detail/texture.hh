@@ -22,7 +22,7 @@ class Texture {
     unsigned char* m_data;
 
 public:
-    Texture(const char* path);
+    explicit Texture(const char* path);
     ~Texture();
 
     [[nodiscard]] int get_width() const {
