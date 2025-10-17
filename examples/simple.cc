@@ -2,7 +2,7 @@
 
 int main() {
 
-    gfx::Window window(600, 600, "GLGame", false);
+    gfx::Window window(1600, 900, "my window", false);
     gfx::Renderer rd(window);
 
     rd.draw([&]() {
