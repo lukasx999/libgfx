@@ -23,6 +23,12 @@ class Texture {
 
 public:
     explicit Texture(const char* path);
+
+    Texture(const Texture&) = delete;
+    Texture(Texture&&) = delete;
+    Texture& operator=(const Texture&) = delete;
+    Texture& operator=(Texture&&) = delete;
+
     ~Texture();
 
     [[nodiscard]] int get_width() const {
@@ -36,11 +42,6 @@ public:
     [[nodiscard]] int get_channels() const {
         return m_channels;
     }
-
-    Texture(const Texture&) = delete;
-    Texture(Texture&&) = delete;
-    Texture& operator=(const Texture&) = delete;
-    Texture& operator=(Texture&&) = delete;
 
 private:
     [[nodiscard]] constexpr GLint get_opengl_texture_format() const {
