@@ -19,32 +19,25 @@ TriangleRenderer::TriangleRenderer(gfx::Window& window)
     glGenVertexArrays(1, &m_vertex_array);
     glBindVertexArray(m_vertex_array);
 
-
     glGenBuffers(1, &m_vertex_buffer);
     glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer);
-
     GLint a_pos = glGetAttribLocation(m_program, "a_pos");
     glVertexAttribPointer(a_pos, 2, GL_FLOAT, false, sizeof(glm::vec2), nullptr);
     glEnableVertexAttribArray(a_pos);
 
-
     glGenBuffers(1, &m_color_buffer);
     glBindBuffer(GL_ARRAY_BUFFER, m_color_buffer);
-
     GLint a_color = glGetAttribLocation(m_program, "a_color");
     glVertexAttribPointer(a_color, 4, GL_FLOAT, false, sizeof(glm::vec4), nullptr);
     glEnableVertexAttribArray(a_color);
 
-
     glGenBuffers(1, &m_transform_buffer);
     glBindBuffer(GL_ARRAY_BUFFER, m_transform_buffer);
-
     GLint a_mvp = glGetAttribLocation(m_program, "a_mvp");
     for (int i = 0; i < 4; ++i) {
         glVertexAttribPointer(a_mvp+i, 4, GL_FLOAT, false, sizeof(glm::vec4)*4, reinterpret_cast<void*>(i * sizeof(glm::vec4)));
         glEnableVertexAttribArray(a_mvp+i);
     }
-
 
     glBindVertexArray(0);
     glUseProgram(0);
