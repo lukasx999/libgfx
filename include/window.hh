@@ -13,10 +13,10 @@
 namespace gfx {
 
 enum WindowFlags : uint8_t {
-    None          = 0x00,
-    Resizable     = 0x01,
-    DisableCursor = 0x02,
-    DisableVsync  = 0x03,
+    None          = 1 << 0,
+    Resizable     = 1 << 1,
+    DisableCursor = 1 << 2,
+    DisableVsync  = 1 << 3,
 };
 
 class Window {
