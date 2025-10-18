@@ -10,11 +10,19 @@ struct Vec {
     float x = 0.0f;
     float y = 0.0f;
 
-    constexpr float length() const {
+    [[nodiscard]] constexpr Vec normalized() const {
+        float len = length();
+        return {
+            x / len,
+            y / len,
+        };
+    }
+
+    [[nodiscard]] constexpr float length() const {
         return std::sqrt(x*x + y*y);
     }
 
-    constexpr float distance(const Vec& other) const {
+    [[nodiscard]] constexpr float distance(const Vec& other) const {
         auto diff = other - *this;
         return std::sqrt(diff.x*diff.x + diff.y*diff.y);
     }
@@ -44,6 +52,13 @@ struct Vec {
             x + other.x,
             y + other.y,
         };
+    }
+
+    constexpr Vec& operator+=(const Vec& other) {
+        x += other.x;
+        y += other.y;
+
+        return *this;
     }
 
     constexpr Vec operator*(const Vec& other) const {
