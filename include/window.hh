@@ -70,6 +70,10 @@ public:
         return glfwGetTime();
     }
 
+    [[nodiscard]] KeyState get_mouse_button_state(MouseButton mb) const {
+        return KeyState(glfwGetMouseButton(m_window, gfx_mouse_button_to_glfw_mouse_button(mb)));
+    }
+
     [[nodiscard]] KeyState get_key_state(Key key) const {
         return KeyState(glfwGetKey(m_window, gfx_key_to_glfw_key(key)));
     }
@@ -85,6 +89,7 @@ public:
 
 private:
     [[nodiscard]] static GLFWwindow* init_glfw(int width, int height, const char* window_title, uint8_t flags);
+    [[nodiscard]] static int gfx_mouse_button_to_glfw_mouse_button(MouseButton mb);
     [[nodiscard]] static int gfx_key_to_glfw_key(Key key);
 
     static void debug_message_callback(

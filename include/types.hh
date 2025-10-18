@@ -135,6 +135,10 @@ public:
 
 };
 
+enum class MouseButton {
+    LMB, RMB, Middle,
+};
+
 enum class Key {
     Escape,
     Space,

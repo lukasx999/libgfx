@@ -28,6 +28,7 @@
 // TODO: disable opengl/glfw logs
 // TODO: asset packer
 // TODO: visual debugger for hovering over shapes
+// TODO: merge get_key_state and get_mouse_button_state?
 
 namespace gfx {
 

@@ -40,6 +40,16 @@ GLFWwindow* gfx::Window::init_glfw(int width, int height, const char* window_tit
     return window;
 }
 
+int gfx::Window::gfx_mouse_button_to_glfw_mouse_button(MouseButton mb) {
+    switch (mb) {
+        using enum gfx::MouseButton;
+
+        case LMB: return GLFW_MOUSE_BUTTON_LEFT;
+        case RMB: return GLFW_MOUSE_BUTTON_RIGHT;
+        case Middle: return GLFW_MOUSE_BUTTON_MIDDLE;
+    }
+}
+
 int gfx::Window::gfx_key_to_glfw_key(Key key) {
     switch (key) {
         using enum Key;
