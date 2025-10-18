@@ -26,6 +26,12 @@
 // TODO: fix glfw resizing window
 // TODO: anti-aliasing
 // TODO: overloads for draw functions with gfx::Vec
+// TODO: window flags bitfields
+// TODO: logging
+// TODO: disable opengl/glfw logs
+// TODO: alpha blending
+// TODO: asset packer
+// TODO: visual debugger for hovering over shapes
 
 namespace gfx {
 
@@ -51,8 +57,8 @@ class Renderer {
 
     glm::mat4 m_view_default = gen_view_matrix(
         m_window,
-        m_window.get_width()/2.0f,
-        m_window.get_height()/2.0f
+        m_window.get_width() / 2.0f,
+        m_window.get_height() / 2.0f
     );
     glm::mat4 m_view_camera = m_view_default;
     glm::mat4 m_view_active = m_view_default;
@@ -124,6 +130,16 @@ public:
         m_rectangle.draw(x, y, width, height, rotation, color, m_view_active);
     }
 
+    void draw_rectangle(
+        gfx::Vec vec,
+        float width,
+        float height,
+        const gfx::IRotation& rotation,
+        gfx::Color color
+    ) {
+        draw_rectangle(vec.x, vec.y, width, height, rotation, color);
+    }
+
     void draw_texture(
         float x,
         float y,
@@ -136,9 +152,23 @@ public:
         m_texture.draw(x, y, width, height, rotation, texture, m_view_active);
     }
 
+    void draw_texture(
+        gfx::Vec vec,
+        float width,
+        float height,
+        const gfx::IRotation& rotation,
+        const gfx::Texture& texture
+    ) {
+        draw_texture(vec.x, vec.y, width, height, rotation, texture);
+    }
+
     void draw_circle(float x, float y, float radius, gfx::Color color) {
         flush();
         m_circle.draw(x, y, radius, color);
+    }
+
+    void draw_circle(gfx::Vec center, float radius, gfx::Color color) {
+        draw_circle(center.x, center.y, radius, color);
     }
 
     void draw_triangle(float x0, float y0, float x1, float y1, float x2, float y2, gfx::Color color) {
@@ -146,14 +176,26 @@ public:
         m_triangle.draw(x0, y0, x1, y1, x2, y2, color, m_view_active);
     }
 
+    void draw_triangle(gfx::Vec v0, gfx::Vec v1, gfx::Vec v2, gfx::Color color) {
+        draw_triangle(v0.x, v0.y, v1.x, v1.y, v2.x, v2.y, color);
+    }
+
     void draw_line(float x0, float y0, float x1, float y1, gfx::Color color) {
         flush_all_except(m_line);
         m_line.draw(x0, y0, x1, y1, color, m_view_active);
     }
 
+    void draw_line(gfx::Vec v0, gfx::Vec v1, gfx::Color color) {
+        draw_line(v0.x, v0.y, v1.x, v1.y, color);
+    }
+
     void draw_text(float x, float y, unsigned int text_size, const char* text, const gfx::Font& font, gfx::Color color) {
         flush();
         m_text.draw(x, y, text_size, text, font, color);
+    }
+
+    void draw_text(gfx::Vec vec, unsigned int text_size, const char* text, const gfx::Font& font, gfx::Color color) {
+        draw_text(vec.x, vec.y, text_size, text, font, color);
     }
 
     [[nodiscard]] gfx::Font load_font(const char* path) const {

@@ -24,6 +24,9 @@ GLFWwindow* gfx::Window::init_glfw(int width, int height, const char* window_tit
     gladLoadGL(glfwGetProcAddress);
     glfwSwapInterval(1);
 
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_DST_ALPHA);
+
     // TODO: #define GFX_WIREFRAME macro for toggling this
     // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
