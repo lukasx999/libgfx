@@ -52,7 +52,7 @@ class Renderer {
     double m_frame_time = 0.0;
     double m_last_frame = 0.0;
 
-    double m_desired_fps = 60.0;
+    double m_desired_fps = 0.0;
 
     glm::mat4 m_view_default = gen_view_matrix(
         m_window,
@@ -148,6 +148,10 @@ public:
         m_rectangle.draw(x, y, width, height, rotation, color, m_view_active);
     }
 
+    void draw_rectangle(float x, float y, float width, float height, gfx::Color color) {
+        draw_rectangle(x, y, width, height, 0_deg, color);
+    }
+
     void draw_rectangle(
         gfx::Vec vec,
         float width,
@@ -156,6 +160,10 @@ public:
         gfx::Color color
     ) {
         draw_rectangle(vec.x, vec.y, width, height, rotation, color);
+    }
+
+    void draw_rectangle(gfx::Vec vec, float width, float height, gfx::Color color) {
+        draw_rectangle(vec.x, vec.y, width, height, 0_deg, color);
     }
 
     void draw_texture(
