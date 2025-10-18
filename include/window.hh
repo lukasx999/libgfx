@@ -13,9 +13,9 @@
 namespace gfx {
 
 enum WindowFlags : uint8_t {
-    None = 0,
-    Resizable = 1 << 0,
-    DisableCursor = 1 << 2,
+    None          = 0x00,
+    Resizable     = 0x01,
+    DisableCursor = 0x02,
 };
 
 class Window {
