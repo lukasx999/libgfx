@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cmath>
+#include <format>
 
 #include <types.hh>
 
@@ -92,3 +93,11 @@ struct Vec {
 };
 
 } // namespace gfx
+
+template <>
+struct std::formatter<gfx::Vec> : std::formatter<std::string> {
+    auto format(const gfx::Vec& vec, std::format_context& ctx) const {
+        auto fmt = std::format("{{ x: {}, y: {} }}", vec.x, vec.y);
+        return std::formatter<std::string>::format(fmt, ctx);
+    }
+};
