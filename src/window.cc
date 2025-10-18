@@ -21,14 +21,14 @@ GLFWwindow* gfx::Window::init_glfw(int width, int height, const char* window_tit
 
     glfwMakeContextCurrent(window);
     gladLoadGL(glfwGetProcAddress);
-    glfwSwapInterval(1);
+    glfwSwapInterval(flags & WindowFlags::DisableVsync ? 0 : 1);
 
     glfwSetInputMode(window, GLFW_CURSOR, flags & WindowFlags::DisableCursor ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    // TODO: #define GFX_WIREFRAME macro for toggling this
+    // TODO: option for this
     // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     glDebugMessageCallback(debug_message_callback, nullptr);
