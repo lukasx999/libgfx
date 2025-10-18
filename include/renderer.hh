@@ -25,8 +25,6 @@
 // TODO: circle using GL_POINTS
 // TODO: fix glfw resizing window
 // TODO: anti-aliasing
-// TODO: overloads for draw functions with gfx::Vec
-// TODO: window flags bitfields
 // TODO: disable opengl/glfw logs
 // TODO: asset packer
 // TODO: visual debugger for hovering over shapes
