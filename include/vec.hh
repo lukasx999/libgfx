@@ -10,6 +10,10 @@ struct Vec {
     float x = 0.0f;
     float y = 0.0f;
 
+    constexpr float length() const {
+        return std::sqrt(x*x + y*y);
+    }
+
     constexpr float distance(const Vec& other) const {
         auto diff = other - *this;
         return std::sqrt(diff.x*diff.x + diff.y*diff.y);
