@@ -1,8 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/home/lukas/code/repos/libgfx/build/cmake_install.cmake",
-		"/home/lukas/code/repos/libgfx/build/src/cmake_install.cmake"
-	],
-	"Parallel" : false
-}
