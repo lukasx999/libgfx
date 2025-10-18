@@ -52,6 +52,8 @@ class Renderer {
     double m_frame_time = 0.0;
     double m_last_frame = 0.0;
 
+    double m_desired_fps = 60.0;
+
     glm::mat4 m_view_default = gen_view_matrix(
         m_window,
         m_window.get_width() / 2.0f,
@@ -71,14 +73,33 @@ public:
         , m_text(m_window)
     { }
 
+    // 0.0 means no limit
+    void set_fps(double fps) {
+        m_desired_fps = fps;
+    }
+
     // calls the given function in a draw context, issuing draw calls outside
     // of this context, will result in undefined behavior
     void with_draw_context(std::function<void()> draw_fn) {
-        calculate_frame_time();
+
+        // calculate frame time
+        double frame_start = glfwGetTime();
+        m_frame_time = frame_start - m_last_frame;
+        m_last_frame = frame_start;
+
         draw_fn();
+
         flush();
         glfwSwapBuffers(m_window.m_window);
         glfwPollEvents();
+
+        // sleep for the rest of the frame to keep the desired framerate steady
+        if (m_desired_fps == 0.0) return;
+        double frame_end = glfwGetTime() - frame_start;
+
+        struct timespec ts{};
+        ts.tv_nsec = (1.0 / m_desired_fps - frame_end) * 1e9,
+        nanosleep(&ts, nullptr);
     }
 
     // calls the given function in a draw loop
@@ -226,12 +247,6 @@ private:
                 continue;
             rd.get().flush();
         }
-    }
-
-    void calculate_frame_time() {
-        double time = glfwGetTime();
-        m_frame_time = time - m_last_frame;
-        m_last_frame = time;
     }
 
     [[nodiscard]] static constexpr
