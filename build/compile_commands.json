@@ -1,0 +1,56 @@
+[
+{
+  "directory": "/home/lukas/code/repos/libgfx/build",
+  "command": "/usr/bin/clang++ -I/home/lukas/code/repos/libgfx/deps/stb -I/home/lukas/code/repos/libgfx/include -I/usr/include/freetype2 -I/home/lukas/code/repos/libgfx/deps/glad/include -std=gnu++23 -fcolor-diagnostics -Wno-c23-extensions -Wall -Wextra -O3 -o CMakeFiles/gfx.dir/src/gfx.cc.o -c /home/lukas/code/repos/libgfx/src/gfx.cc",
+  "file": "/home/lukas/code/repos/libgfx/src/gfx.cc",
+  "output": "/home/lukas/code/repos/libgfx/build/CMakeFiles/gfx.dir/src/gfx.cc.o"
+},
+{
+  "directory": "/home/lukas/code/repos/libgfx/build",
+  "command": "/usr/bin/clang++ -I/home/lukas/code/repos/libgfx/deps/stb -I/home/lukas/code/repos/libgfx/include -I/usr/include/freetype2 -I/home/lukas/code/repos/libgfx/deps/glad/include -std=gnu++23 -fcolor-diagnostics -Wno-c23-extensions -Wall -Wextra -O3 -o CMakeFiles/gfx.dir/src/window.cc.o -c /home/lukas/code/repos/libgfx/src/window.cc",
+  "file": "/home/lukas/code/repos/libgfx/src/window.cc",
+  "output": "/home/lukas/code/repos/libgfx/build/CMakeFiles/gfx.dir/src/window.cc.o"
+},
+{
+  "directory": "/home/lukas/code/repos/libgfx/build",
+  "command": "/usr/bin/clang++ -I/home/lukas/code/repos/libgfx/deps/stb -I/home/lukas/code/repos/libgfx/include -I/usr/include/freetype2 -I/home/lukas/code/repos/libgfx/deps/glad/include -std=gnu++23 -fcolor-diagnostics -Wno-c23-extensions -Wall -Wextra -O3 -o CMakeFiles/gfx.dir/src/rectangle.cc.o -c /home/lukas/code/repos/libgfx/src/rectangle.cc",
+  "file": "/home/lukas/code/repos/libgfx/src/rectangle.cc",
+  "output": "/home/lukas/code/repos/libgfx/build/CMakeFiles/gfx.dir/src/rectangle.cc.o"
+},
+{
+  "directory": "/home/lukas/code/repos/libgfx/build",
+  "command": "/usr/bin/clang++ -I/home/lukas/code/repos/libgfx/deps/stb -I/home/lukas/code/repos/libgfx/include -I/usr/include/freetype2 -I/home/lukas/code/repos/libgfx/deps/glad/include -std=gnu++23 -fcolor-diagnostics -Wno-c23-extensions -Wall -Wextra -O3 -o CMakeFiles/gfx.dir/src/circle.cc.o -c /home/lukas/code/repos/libgfx/src/circle.cc",
+  "file": "/home/lukas/code/repos/libgfx/src/circle.cc",
+  "output": "/home/lukas/code/repos/libgfx/build/CMakeFiles/gfx.dir/src/circle.cc.o"
+},
+{
+  "directory": "/home/lukas/code/repos/libgfx/build",
+  "command": "/usr/bin/clang++ -I/home/lukas/code/repos/libgfx/deps/stb -I/home/lukas/code/repos/libgfx/include -I/usr/include/freetype2 -I/home/lukas/code/repos/libgfx/deps/glad/include -std=gnu++23 -fcolor-diagnostics -Wno-c23-extensions -Wall -Wextra -O3 -o CMakeFiles/gfx.dir/src/triangle.cc.o -c /home/lukas/code/repos/libgfx/src/triangle.cc",
+  "file": "/home/lukas/code/repos/libgfx/src/triangle.cc",
+  "output": "/home/lukas/code/repos/libgfx/build/CMakeFiles/gfx.dir/src/triangle.cc.o"
+},
+{
+  "directory": "/home/lukas/code/repos/libgfx/build",
+  "command": "/usr/bin/clang++ -I/home/lukas/code/repos/libgfx/deps/stb -I/home/lukas/code/repos/libgfx/include -I/usr/include/freetype2 -I/home/lukas/code/repos/libgfx/deps/glad/include -std=gnu++23 -fcolor-diagnostics -Wno-c23-extensions -Wall -Wextra -O3 -o CMakeFiles/gfx.dir/src/texture.cc.o -c /home/lukas/code/repos/libgfx/src/texture.cc",
+  "file": "/home/lukas/code/repos/libgfx/src/texture.cc",
+  "output": "/home/lukas/code/repos/libgfx/build/CMakeFiles/gfx.dir/src/texture.cc.o"
+},
+{
+  "directory": "/home/lukas/code/repos/libgfx/build",
+  "command": "/usr/bin/clang++ -I/home/lukas/code/repos/libgfx/deps/stb -I/home/lukas/code/repos/libgfx/include -I/usr/include/freetype2 -I/home/lukas/code/repos/libgfx/deps/glad/include -std=gnu++23 -fcolor-diagnostics -Wno-c23-extensions -Wall -Wextra -O3 -o CMakeFiles/gfx.dir/src/line.cc.o -c /home/lukas/code/repos/libgfx/src/line.cc",
+  "file": "/home/lukas/code/repos/libgfx/src/line.cc",
+  "output": "/home/lukas/code/repos/libgfx/build/CMakeFiles/gfx.dir/src/line.cc.o"
+},
+{
+  "directory": "/home/lukas/code/repos/libgfx/build",
+  "command": "/usr/bin/clang++ -I/home/lukas/code/repos/libgfx/deps/stb -I/home/lukas/code/repos/libgfx/include -I/usr/include/freetype2 -I/home/lukas/code/repos/libgfx/deps/glad/include -std=gnu++23 -fcolor-diagnostics -Wno-c23-extensions -Wall -Wextra -O3 -o CMakeFiles/gfx.dir/src/text.cc.o -c /home/lukas/code/repos/libgfx/src/text.cc",
+  "file": "/home/lukas/code/repos/libgfx/src/text.cc",
+  "output": "/home/lukas/code/repos/libgfx/build/CMakeFiles/gfx.dir/src/text.cc.o"
+},
+{
+  "directory": "/home/lukas/code/repos/libgfx/build",
+  "command": "/usr/bin/clang++ -I/home/lukas/code/repos/libgfx/deps/stb -I/home/lukas/code/repos/libgfx/include -I/usr/include/freetype2 -I/home/lukas/code/repos/libgfx/deps/glad/include -std=gnu++23 -fcolor-diagnostics -o CMakeFiles/tests.dir/test.cc.o -c /home/lukas/code/repos/libgfx/test.cc",
+  "file": "/home/lukas/code/repos/libgfx/test.cc",
+  "output": "/home/lukas/code/repos/libgfx/build/CMakeFiles/tests.dir/test.cc.o"
+}
+]

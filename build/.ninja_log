@@ -1,0 +1,12 @@
+# ninja log v6
+2	21	1760796350103906729	libgfx.a	7e1ebcfbbcbbb9b0
+2	1376	1760796312523788289	CMakeFiles/gfx.dir/src/window.cc.o	d2aa1a9ebe8066f9
+2	1389	1760796312524117897	CMakeFiles/gfx.dir/src/circle.cc.o	53c9f947ae861afc
+3	1468	1760796312524535525	CMakeFiles/gfx.dir/src/line.cc.o	2fc68992fb7b4a0d
+3	1396	1760796312524682815	CMakeFiles/gfx.dir/src/text.cc.o	423c2f4c3e76e0a4
+2	1616	1760796312524407492	CMakeFiles/gfx.dir/src/texture.cc.o	4877b7acd9cf71c3
+2	1674	1760796312524265788	CMakeFiles/gfx.dir/src/triangle.cc.o	3004a255428bbf08
+2	2253	1760796312523957401	CMakeFiles/gfx.dir/src/rectangle.cc.o	1345fea55fbefd77
+2	2887	1760796312522472710	CMakeFiles/gfx.dir/src/gfx.cc.o	113deef937de9647
+2	799	1760796452604363887	CMakeFiles/tests.dir/test.cc.o	550090812289968e
+799	833	1760796453401397170	tests	1479c1d57d9ee10e

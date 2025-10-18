@@ -6,11 +6,13 @@ set(CMAKE_COLOR_DIAGNOSTICS ON)
 
 project(Gfx)
 
+list(APPEND include_dirs include/ /usr/include/freetype2/ deps/glad/include)
+
 add_library(gfx)
 target_compile_options(gfx PRIVATE "-Wno-c23-extensions" "-Wall" "-Wextra" "-O3")
-include_directories(deps/stb)
-target_include_directories(gfx PUBLIC include /usr/include/freetype2/ deps/glad/include)
+include_directories(deps/stb ${include_dirs})
+target_include_directories(gfx PUBLIC ${include_dirs})
 add_subdirectory(src)
 target_link_libraries(gfx PRIVATE glfw freetype)
 
-# add_executable(tests test.cc)
+add_executable(tests test.cc)
