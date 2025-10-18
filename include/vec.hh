@@ -53,6 +53,13 @@ struct Vec {
         };
     }
 
+    constexpr Vec operator*(float value) const {
+        return {
+            x * value,
+            y * value,
+        };
+    }
+
     constexpr Vec operator-(const Vec& other) const {
         return {
             x - other.x,
