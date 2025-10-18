@@ -12,13 +12,19 @@
 
 namespace gfx {
 
+enum WindowFlags : uint8_t {
+    None = 0,
+    Resizable = 1 << 0,
+    DisableCursor = 1 << 2,
+};
+
 class Window {
     friend class Renderer;
     GLFWwindow* m_window;
 
 public:
-    Window(int width, int height, const char* window_title, bool resizable_window)
-    : m_window(init_glfw(width, height, window_title, resizable_window))
+    Window(int width, int height, const char* window_title, uint8_t flags)
+    : m_window(init_glfw(width, height, window_title, flags))
     { }
 
     Window(const Window&) = delete;
@@ -37,6 +43,14 @@ public:
 
     void close() {
         glfwSetWindowShouldClose(m_window, true);
+    }
+
+    [[nodiscard]] const char* get_title() const {
+        return glfwGetWindowTitle(m_window);
+    }
+
+    void set_title(const char* title) {
+        glfwSetWindowTitle(m_window, title);
     }
 
     [[nodiscard]] int get_width() const {
@@ -69,7 +83,7 @@ public:
     }
 
 private:
-    [[nodiscard]] static GLFWwindow* init_glfw(int width, int height, const char* window_title, bool resizable_window);
+    [[nodiscard]] static GLFWwindow* init_glfw(int width, int height, const char* window_title, uint8_t flags);
     [[nodiscard]] static int gfx_key_to_glfw_key(Key key);
 
     static void debug_message_callback(
