@@ -93,6 +93,10 @@ struct Color {
         return 0x000000ff;
     }
 
+    [[nodiscard]] static constexpr Color orange() {
+        return 0xffa500ff;
+    }
+
     [[nodiscard]] static constexpr Color white() {
         return 0xffffffff;
     }
