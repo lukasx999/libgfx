@@ -27,9 +27,7 @@
 // TODO: anti-aliasing
 // TODO: overloads for draw functions with gfx::Vec
 // TODO: window flags bitfields
-// TODO: logging
 // TODO: disable opengl/glfw logs
-// TODO: alpha blending
 // TODO: asset packer
 // TODO: visual debugger for hovering over shapes
 

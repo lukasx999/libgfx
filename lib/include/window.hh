@@ -8,6 +8,7 @@
 #include <glm/ext.hpp>
 
 #include <types.hh>
+#include <vec.hh>
 
 namespace gfx {
 
@@ -56,6 +57,15 @@ public:
 
     [[nodiscard]] KeyState get_key_state(Key key) const {
         return KeyState(glfwGetKey(m_window, gfx_key_to_glfw_key(key)));
+    }
+
+    [[nodiscard]] gfx::Vec get_mouse_pos() const {
+        double x, y;
+        glfwGetCursorPos(m_window, &x, &y);
+        return {
+            static_cast<float>(x),
+            static_cast<float>(y),
+        };
     }
 
 private:
