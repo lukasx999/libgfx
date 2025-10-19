@@ -11,11 +11,6 @@ inline constexpr char default_[] = {
 '\0'
 };
 
-inline constexpr char texture[] = {
-#embed "../shaders/texture.vert" suffix(,)
-'\0'
-};
-
 inline constexpr char text[] = {
 #embed "../shaders/text.vert" suffix(,)
 '\0'
@@ -26,12 +21,17 @@ inline constexpr char batched[] = {
 '\0'
 };
 
+inline constexpr char texture[] = {
+#embed "../shaders/texture.vert" suffix(,)
+'\0'
+};
+
 } // namespace vertex
 
 namespace fragment {
 
-inline constexpr char default_[] = {
-#embed "../shaders/default.frag" suffix(,)
+inline constexpr char circle[] = {
+#embed "../shaders/circle.frag" suffix(,)
 '\0'
 };
 
@@ -45,8 +45,8 @@ inline constexpr char texture[] = {
 '\0'
 };
 
-inline constexpr char circle[] = {
-#embed "../shaders/circle.frag" suffix(,)
+inline constexpr char text[] = {
+#embed "../shaders/text.frag" suffix(,)
 '\0'
 };
 

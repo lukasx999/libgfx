@@ -7,7 +7,7 @@ namespace gfx::detail {
 TextRenderer::TextRenderer(gfx::Window& window)
 : m_window(window) {
 
-    m_program = create_shader_program(shaders::vertex::text, shaders::fragment::texture);
+    m_program = create_shader_program(shaders::vertex::text, shaders::fragment::text);
 
     glGenVertexArrays(1, &m_vertex_array);
     glBindVertexArray(m_vertex_array);
@@ -40,19 +40,19 @@ TextRenderer::~TextRenderer() {
     FT_Done_FreeType(m_ft);
 }
 
-void TextRenderer::draw(float x, float y, unsigned int text_size, const char* text, const gfx::Font& font, gfx::Color color) {
+void TextRenderer::draw(float x, float y, unsigned int text_size, const char* text, const gfx::Font& font, gfx::Color color, glm::mat4 view) {
     int offset = 0;
 
     for (const char* c = text; *c; ++c) {
         auto glyph = font.load_glyph(*c, text_size);
-        draw_char(x+offset, y, glyph, color);
+        draw_char(x+offset, y, glyph, color, view);
         offset += glyph.advance;
     }
 
 }
 
 // TODO: render text under x,y instead of above?
-void TextRenderer::draw_char(float x, float y, const Glyph& glyph, gfx::Color color) {
+void TextRenderer::draw_char(float x, float y, const Glyph& glyph, gfx::Color color, glm::mat4 view) {
 
     glUseProgram(m_program);
     glBindVertexArray(m_vertex_array);
@@ -71,7 +71,7 @@ void TextRenderer::draw_char(float x, float y, const Glyph& glyph, gfx::Color co
         0.0f
     );
 
-    glm::mat4 mvp = projection * model;
+    glm::mat4 mvp = projection * view * model;
     GLint u_mvp = glGetUniformLocation(m_program, "u_mvp");
     glUniformMatrix4fv(u_mvp, 1, false, glm::value_ptr(mvp));
 

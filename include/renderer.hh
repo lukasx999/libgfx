@@ -17,18 +17,19 @@
 #include <vec.hh>
 #include <window.hh>
 
+// TODO: build system for non-cmake
 // TODO: static linking
 // TODO: auto-invoke python script for generating shader glue code
 // TODO: tui for statistics
+// TODO: fix circle rendering (batching)
 // TODO: show average fps
-// TODO: limit fps eg: set_fps(std::optional<int> fps)
-// TODO: circle using GL_POINTS
 // TODO: fix glfw resizing window
 // TODO: anti-aliasing
 // TODO: disable opengl/glfw logs
 // TODO: asset packer
 // TODO: visual debugger for hovering over shapes
 // TODO: merge get_key_state and get_mouse_button_state?
+// TODO: unity-like ui (imgui?) for changing variables?
 
 namespace gfx {
 
@@ -198,7 +199,7 @@ public:
 
     void draw_circle(float x, float y, float radius, gfx::Color color) {
         flush();
-        m_circle.draw(x, y, radius, color);
+        m_circle.draw(x, y, radius, color, m_view_active);
     }
 
     void draw_circle(gfx::Vec center, float radius, gfx::Color color) {
@@ -225,7 +226,7 @@ public:
 
     void draw_text(float x, float y, unsigned int text_size, const char* text, const gfx::Font& font, gfx::Color color) {
         flush();
-        m_text.draw(x, y, text_size, text, font, color);
+        m_text.draw(x, y, text_size, text, font, color, m_view_active);
     }
 
     void draw_text(gfx::Vec vec, unsigned int text_size, const char* text, const gfx::Font& font, gfx::Color color) {

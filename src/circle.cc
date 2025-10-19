@@ -35,7 +35,7 @@ CircleRenderer::CircleRenderer(gfx::Window& window)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void CircleRenderer::draw(float x, float y, float radius, gfx::Color color) {
+void CircleRenderer::draw(float x, float y, float radius, gfx::Color color, glm::mat4 view) {
 
     glBindVertexArray(m_vertex_array);
     glUseProgram(m_program);
@@ -52,7 +52,7 @@ void CircleRenderer::draw(float x, float y, float radius, gfx::Color color) {
         0.0f
     );
 
-    glm::mat4 mvp = projection * model;
+    glm::mat4 mvp = projection * view * model;
 
     GLint u_mvp = glGetUniformLocation(m_program, "u_mvp");
     glUniformMatrix4fv(u_mvp, 1, false, glm::value_ptr(mvp));

@@ -6,7 +6,7 @@ uniform int u_radius;
 uniform vec2 u_center;
 uniform int u_window_height;
 
-// circles are rendered as squares, where all fragments outside of the circle's radius
+// circles are rendered as quads, where all fragments outside of the circle's radius
 // are discarded
 void main() {
     vec2 coord = gl_FragCoord.xy;

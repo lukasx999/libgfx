@@ -138,14 +138,14 @@ public:
     TextRenderer& operator=(const TextRenderer&) = delete;
     TextRenderer& operator=(TextRenderer&&) = delete;
 
-    void draw(float x, float y, unsigned int text_size, const char* text, const gfx::Font& font, gfx::Color color);
+    void draw(float x, float y, unsigned int text_size, const char* text, const gfx::Font& font, gfx::Color color, glm::mat4 view);
 
     [[nodiscard]] gfx::Font load_font(const char* path) const {
         return { m_ft, path };
     }
 
 private:
-    void draw_char(float x, float y, const Glyph& glyph, gfx::Color color);
+    void draw_char(float x, float y, const Glyph& glyph, gfx::Color color, glm::mat4 view);
 
 };
 
