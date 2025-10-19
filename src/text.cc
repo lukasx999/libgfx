@@ -5,7 +5,8 @@
 namespace gfx::detail {
 
 TextRenderer::TextRenderer(gfx::Window& window)
-: m_window(window) {
+: m_window(window)
+{
 
     m_program = create_shader_program(shaders::vertex::text, shaders::fragment::text);
 
@@ -61,7 +62,7 @@ void TextRenderer::draw_char(float x, float y, const Glyph& glyph, gfx::Color co
     unsigned int height = glyph.height;
 
     glm::mat4 model(1.0f);
-    model = glm::translate(model, glm::vec3(x+glyph.bearing_x, y-glyph.bearing_y, 0.0f));
+    model = glm::translate(model, glm::vec3(x + glyph.bearing_x, y - glyph.bearing_y, 0.0f));
     model = glm::scale(model, glm::vec3(width, height, 0.0f));
 
     glm::mat4 projection = glm::ortho(
