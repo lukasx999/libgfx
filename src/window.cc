@@ -44,8 +44,8 @@ int gfx::Window::gfx_mouse_button_to_glfw_mouse_button(MouseButton mb) {
     switch (mb) {
         using enum gfx::MouseButton;
 
-        case LMB: return GLFW_MOUSE_BUTTON_LEFT;
-        case RMB: return GLFW_MOUSE_BUTTON_RIGHT;
+        case Left: return GLFW_MOUSE_BUTTON_LEFT;
+        case Right: return GLFW_MOUSE_BUTTON_RIGHT;
         case Middle: return GLFW_MOUSE_BUTTON_MIDDLE;
     }
 }
