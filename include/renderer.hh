@@ -152,6 +152,14 @@ public:
         draw_rectangle(x, y, width, height, 0_deg, color);
     }
 
+    void draw_rectangle(gfx::Rect rect, gfx::Color color) {
+        draw_rectangle(rect.x, rect.y, rect.width, rect.height, 0_deg, color);
+    }
+
+    void draw_rectangle(gfx::Rect rect, const gfx::IRotation& rotation, gfx::Color color) {
+        draw_rectangle(rect.x, rect.y, rect.width, rect.height, rotation, color);
+    }
+
     void draw_rectangle(
         gfx::Vec vec,
         float width,
