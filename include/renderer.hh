@@ -17,19 +17,18 @@
 #include <vec.hh>
 #include <window.hh>
 
+// TODO: render text below x/y
 // TODO: build system for non-cmake
 // TODO: static linking
 // TODO: auto-invoke python script for generating shader glue code
+// TODO: catch2 unit tests
 // TODO: tui for statistics
 // TODO: fix circle rendering (batching)
-// TODO: show average fps
 // TODO: fix glfw resizing window
 // TODO: anti-aliasing
 // TODO: disable opengl/glfw logs
 // TODO: asset packer
-// TODO: visual debugger for hovering over shapes
 // TODO: merge get_key_state and get_mouse_button_state?
-// TODO: unity-like ui (imgui?) for changing variables?
 
 namespace gfx {
 
