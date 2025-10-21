@@ -24,9 +24,9 @@ class Window {
     GLFWwindow* m_window;
 
 public:
-    Window(int width, int height, const char* window_title, uint8_t flags)
-    : m_window(init_glfw(width, height, window_title, flags))
-    { }
+    Window(int width, int height, const char* window_title, uint8_t flags) {
+        m_window = init_glfw(width, height, window_title, flags);
+    }
 
     Window(const Window&) = delete;
     Window(Window&&) = delete;
