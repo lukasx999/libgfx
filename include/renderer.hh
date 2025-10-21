@@ -17,6 +17,7 @@
 #include <vec.hh>
 #include <window.hh>
 
+// TODO: fix glfw resizing window
 // TODO: render text below x/y
 // TODO: build system for non-cmake
 // TODO: static linking
@@ -24,7 +25,6 @@
 // TODO: catch2 unit tests
 // TODO: tui for statistics
 // TODO: fix circle rendering (batching)
-// TODO: fix glfw resizing window
 // TODO: anti-aliasing
 // TODO: disable opengl/glfw logs
 // TODO: asset packer
