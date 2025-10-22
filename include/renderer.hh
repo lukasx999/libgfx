@@ -17,10 +17,8 @@
 #include <vec.hh>
 #include <window.hh>
 
-// TODO: fix glfw resizing window
 // TODO: render text below x/y
 // TODO: build system for non-cmake
-// TODO: static linking
 // TODO: auto-invoke python script for generating shader glue code
 // TODO: catch2 unit tests
 // TODO: tui for statistics

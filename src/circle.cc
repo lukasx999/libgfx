@@ -63,8 +63,11 @@ void CircleRenderer::draw(float x, float y, float radius, gfx::Color color, glm:
     GLint u_radius = glGetUniformLocation(m_program, "u_radius");
     glUniform1i(u_radius, radius);
 
+    // center vector thats passed to the fragment shader needs to be
+    // transformed only into view space
     GLint u_center = glGetUniformLocation(m_program, "u_center");
-    glUniform2f(u_center, x, y);
+    glm::vec2 center = view * glm::vec4(x, y, 0.0f, 1.0f);
+    glUniform2f(u_center, center.x, center.y);
 
     GLint u_color = glGetUniformLocation(m_program, "u_color");
     auto normalized = color.normalized();
