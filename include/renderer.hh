@@ -17,7 +17,7 @@
 #include <vec.hh>
 #include <window.hh>
 
-// TODO: bundle vertex data
+// TODO: think about performance cost of batching (additional vertex attribute data)
 // TODO: render text below x/y
 // TODO: build system for non-cmake
 // TODO: auto-invoke python script for generating shader glue code
