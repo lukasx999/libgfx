@@ -1,6 +1,6 @@
 #pragma once
 
-#include <array>
+#include <vector>
 
 #include <types.hh>
 #include <window.hh>
@@ -8,7 +8,7 @@
 
 namespace gfx::detail {
 
-class CircleRenderer {
+class CircleRenderer : public IDeferredRenderer {
     gfx::Window& m_window;
 
     GLuint m_program;
@@ -16,22 +16,22 @@ class CircleRenderer {
     GLuint m_vertex_buffer;
     GLuint m_index_buffer;
 
-    static constexpr std::array m_vertices {
-        glm::vec2(1.0, 1.0), // top-right
-        glm::vec2(0.0, 1.0), // top-left
-        glm::vec2(0.0, 0.0), // bottom-left
-        glm::vec2(1.0, 0.0), // bottom-right
+    struct Vertex {
+        glm::vec2 pos;
+        glm::vec4 color;
+        glm::mat4 transform;
+        float radius;
+        glm::vec2 center;
     };
 
-    static constexpr std::array m_indices {
-        0u, 1u, 2u,
-        3u, 2u, 0u,
-    };
+    std::vector<Vertex> m_vertices;
+    std::vector<unsigned int> m_indices;
 
 public:
     explicit CircleRenderer(gfx::Window& window);
 
     void draw(float x, float y, float radius, gfx::Color color, glm::mat4 view);
+    void flush() override;
 
 };
 

@@ -17,6 +17,7 @@
 #include <vec.hh>
 #include <window.hh>
 
+// TODO: bundle vertex data
 // TODO: render text below x/y
 // TODO: build system for non-cmake
 // TODO: auto-invoke python script for generating shader glue code
@@ -41,8 +42,9 @@ class Renderer {
     detail::LineRenderer m_line;
     detail::TextRenderer m_text;
 
-    std::array<std::reference_wrapper<detail::IDeferredRenderer>, 4> m_deferred_renderers {
+    std::array<std::reference_wrapper<detail::IDeferredRenderer>, 5> m_deferred_renderers {
         m_rectangle,
+        m_circle,
         m_triangle,
         m_texture,
         m_line
@@ -196,7 +198,7 @@ public:
     }
 
     void draw_circle(float x, float y, float radius, gfx::Color color) {
-        flush();
+        flush_all_except(m_circle);
         m_circle.draw(x, y, radius, color, m_view_active);
     }
 
