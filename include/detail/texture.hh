@@ -12,6 +12,7 @@ namespace detail {
 class TextureRenderer;
 } // namespace detail
 
+// WARNING: do not use this class before constructing a gfx::Window!
 class Texture {
     friend detail::TextureRenderer;
 
