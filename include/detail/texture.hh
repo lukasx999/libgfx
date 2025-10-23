@@ -23,6 +23,7 @@ class Texture {
 
 public:
     explicit Texture(const char* path);
+    explicit Texture(const std::string& path);
 
     Texture(const Texture&) = delete;
     Texture(Texture&&) = delete;
@@ -44,6 +45,8 @@ public:
     }
 
 private:
+    void load_texture(const char* path);
+
     [[nodiscard]] constexpr GLint get_opengl_texture_format() const {
         switch (m_channels) {
             case 3: return GL_RGB;

@@ -10,7 +10,16 @@
 
 namespace gfx {
 
+Texture::Texture(const std::string& path) {
+    load_texture(path.c_str());
+}
+
 Texture::Texture(const char* path) {
+    load_texture(path);
+}
+
+void Texture::load_texture(const char* path) {
+
     m_data = stbi_load(path, &m_width, &m_height, &m_channels, 0);
     if (m_data == nullptr) {
         // TODO: custom exception type

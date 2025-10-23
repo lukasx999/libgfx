@@ -17,6 +17,8 @@
 #include <vec.hh>
 #include <window.hh>
 
+// TODO: stencil buffer
+// TODO: load texture from memory
 // TODO: think about performance cost of batching (additional vertex attribute data)
 // TODO: render text below x/y
 // TODO: build system for non-cmake
