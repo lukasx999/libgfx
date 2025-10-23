@@ -87,6 +87,28 @@ struct Color {
         , a(color >> 8*0 & 0xff)
     { }
 
+    // these methods allow you to partially modify colors, within one expression.
+
+    Color& set_red(uint8_t value) {
+        r = value;
+        return *this;
+    }
+
+    Color& set_green(uint8_t value) {
+        g = value;
+        return *this;
+    }
+
+    Color& set_blue(uint8_t value) {
+        b = value;
+        return *this;
+    }
+
+    Color& set_alpha(uint8_t value) {
+        a = value;
+        return *this;
+    }
+
     [[nodiscard]] constexpr auto normalized() const {
         struct NormalizedColor {
             float r, g, b, a;
