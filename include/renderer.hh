@@ -25,7 +25,6 @@
 // TODO: auto-invoke python script for generating shader glue code
 // TODO: catch2 unit tests
 // TODO: tui for statistics
-// TODO: fix circle rendering (batching)
 // TODO: anti-aliasing
 // TODO: disable opengl/glfw logs
 // TODO: asset packer
