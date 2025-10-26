@@ -43,11 +43,6 @@ class Renderer {
     detail::LineRenderer m_line;
     detail::TextRenderer m_text;
 
-    std::array<std::reference_wrapper<detail::IDeferredRenderer>, 2> m_deferred_renderers {
-        m_triangle,
-        m_texture,
-    };
-
     double m_frame_time = 0.0;
     double m_last_frame = 0.0;
 
@@ -88,7 +83,6 @@ public:
 
         draw_fn();
 
-        flush();
         glfwSwapBuffers(m_window.m_window);
         glfwPollEvents();
 
@@ -143,7 +137,6 @@ public:
         const gfx::IRotation& rotation,
         gfx::Color color
     ) {
-        flush();
         m_rectangle.draw(x, y, width, height, rotation, color, m_view_active);
     }
 
@@ -181,7 +174,6 @@ public:
         const gfx::IRotation& rotation,
         const gfx::Texture& texture
     ) {
-        flush_all_except(m_texture);
         m_texture.draw(x, y, width, height, rotation, texture, m_view_active);
     }
 
@@ -196,7 +188,6 @@ public:
     }
 
     void draw_circle(float x, float y, float radius, gfx::Color color) {
-        flush();
         m_circle.draw(x, y, radius, color, m_view_active);
     }
 
@@ -205,7 +196,6 @@ public:
     }
 
     void draw_triangle(float x0, float y0, float x1, float y1, float x2, float y2, gfx::Color color) {
-        flush_all_except(m_triangle);
         m_triangle.draw(x0, y0, x1, y1, x2, y2, color, m_view_active);
     }
 
@@ -214,7 +204,6 @@ public:
     }
 
     void draw_line(float x0, float y0, float x1, float y1, gfx::Color color) {
-        flush();
         m_line.draw(x0, y0, x1, y1, color, m_view_active);
     }
 
@@ -223,7 +212,6 @@ public:
     }
 
     void draw_text(float x, float y, unsigned int text_size, const char* text, const gfx::Font& font, gfx::Color color) {
-        flush();
         m_text.draw(x, y, text_size, text, font, color, m_view_active);
     }
 
@@ -242,28 +230,6 @@ public:
     }
 
 private:
-    void flush() {
-        for (auto& rd : m_deferred_renderers) {
-            rd.get().flush();
-        }
-    }
-
-    // make sure all other shapes have already been drawn to the screen,
-    // as otherwise the drawing order will be incorrect, leading weird
-    // overlapping shapes
-    //
-    // therefore we have to flush all other shapes before drawing the current one
-    //
-    // this has the unfortunate effect of breaking batching optimizations
-    // when using interleaved rendering when drawing a lot of shapes
-    void flush_all_except(const detail::IDeferredRenderer& exception) {
-        for (auto& rd : m_deferred_renderers) {
-            if (reinterpret_cast<detail::IDeferredRenderer*>(&rd) == &exception)
-                continue;
-            rd.get().flush();
-        }
-    }
-
     [[nodiscard]] static constexpr
     glm::mat4 gen_view_matrix(const Window& window, float center_x, float center_y) {
         glm::vec3 camera_position(

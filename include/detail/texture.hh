@@ -61,33 +61,27 @@ private:
 
 namespace gfx::detail {
 
-class TextureRenderer : public IDeferredRenderer {
+class TextureRenderer {
     gfx::Window& m_window;
 
     GLuint m_program;
     GLuint m_vertex_array;
     GLuint m_vertex_buffer;
     GLuint m_index_buffer;
-    GLuint m_uv_buffer;
-    GLuint m_transform_buffer;
 
-    struct RenderGroup {
-        const gfx::Texture& texture;
-        std::vector<glm::vec2> vertices;
-        std::vector<unsigned int> indices;
-        std::vector<glm::vec2> uvs;
-        std::vector<glm::mat4> transforms;
+    static constexpr std::array m_indices {
+        0u, // top-left
+        1u, // top-right
+        2u, // bottom-left
+        3u, // bottom-right
+        2u, // bottom-left
+        1u, // top-right
     };
 
-    // the texture sampler is a uniform, so we create groups of transforms per texture
-    // and batch-render each group, resulting in one draw call per texture
-    //
-    // for identifying each group, we just hash the raw pointer to the heap-allocated
-    // memory of the texture
-    // this means that theoretically 2 identical textures could end up being in a
-    // different group, if the user has 2 seperate `gfx::Texture` objects
-    // however, this should never be a problem in practice
-    std::unordered_map<unsigned char*, RenderGroup> m_render_group;
+    struct Vertex {
+        glm::vec2 pos;
+        glm::vec2 uv;
+    };
 
 public:
     explicit TextureRenderer(gfx::Window& window);
@@ -101,7 +95,6 @@ public:
         const gfx::Texture& texture,
         glm::mat4 view
     );
-    void flush() override;
 
 };
 

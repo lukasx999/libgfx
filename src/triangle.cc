@@ -14,7 +14,7 @@ TriangleRenderer::TriangleRenderer(gfx::Window& window)
 : m_window(window)
 {
 
-    m_program = detail::create_shader_program(shaders::vertex::batched, shaders::fragment::batched);
+    m_program = detail::create_shader_program(shaders::vertex::default_, shaders::fragment::default_);
 
     glGenVertexArrays(1, &m_vertex_array);
     glBindVertexArray(m_vertex_array);
@@ -25,29 +25,24 @@ TriangleRenderer::TriangleRenderer(gfx::Window& window)
     glVertexAttribPointer(a_pos, 2, GL_FLOAT, false, sizeof(glm::vec2), nullptr);
     glEnableVertexAttribArray(a_pos);
 
-    glGenBuffers(1, &m_color_buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, m_color_buffer);
-    GLint a_color = glGetAttribLocation(m_program, "a_color");
-    glVertexAttribPointer(a_color, 4, GL_FLOAT, false, sizeof(glm::vec4), nullptr);
-    glEnableVertexAttribArray(a_color);
-
-    glGenBuffers(1, &m_transform_buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, m_transform_buffer);
-    GLint a_mvp = glGetAttribLocation(m_program, "a_mvp");
-    for (int i = 0; i < 4; ++i) {
-        glVertexAttribPointer(a_mvp+i, 4, GL_FLOAT, false, sizeof(glm::vec4)*4, reinterpret_cast<void*>(i * sizeof(glm::vec4)));
-        glEnableVertexAttribArray(a_mvp+i);
-    }
-
     glBindVertexArray(0);
     glUseProgram(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void TriangleRenderer::draw(float x0, float y0, float x1, float y1, float x2, float y2, gfx::Color color, glm::mat4 view) {
-    m_vertices.push_back({ x0, y0 });
-    m_vertices.push_back({ x1, y1 });
-    m_vertices.push_back({ x2, y2 });
+
+    glUseProgram(m_program);
+    glBindVertexArray(m_vertex_array);
+
+    auto vertices = std::to_array<glm::vec2>({
+        { x0, y0 },
+        { x1, y1 },
+        { x2, y2 },
+    });
+
+    glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec2), vertices.data(), GL_DYNAMIC_DRAW);
 
     glm::mat4 model(1.0);
 
@@ -60,36 +55,15 @@ void TriangleRenderer::draw(float x0, float y0, float x1, float y1, float x2, fl
 
     glm::mat4 mvp = projection * view * model;
 
-    m_transforms.push_back(mvp);
-    m_transforms.push_back(mvp);
-    m_transforms.push_back(mvp);
+    GLint u_mvp = glGetUniformLocation(m_program, "u_mvp");
+    glUniformMatrix4fv(u_mvp, 1, false, glm::value_ptr(mvp));
 
     auto c = color.normalized();
-    glm::vec4 cv(c.r, c.g, c.b, c.a);
-    m_colors.push_back(cv);
-    m_colors.push_back(cv);
-    m_colors.push_back(cv);
-}
+    GLint u_color = glGetUniformLocation(m_program, "u_color");
+    glUniform4f(u_color, c.r, c.g, c.b, c.a);
 
-void TriangleRenderer::flush() {
+    glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 
-    glBindVertexArray(m_vertex_array);
-    glUseProgram(m_program);
-
-    glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer);
-    glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(glm::vec2), m_vertices.data(), GL_DYNAMIC_DRAW);
-
-    glBindBuffer(GL_ARRAY_BUFFER, m_color_buffer);
-    glBufferData(GL_ARRAY_BUFFER, m_colors.size() * sizeof(glm::vec4), m_colors.data(), GL_DYNAMIC_DRAW);
-
-    glBindBuffer(GL_ARRAY_BUFFER, m_transform_buffer);
-    glBufferData(GL_ARRAY_BUFFER, m_transforms.size() * sizeof(glm::mat4), m_transforms.data(), GL_DYNAMIC_DRAW);
-
-    glDrawArrays(GL_TRIANGLES, 0, m_vertices.size());
-
-    m_colors.clear();
-    m_vertices.clear();
-    m_transforms.clear();
 }
 
 } // namespace gfx::detail

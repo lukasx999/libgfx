@@ -8,23 +8,16 @@
 
 namespace gfx::detail {
 
-class TriangleRenderer : public IDeferredRenderer {
+class TriangleRenderer {
     gfx::Window& m_window;
 
     GLuint m_program;
     GLuint m_vertex_array;
     GLuint m_vertex_buffer;
-    GLuint m_color_buffer;
-    GLuint m_transform_buffer;
-
-    std::vector<glm::vec2> m_vertices;
-    std::vector<glm::vec4> m_colors;
-    std::vector<glm::mat4> m_transforms;
 
 public:
     explicit TriangleRenderer(gfx::Window& window);
     void draw(float x0, float y0, float x1, float y1, float x2, float y2, gfx::Color color, glm::mat4 view);
-    void flush() override;
 
 };
 

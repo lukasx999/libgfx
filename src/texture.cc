@@ -58,26 +58,19 @@ TextureRenderer::TextureRenderer(gfx::Window& window)
     glBindVertexArray(m_vertex_array);
 
     glGenBuffers(1, &m_index_buffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_index_buffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(unsigned int), m_indices.data(), GL_STATIC_DRAW);
 
     glGenBuffers(1, &m_vertex_buffer);
     glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer);
+
     GLint a_pos = glGetAttribLocation(m_program, "a_pos");
-    glVertexAttribPointer(a_pos, 2, GL_FLOAT, false, sizeof(glm::vec2), nullptr);
+    glVertexAttribPointer(a_pos, 2, GL_FLOAT, false, sizeof(Vertex), reinterpret_cast<void*>(offsetof(Vertex, pos)));
     glEnableVertexAttribArray(a_pos);
 
-    glGenBuffers(1, &m_uv_buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, m_uv_buffer);
     GLint a_uv = glGetAttribLocation(m_program, "a_uv");
-    glVertexAttribPointer(a_uv, 2, GL_FLOAT, false, sizeof(glm::vec2), nullptr);
+    glVertexAttribPointer(a_uv, 2, GL_FLOAT, false, sizeof(Vertex), reinterpret_cast<void*>(offsetof(Vertex, uv)));
     glEnableVertexAttribArray(a_uv);
-
-    glGenBuffers(1, &m_transform_buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, m_transform_buffer);
-    GLint a_mvp = glGetAttribLocation(m_program, "a_mvp");
-    for (int i = 0; i < 4; ++i) {
-        glVertexAttribPointer(a_mvp+i, 4, GL_FLOAT, false, sizeof(glm::vec4)*4, reinterpret_cast<void*>(i * sizeof(glm::vec4)));
-        glEnableVertexAttribArray(a_mvp+i);
-    }
 
     // just to make sure everything still works after unbinding, as other classes/functions may
     // modify opengl state after running the ctor
@@ -97,6 +90,19 @@ void TextureRenderer::draw(
     glm::mat4 view
 ) {
 
+    glUseProgram(m_program);
+    glBindVertexArray(m_vertex_array);
+
+    auto vertices = std::to_array<Vertex>({
+        { { x,       y        }, { 0.0f, 0.0f } }, // top-left
+        { { x+width, y        }, { 1.0f, 0.0f } }, // top-right
+        { { x,       y+height }, { 0.0f, 1.0f } }, // bottom-left
+        { { x+width, y+height }, { 1.0f, 1.0f } }, // bottom-right
+    });
+
+    glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), vertices.data(), GL_DYNAMIC_DRAW);
+
     // the translations are needed to subtract the world space coordinates (x,y)
     // since we want the rectangle to rotate around its top left corner, and
     // to set the center of rotation to the middle of the rectangle
@@ -114,93 +120,11 @@ void TextureRenderer::draw(
 
     glm::mat4 mvp = projection * view * model;
 
-    if (m_render_group.contains(texture.m_data)) {
-        RenderGroup& g = m_render_group.at(texture.m_data);
+    GLint u_mvp = glGetUniformLocation(m_program, "u_mvp");
+    glUniformMatrix4fv(u_mvp, 1, false, glm::value_ptr(mvp));
 
-        int vertex_count = g.vertices.size();
-        g.indices.push_back(0u + vertex_count); // top-left
-        g.indices.push_back(1u + vertex_count); // top-right
-        g.indices.push_back(2u + vertex_count); // bottom-left
-        g.indices.push_back(3u + vertex_count); // bottom-right
-        g.indices.push_back(2u + vertex_count); // bottom-left
-        g.indices.push_back(1u + vertex_count); // top-right
-
-        g.vertices.push_back({ x,       y        }); // top-left
-        g.vertices.push_back({ x+width, y        }); // top-right
-        g.vertices.push_back({ x,       y+height }); // bottom-left
-        g.vertices.push_back({ x+width, y+height }); // bottom-right
-
-        g.uvs.push_back({ 0.0, 0.0 }); // top-left
-        g.uvs.push_back({ 1.0, 0.0 }); // top-right
-        g.uvs.push_back({ 0.0, 1.0 }); // bottom-left
-        g.uvs.push_back({ 1.0, 1.0 }); // bottom-right
-
-        g.transforms.push_back(mvp);
-        g.transforms.push_back(mvp);
-        g.transforms.push_back(mvp);
-        g.transforms.push_back(mvp);
-
-    } else {
-        RenderGroup group {
-            texture,
-            {
-                { x,       y        }, // top-left
-                { x+width, y        }, // top-right
-                { x,       y+height }, // bottom-left
-                { x+width, y+height }, // bottom-right
-            },
-            {
-                0u, // top-left
-                1u, // top-right
-                2u, // bottom-left
-                3u, // bottom-right
-                2u, // bottom-left
-                1u, // top-right
-            },
-            {
-                { 0.0, 0.0 }, // top-left
-                { 1.0, 0.0 }, // top-right
-                { 0.0, 1.0 }, // bottom-left
-                { 1.0, 1.0 }, // bottom-right
-            },
-            {
-                mvp,
-                mvp,
-                mvp,
-                mvp,
-            }
-        };
-        m_render_group.emplace(texture.m_data, group);
-    }
-
-}
-
-void TextureRenderer::flush() {
-
-    glUseProgram(m_program);
-    glBindVertexArray(m_vertex_array);
-
-    for (auto& [key, value] : m_render_group) {
-        auto& [texture, vertices, indices, uvs, transforms] = value;
-
-        glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer);
-        glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec2), vertices.data(), GL_DYNAMIC_DRAW);
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_index_buffer);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), indices.data(), GL_DYNAMIC_DRAW);
-
-        glBindBuffer(GL_ARRAY_BUFFER, m_uv_buffer);
-        glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(glm::vec2), uvs.data(), GL_DYNAMIC_DRAW);
-
-        glBindBuffer(GL_ARRAY_BUFFER, m_transform_buffer);
-        glBufferData(GL_ARRAY_BUFFER, transforms.size() * sizeof(glm::mat4), transforms.data(), GL_DYNAMIC_DRAW);
-
-        glBindTexture(GL_TEXTURE_2D, texture.m_texture);
-
-        glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
-    }
-
-    m_render_group.clear();
+    glBindTexture(GL_TEXTURE_2D, texture.m_texture);
+    glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr);
 }
 
 } // namespace detail
