@@ -43,8 +43,7 @@ class Renderer {
     detail::LineRenderer m_line;
     detail::TextRenderer m_text;
 
-    std::array<std::reference_wrapper<detail::IDeferredRenderer>, 4> m_deferred_renderers {
-        m_circle,
+    std::array<std::reference_wrapper<detail::IDeferredRenderer>, 3> m_deferred_renderers {
         m_triangle,
         m_texture,
         m_line
@@ -198,7 +197,7 @@ public:
     }
 
     void draw_circle(float x, float y, float radius, gfx::Color color) {
-        flush_all_except(m_circle);
+        flush();
         m_circle.draw(x, y, radius, color, m_view_active);
     }
 

@@ -8,7 +8,7 @@
 
 namespace gfx::detail {
 
-class CircleRenderer : public IDeferredRenderer {
+class CircleRenderer {
     gfx::Window& m_window;
 
     GLuint m_program;
@@ -16,22 +16,18 @@ class CircleRenderer : public IDeferredRenderer {
     GLuint m_vertex_buffer;
     GLuint m_index_buffer;
 
-    struct Vertex {
-        glm::vec2 pos;
-        glm::vec4 color;
-        glm::mat4 transform;
-        float radius;
-        glm::vec2 center;
+    static constexpr std::array m_indices {
+        0u, // top-left
+        1u, // top-right
+        2u, // bottom-left
+        3u, // bottom-right
+        2u, // bottom-left
+        1u, // top-right
     };
-
-    std::vector<Vertex> m_vertices;
-    std::vector<unsigned int> m_indices;
 
 public:
     explicit CircleRenderer(gfx::Window& window);
-
     void draw(float x, float y, float radius, gfx::Color color, glm::mat4 view);
-    void flush() override;
 
 };
 

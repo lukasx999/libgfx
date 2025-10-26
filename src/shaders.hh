@@ -21,11 +21,6 @@ inline constexpr char text[] = {
 '\0'
 };
 
-inline constexpr char circle[] = {
-#embed "../shaders/circle.vert" suffix(,)
-'\0'
-};
-
 inline constexpr char batched[] = {
 #embed "../shaders/batched.vert" suffix(,)
 '\0'
