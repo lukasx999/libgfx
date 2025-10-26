@@ -19,7 +19,6 @@
 
 // TODO: stencil buffer
 // TODO: load texture from memory
-// TODO: think about performance cost of batching (additional vertex attribute data)
 // TODO: render text below x/y
 // TODO: build system for non-cmake
 // TODO: auto-invoke python script for generating shader glue code
@@ -29,7 +28,6 @@
 // TODO: disable opengl/glfw logs
 // TODO: asset packer
 // TODO: merge get_key_state and get_mouse_button_state?
-// TODO: compare rectangle batch renderer to non batch
 
 namespace gfx {
 
