@@ -43,8 +43,7 @@ class Renderer {
     detail::LineRenderer m_line;
     detail::TextRenderer m_text;
 
-    std::array<std::reference_wrapper<detail::IDeferredRenderer>, 5> m_deferred_renderers {
-        m_rectangle,
+    std::array<std::reference_wrapper<detail::IDeferredRenderer>, 4> m_deferred_renderers {
         m_circle,
         m_triangle,
         m_texture,
@@ -146,7 +145,7 @@ public:
         const gfx::IRotation& rotation,
         gfx::Color color
     ) {
-        flush_all_except(m_rectangle);
+        flush();
         m_rectangle.draw(x, y, width, height, rotation, color, m_view_active);
     }
 

@@ -8,20 +8,22 @@
 
 namespace gfx::detail {
 
-class RectangleRenderer : public IDeferredRenderer {
+class RectangleRenderer {
     gfx::Window& m_window;
 
     GLuint m_program;
     GLuint m_vertex_array;
     GLuint m_vertex_buffer;
-    GLuint m_color_buffer;
     GLuint m_index_buffer;
-    GLuint m_transform_buffer;
 
-    std::vector<glm::vec2> m_vertices;
-    std::vector<glm::vec4> m_colors;
-    std::vector<unsigned int> m_indices;
-    std::vector<glm::mat4> m_transforms;
+    static constexpr std::array m_indices {
+        0u, // top-left
+        1u, // top-right
+        2u, // bottom-left
+        3u, // bottom-right
+        2u, // bottom-left
+        1u, // top-right
+    };
 
 public:
     explicit RectangleRenderer(gfx::Window& window);
@@ -34,7 +36,6 @@ public:
         gfx::Color color,
         glm::mat4 view
     );
-    void flush() override;
 
 };
 
