@@ -17,6 +17,8 @@
 #include <vec.hh>
 #include <window.hh>
 
+// TODO: lighting and reflections
+// TODO: camera rotation
 // TODO: stencil buffer
 // TODO: load texture from memory
 // TODO: render text below x/y
@@ -118,7 +120,6 @@ public:
         m_view_active = m_view_default;
     }
 
-    // TODO: rotation
     void set_camera(float center_x, float center_y) {
         m_view_camera = gen_view_matrix(m_window, center_x, center_y);
     }
