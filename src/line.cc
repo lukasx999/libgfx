@@ -15,7 +15,7 @@ LineRenderer::LineRenderer(gfx::Window& window)
 : m_window(window)
 {
 
-    m_program = create_shader_program(shaders::vertex::batched, shaders::fragment::batched);
+    m_program = create_shader_program(shaders::vertex::default_, shaders::fragment::default_);
 
     glGenVertexArrays(1, &m_vertex_array);
     glBindVertexArray(m_vertex_array);
@@ -26,20 +26,6 @@ LineRenderer::LineRenderer(gfx::Window& window)
     glVertexAttribPointer(a_pos, 2, GL_FLOAT, false, sizeof(glm::vec2), nullptr);
     glEnableVertexAttribArray(a_pos);
 
-    glGenBuffers(1, &m_color_buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, m_color_buffer);
-    GLint a_color = glGetAttribLocation(m_program, "a_color");
-    glEnableVertexAttribArray(a_color);
-    glVertexAttribPointer(a_color, 4, GL_FLOAT, false, sizeof(glm::vec4), nullptr);
-
-    glGenBuffers(1, &m_transform_buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, m_transform_buffer);
-    GLint a_mvp = glGetAttribLocation(m_program, "a_mvp");
-    for (int i = 0; i < 4; ++i) {
-        glVertexAttribPointer(a_mvp+i, 4, GL_FLOAT, false, sizeof(glm::vec4)*4, reinterpret_cast<void*>(i * sizeof(glm::vec4)));
-        glEnableVertexAttribArray(a_mvp+i);
-    }
-
     // just to make sure everything still works after unbinding, as other classes/functions may
     // modify opengl state after running the ctor
     glBindVertexArray(0);
@@ -49,8 +35,16 @@ LineRenderer::LineRenderer(gfx::Window& window)
 
 void LineRenderer::draw(float x0, float y0, float x1, float y1, gfx::Color color, glm::mat4 view) {
 
-    m_vertices.push_back({ x0, y0 });
-    m_vertices.push_back({ x1, y1 });
+    glUseProgram(m_program);
+    glBindVertexArray(m_vertex_array);
+
+    auto vertices = std::to_array<glm::vec2>({
+        { x0, y0 },
+        { x1, y1 },
+    });
+
+    glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec2), vertices.data(), GL_DYNAMIC_DRAW);
 
     glm::mat4 model(1.0);
 
@@ -63,32 +57,14 @@ void LineRenderer::draw(float x0, float y0, float x1, float y1, gfx::Color color
 
     glm::mat4 mvp = projection * view * model;
 
-    m_transforms.push_back(mvp);
-    m_transforms.push_back(mvp);
+    GLint u_mvp = glGetUniformLocation(m_program, "u_mvp");
+    glUniformMatrix4fv(u_mvp, 1, false, glm::value_ptr(mvp));
 
     auto c = color.normalized();
-    glm::vec4 c_vec4(c.r, c.g, c.b, c.a);
-    m_colors.push_back(c_vec4);
-    m_colors.push_back(c_vec4);
-}
+    GLint u_color = glGetUniformLocation(m_program, "u_color");
+    glUniform4f(u_color, c.r, c.g, c.b, c.a);
 
-void LineRenderer::flush() {
-
-    glUseProgram(m_program);
-    glBindVertexArray(m_vertex_array);
-
-    glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer);
-    glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(glm::vec2), m_vertices.data(), GL_DYNAMIC_DRAW);
-
-    glBindBuffer(GL_ARRAY_BUFFER, m_color_buffer);
-    glBufferData(GL_ARRAY_BUFFER, m_colors.size() * sizeof(glm::vec4), m_colors.data(), GL_DYNAMIC_DRAW);
-
-    glBindBuffer(GL_ARRAY_BUFFER, m_transform_buffer);
-    glBufferData(GL_ARRAY_BUFFER, m_transforms.size() * sizeof(glm::mat4), m_transforms.data(), GL_DYNAMIC_DRAW);
-
-    glDrawArrays(GL_LINES, 0, m_vertices.size());
-    m_vertices.clear();
-    m_colors.clear();
+    glDrawArrays(GL_LINES, 0, vertices.size());
 }
 
 } // namespace gfx::detail

@@ -43,10 +43,9 @@ class Renderer {
     detail::LineRenderer m_line;
     detail::TextRenderer m_text;
 
-    std::array<std::reference_wrapper<detail::IDeferredRenderer>, 3> m_deferred_renderers {
+    std::array<std::reference_wrapper<detail::IDeferredRenderer>, 2> m_deferred_renderers {
         m_triangle,
         m_texture,
-        m_line
     };
 
     double m_frame_time = 0.0;
@@ -215,7 +214,7 @@ public:
     }
 
     void draw_line(float x0, float y0, float x1, float y1, gfx::Color color) {
-        flush_all_except(m_line);
+        flush();
         m_line.draw(x0, y0, x1, y1, color, m_view_active);
     }
 
