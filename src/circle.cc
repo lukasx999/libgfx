@@ -68,7 +68,8 @@ void CircleRenderer::draw(float x, float y, float radius, gfx::Color color, glm:
     glUniform4f(u_color, c.r, c.g, c.b, c.a);
 
     GLint u_center = glGetUniformLocation(m_program, "u_center");
-    glUniform2f(u_center, x, y);
+    auto center = view * glm::vec4(x, y, 0.0, 1.0);
+    glUniform2f(u_center, center.x, center.y);
 
     GLint u_radius = glGetUniformLocation(m_program, "u_radius");
     glUniform1f(u_radius, radius);
