@@ -20,7 +20,6 @@
 // TODO: lighting and reflections
 // TODO: camera rotation
 // TODO: stencil buffer
-// TODO: load texture from memory
 // TODO: render text below x/y
 // TODO: build system for non-cmake
 // TODO: auto-invoke python script for generating shader glue code
