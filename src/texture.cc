@@ -10,21 +10,18 @@
 
 namespace gfx {
 
-Texture::Texture(const std::string& path) {
-    load_texture(path.c_str());
-}
-
-Texture::Texture(const char* path) {
-    load_texture(path);
-}
-
-void Texture::load_texture(const char* path) {
+void Texture::load_texture_from_file(const char* path) {
 
     m_data = stbi_load(path, &m_width, &m_height, &m_channels, 0);
     if (m_data == nullptr) {
         // TODO: custom exception type
         throw std::runtime_error("failed to load texture");
     }
+
+    gen_texture();
+}
+
+void Texture::gen_texture() {
 
     glGenTextures(1, &m_texture);
     glActiveTexture(GL_TEXTURE0);
@@ -43,7 +40,9 @@ void Texture::load_texture(const char* path) {
 }
 
 Texture::~Texture() {
-    stbi_image_free(m_data);
+    if (m_from_file) {
+        stbi_image_free(const_cast<unsigned char*>(m_data));
+    }
     glDeleteTextures(1, &m_texture);
 }
 

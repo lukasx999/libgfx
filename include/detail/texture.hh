@@ -20,11 +20,32 @@ class Texture {
     int m_width;
     int m_height;
     int m_channels;
-    unsigned char* m_data;
+    const unsigned char* m_data;
+    bool m_from_file = false;
 
 public:
-    explicit Texture(const char* path);
-    explicit Texture(const std::string& path);
+    // construct a texture from a file
+    explicit Texture(const char* path) {
+        m_from_file = true;
+        load_texture_from_file(path);
+    }
+
+    // construct a texture from a file
+    explicit Texture(const std::string& path) {
+        m_from_file = true;
+        load_texture_from_file(path.c_str());
+    }
+
+    // construct a texture from memory
+    Texture(int width, int height, int channels, const unsigned char* bytes)
+        : m_width(width)
+        , m_height(height)
+        , m_channels(channels)
+        , m_data(bytes)
+
+    {
+        gen_texture();
+    }
 
     Texture(const Texture&) = delete;
     Texture(Texture&&) = delete;
@@ -46,7 +67,8 @@ public:
     }
 
 private:
-    void load_texture(const char* path);
+    void load_texture_from_file(const char* path);
+    void gen_texture();
 
     [[nodiscard]] constexpr GLint get_opengl_texture_format() const {
         switch (m_channels) {
