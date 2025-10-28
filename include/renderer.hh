@@ -24,8 +24,8 @@
 // TODO: build system for non-cmake
 // TODO: auto-invoke python script for generating shader glue code
 // TODO: catch2 unit tests
+// TODO: fix todos
 // TODO: tui for statistics
-// TODO: anti-aliasing
 // TODO: disable opengl/glfw logs
 // TODO: asset packer
 // TODO: merge get_key_state and get_mouse_button_state?
