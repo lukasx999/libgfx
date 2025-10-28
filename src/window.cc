@@ -13,6 +13,7 @@ GLFWwindow* gfx::Window::init_glfw(int width, int height, const char* window_tit
 
     glfwWindowHint(GLFW_RESIZABLE, flags & WindowFlags::Resizable);
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
+    glfwWindowHint(GLFW_SAMPLES, 4);
 
     auto window = glfwCreateWindow(width, height, window_title, nullptr, nullptr);
     if (window == nullptr) {
@@ -25,8 +26,11 @@ GLFWwindow* gfx::Window::init_glfw(int width, int height, const char* window_tit
 
     glfwSetInputMode(window, GLFW_CURSOR, flags & WindowFlags::DisableCursor ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
 
+    glEnable(GL_MULTISAMPLE);  
+
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 
     // TODO: option for this
     // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
