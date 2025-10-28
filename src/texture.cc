@@ -2,8 +2,11 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
-#include <stb_image.h>
 #include <GLFW/glfw3.h>
+
+#define STBI_FAILURE_USERMSG
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
 
 #include <detail/texture.hh>
 #include "shaders.hh"
@@ -15,7 +18,7 @@ void Texture::load_texture_from_file(const char* path) {
     m_data = stbi_load(path, &m_width, &m_height, &m_channels, 0);
     if (m_data == nullptr) {
         // TODO: custom exception type
-        throw std::runtime_error("failed to load texture");
+        throw std::runtime_error(std::format("failed to load texture: {}", stbi_failure_reason()));
     }
 
     gen_texture();
@@ -109,6 +112,67 @@ void TextureRenderer::draw(
     model = glm::translate(model, glm::vec3(x+width/2.0, y+height/2.0, 0.0));
     model = glm::rotate(model, rotation.get_radians(), glm::vec3(0.0f, 0.0f, 1.0f));
     model = glm::translate(model, glm::vec3(-x-width/2.0, -y-height/2.0, 0.0));
+
+    glm::mat4 projection = glm::ortho(
+        0.0f,
+        static_cast<float>(m_window.get_width()),
+        static_cast<float>(m_window.get_height()),
+        0.0f
+    );
+
+    glm::mat4 mvp = projection * view * model;
+
+    GLint u_mvp = glGetUniformLocation(m_program, "u_mvp");
+    glUniformMatrix4fv(u_mvp, 1, false, glm::value_ptr(mvp));
+
+    glBindTexture(GL_TEXTURE_2D, texture.m_texture);
+    glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr);
+}
+
+void TextureRenderer::draw_sub(
+    float dest_x,
+    float dest_y,
+    float dest_width,
+    float dest_height,
+    float src_x,
+    float src_y,
+    float src_width,
+    float src_height,
+    const gfx::IRotation& rotation,
+    const gfx::Texture& texture,
+    glm::mat4 view
+) {
+
+    glUseProgram(m_program);
+    glBindVertexArray(m_vertex_array);
+
+    glm::vec2 uv_start {
+        src_x / texture.m_width,
+        src_y / texture.m_height,
+    };
+
+    glm::vec2 uv_end {
+        (src_x + src_width) / texture.m_width,
+        (src_y + src_height) / texture.m_height,
+    };
+
+    auto vertices = std::to_array<Vertex>({
+        { { dest_x,            dest_y             }, { uv_start.x, uv_start.y } }, // top-left
+        { { dest_x+dest_width, dest_y             }, { uv_end.x,   uv_start.y } }, // top-right
+        { { dest_x,            dest_y+dest_height }, { uv_start.x, uv_end.y   } }, // bottom-left
+        { { dest_x+dest_width, dest_y+dest_height }, { uv_end.x,   uv_end.y   } }, // bottom-right
+    });
+
+    glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), vertices.data(), GL_DYNAMIC_DRAW);
+
+    // the translations are needed to subtract the world space coordinates (x,y)
+    // since we want the rectangle to rotate around its top left corner, and
+    // to set the center of rotation to the middle of the rectangle
+    glm::mat4 model(1.0);
+    model = glm::translate(model, glm::vec3(dest_x+dest_width/2.0, dest_y+dest_height/2.0, 0.0));
+    model = glm::rotate(model, rotation.get_radians(), glm::vec3(0.0f, 0.0f, 1.0f));
+    model = glm::translate(model, glm::vec3(-dest_x-dest_width/2.0, -dest_y-dest_height/2.0, 0.0));
 
     glm::mat4 projection = glm::ortho(
         0.0f,
