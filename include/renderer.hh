@@ -176,6 +176,16 @@ public:
     }
 
     void draw_texture(
+        float x,
+        float y,
+        float width,
+        float height,
+        const gfx::Texture& texture
+    ) {
+        m_texture.draw(x, y, width, height, 0_deg, texture, m_view_active);
+    }
+
+    void draw_texture(
         gfx::Vec vec,
         float width,
         float height,
@@ -183,6 +193,15 @@ public:
         const gfx::Texture& texture
     ) {
         draw_texture(vec.x, vec.y, width, height, rotation, texture);
+    }
+
+    void draw_texture(
+        gfx::Vec vec,
+        float width,
+        float height,
+        const gfx::Texture& texture
+    ) {
+        draw_texture(vec.x, vec.y, width, height, 0_deg, texture);
     }
 
     void draw_circle(float x, float y, float radius, gfx::Color color) {
