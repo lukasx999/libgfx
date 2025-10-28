@@ -16,12 +16,14 @@
 #include <vec.hh>
 #include <window.hh>
 
+// TODO: camera rotation
+// TODO: render text below x/y
+// TODO: pimpl to hide headers
+// TODO: merge gfx::Window and gfx::Renderer into one gfx::Context type?
 // TODO: merge draw_texture and draw_texture sub implementations
 // TODO: add rendering to textures/files
 // TODO: lighting and reflections
-// TODO: camera rotation
 // TODO: stencil buffer
-// TODO: render text below x/y
 // TODO: build system for non-cmake
 // TODO: auto-invoke python script for generating shader glue code
 // TODO: catch2 unit tests
@@ -92,7 +94,7 @@ public:
 
         struct timespec ts{};
         ts.tv_nsec = (1.0 / m_desired_fps - frame_end) * 1e9,
-        nanosleep(&ts, nullptr);
+            nanosleep(&ts, nullptr);
     }
 
     // calls the given function in a draw loop
@@ -128,14 +130,7 @@ public:
         set_camera(vec.x, vec.y);
     }
 
-    void draw_rectangle(
-        float x,
-        float y,
-        float width,
-        float height,
-        const gfx::IRotation& rotation,
-        gfx::Color color
-    ) {
+    void draw_rectangle(float x, float y, float width, float height, const gfx::IRotation& rotation, gfx::Color color) {
         m_rectangle.draw(x, y, width, height, rotation, color, m_view_active);
     }
 
@@ -151,13 +146,7 @@ public:
         draw_rectangle(rect.x, rect.y, rect.width, rect.height, rotation, color);
     }
 
-    void draw_rectangle(
-        gfx::Vec vec,
-        float width,
-        float height,
-        const gfx::IRotation& rotation,
-        gfx::Color color
-    ) {
+    void draw_rectangle(gfx::Vec vec, float width, float height, const gfx::IRotation& rotation, gfx::Color color) {
         draw_rectangle(vec.x, vec.y, width, height, rotation, color);
     }
 
@@ -165,58 +154,27 @@ public:
         draw_rectangle(vec.x, vec.y, width, height, 0_deg, color);
     }
 
-    void draw_texture(
-        float x,
-        float y,
-        float width,
-        float height,
-        const gfx::IRotation& rotation,
-        const gfx::Texture& texture
-    ) {
+    void draw_texture(float x, float y, float width, float height, const gfx::IRotation& rotation, const gfx::Texture& texture) {
         m_texture.draw(x, y, width, height, rotation, texture, m_view_active);
     }
 
-    void draw_texture(
-        float x,
-        float y,
-        float width,
-        float height,
-        const gfx::Texture& texture
-    ) {
+    void draw_texture(float x, float y, float width, float height, const gfx::Texture& texture) {
         m_texture.draw(x, y, width, height, 0_deg, texture, m_view_active);
     }
 
-    void draw_texture(
-        gfx::Vec vec,
-        float width,
-        float height,
-        const gfx::IRotation& rotation,
-        const gfx::Texture& texture
-    ) {
+    void draw_texture(gfx::Vec vec, float width, float height, const gfx::IRotation& rotation, const gfx::Texture& texture) {
         draw_texture(vec.x, vec.y, width, height, rotation, texture);
     }
 
-    void draw_texture(
-        gfx::Vec vec,
-        float width,
-        float height,
-        const gfx::Texture& texture
-    ) {
+    void draw_texture(gfx::Vec vec, float width, float height, const gfx::Texture& texture) {
         draw_texture(vec.x, vec.y, width, height, 0_deg, texture);
     }
 
-    void draw_texture(
-        gfx::Rect rect,
-        const gfx::IRotation& rotation,
-        const gfx::Texture& texture
-    ) {
+    void draw_texture(gfx::Rect rect, const gfx::IRotation& rotation, const gfx::Texture& texture) {
         draw_texture(rect.x, rect.y, rect.width, rect.height, rotation, texture);
     }
 
-    void draw_texture(
-        gfx::Rect rect,
-        const gfx::Texture& texture
-    ) {
+    void draw_texture(gfx::Rect rect, const gfx::Texture& texture) {
         draw_texture(rect.x, rect.y, rect.width, rect.height, 0_deg, texture);
     }
 
@@ -285,8 +243,15 @@ private:
             center_y - window.get_height() / 2.0f,
             0.0f
         );
+
         glm::vec3 camera_direction(0.0f, 0.0f, -1.0f);
         glm::vec3 up(0.0f, 1.0f, 0.0f);
+
+        // TODO: center rotation
+        // glm::mat4 transform(1.0f);
+        // transform = glm::rotate(transform, gfx::deg_to_rad(10), glm::vec3(0.0f, 0.0f, 1.0f));
+        // up = transform * glm::vec4(up, 1.0);
+
         glm::mat4 view = glm::lookAt(camera_position, camera_position+camera_direction, up);
         return view;
     }
