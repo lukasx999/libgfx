@@ -37,7 +37,7 @@ void Texture::generate_opengl_texture(const unsigned char* data, int width, int 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    auto format = get_opengl_texture_format(channels);
+    auto format = channels_to_opengl_format(channels);
     glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
     glGenerateMipmap(GL_TEXTURE_2D);
 

@@ -38,7 +38,7 @@ public:
         int width = other.get_width();
         int height = other.get_height();
         int channels = other.get_channels();
-        auto format = get_opengl_texture_format(channels);
+        auto format = channels_to_opengl_format(channels);
 
         unsigned char* buf = new unsigned char[width * height * channels];
         glBindTexture(GL_TEXTURE_2D, other.m_texture);
@@ -75,7 +75,7 @@ public:
         glBindTexture(GL_TEXTURE_2D, m_texture);
         glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_INTERNAL_FORMAT, &internal_format);
         glBindTexture(GL_TEXTURE_2D, 0);
-        return get_channels_from_opengl_texture_format(internal_format);
+        return opengl_format_to_channels(internal_format);
     }
 
 private:
@@ -83,7 +83,7 @@ private:
     void generate_opengl_texture(const unsigned char* data, int width, int height, int channels);
 
     [[nodiscard]] static constexpr
-    GLint get_opengl_texture_format(int channels) {
+    GLint channels_to_opengl_format(int channels) {
         switch (channels) {
             case 3: return GL_RGB;
             case 4: return GL_RGBA;
@@ -92,7 +92,7 @@ private:
     }
 
     [[nodiscard]] static constexpr
-    GLint get_channels_from_opengl_texture_format(GLint format) {
+    int opengl_format_to_channels(GLint format) {
         switch (format) {
             case GL_RGB: return 3;
             case GL_RGBA: return 4;
