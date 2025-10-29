@@ -16,6 +16,7 @@
 #include <vec.hh>
 #include <window.hh>
 
+// TODO: do copying of textures on the gpu, instead of cpu
 // TODO: camera rotation
 // TODO: render text below x/y
 // TODO: pimpl to hide headers

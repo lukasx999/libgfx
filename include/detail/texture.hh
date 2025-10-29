@@ -20,37 +20,45 @@ class Texture {
     int m_width;
     int m_height;
     int m_channels;
-    const unsigned char* m_data;
-    bool m_from_file = false;
 
 public:
     // construct a texture from a file
     explicit Texture(const char* path) {
-        m_from_file = true;
         load_texture_from_file(path);
     }
 
     // construct a texture from a file
     explicit Texture(const std::string& path) {
-        m_from_file = true;
         load_texture_from_file(path.c_str());
     }
 
     // construct a texture from memory
-    Texture(int width, int height, int channels, const unsigned char* bytes)
+    Texture(int width, int height, int channels, unsigned char* bytes)
         : m_width(width)
         , m_height(height)
         , m_channels(channels)
-        , m_data(bytes)
 
     {
-        gen_texture();
+        generate_opengl_texture(bytes);
     }
 
-    Texture(const Texture&) = delete;
-    Texture(Texture&&) = delete;
-    Texture& operator=(const Texture&) = delete;
-    Texture& operator=(Texture&&) = delete;
+    Texture(const Texture& other)
+        : m_width(other.m_width)
+        , m_height(other.m_height)
+        , m_channels(other.m_channels)
+    {
+        auto format = get_opengl_texture_format();
+        unsigned char* buf = new unsigned char[m_width * m_height * m_channels];
+        glBindTexture(GL_TEXTURE_2D, other.m_texture);
+        glGetTexImage(GL_TEXTURE_2D, 0, format, GL_UNSIGNED_BYTE, buf);
+        glBindTexture(GL_TEXTURE_2D, 0);
+        generate_opengl_texture(buf);
+        delete[] buf;
+    }
+
+    Texture(Texture&& other) = delete;
+    Texture& operator=(const Texture& other) = delete;
+    Texture& operator=(Texture&& other) = delete;
 
     ~Texture();
 
@@ -68,7 +76,7 @@ public:
 
 private:
     void load_texture_from_file(const char* path);
-    void gen_texture();
+    void generate_opengl_texture(const unsigned char* data);
 
     [[nodiscard]] constexpr GLint get_opengl_texture_format() const {
         switch (m_channels) {
