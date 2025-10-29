@@ -145,7 +145,6 @@ void TextureRenderer::draw_sub(
     glUseProgram(m_program);
     glBindVertexArray(m_vertex_array);
 
-
     int tex_width = texture.get_width();
     int tex_height = texture.get_height();
 
