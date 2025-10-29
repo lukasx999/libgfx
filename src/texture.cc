@@ -15,17 +15,18 @@ namespace gfx {
 
 void Texture::load_texture_from_file(const char* path) {
 
-    unsigned char* data = stbi_load(path, &m_width, &m_height, &m_channels, 0);
+    int width, height;
+    unsigned char* data = stbi_load(path, &width, &height, &m_channels, 0);
     if (data == nullptr) {
         // TODO: custom exception type
         throw std::runtime_error(std::format("failed to load texture: {}", stbi_failure_reason()));
     }
 
-    generate_opengl_texture(data);
+    generate_opengl_texture(data, width, height);
     stbi_image_free(data);
 }
 
-void Texture::generate_opengl_texture(const unsigned char* data) {
+void Texture::generate_opengl_texture(const unsigned char* data, int width, int height) {
 
     glGenTextures(1, &m_texture);
     glActiveTexture(GL_TEXTURE0);
@@ -37,7 +38,7 @@ void Texture::generate_opengl_texture(const unsigned char* data) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     GLint format = get_opengl_texture_format();
-    glTexImage2D(GL_TEXTURE_2D, 0, format, m_width, m_height, 0, format, GL_UNSIGNED_BYTE, data);
+    glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
     glGenerateMipmap(GL_TEXTURE_2D);
 
     glBindTexture(GL_TEXTURE_2D, 0);
@@ -144,14 +145,18 @@ void TextureRenderer::draw_sub(
     glUseProgram(m_program);
     glBindVertexArray(m_vertex_array);
 
+
+    int tex_width = texture.get_width();
+    int tex_height = texture.get_height();
+
     glm::vec2 uv_start {
-        src_x / texture.m_width,
-        src_y / texture.m_height,
+        src_x / tex_width,
+        src_y / tex_height,
     };
 
     glm::vec2 uv_end {
-        (src_x + src_width) / texture.m_width,
-        (src_y + src_height) / texture.m_height,
+        (src_x + src_width) / tex_width,
+        (src_y + src_height) / tex_height,
     };
 
     auto vertices = std::to_array<Vertex>({
