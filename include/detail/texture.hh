@@ -49,7 +49,13 @@ public:
     }
 
     Texture(Texture&& other) = delete;
-    Texture& operator=(const Texture& other) = delete;
+
+    Texture& operator=(const Texture& other) {
+        Texture temp(other);
+        std::swap(m_texture, temp.m_texture);
+        return *this;
+    }
+
     Texture& operator=(Texture&& other) = delete;
 
     ~Texture();
