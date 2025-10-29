@@ -16,12 +16,11 @@
 #include <vec.hh>
 #include <window.hh>
 
-// TODO: finish gfx::WindowBuilder
-// TODO: remove gfx::Texture m_channels member
-// TODO: do copying of textures on the gpu, instead of cpu
-// TODO: camera rotation
 // TODO: render text below x/y
 // TODO: pimpl to hide headers
+// TODO: camera rotation
+// TODO: finish gfx::WindowBuilder
+// TODO: do copying of textures on the gpu, instead of cpu
 // TODO: merge gfx::Window and gfx::Renderer into one gfx::Context type?
 // TODO: merge draw_texture and draw_texture sub implementations
 // TODO: add rendering to textures/files using opengl fbo
