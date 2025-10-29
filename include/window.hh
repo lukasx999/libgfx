@@ -108,45 +108,45 @@ private:
 
 };
 
-class WindowBuilder {
-    int m_width = 1600;
-    int m_height = 900;
-    const char* m_title = "libgfx application";
-
-public:
-    WindowBuilder() = default;
-
-    WindowBuilder& set_width(int width) {
-        m_width = width;
-        return *this;
-    }
-
-    WindowBuilder& set_height(int height) {
-        m_height = height;
-        return *this;
-    }
-
-    WindowBuilder& set_title(const char* title) {
-        m_title = title;
-        return *this;
-    }
-
-    WindowBuilder& resizable(bool resizable) {
-        return *this;
-    }
-
-    WindowBuilder& enable_cursor(bool enable_cursor) {
-        return *this;
-    }
-
-    WindowBuilder& enable_vsync(bool vsync) {
-        return *this;
-    }
-
-    [[nodiscard]] Window build() const {
-        return Window { m_width, m_height, m_title, 0 };
-    }
-
-};
+// class WindowBuilder {
+//     int m_width = 1600;
+//     int m_height = 900;
+//     const char* m_title = "libgfx application";
+//
+// public:
+//     WindowBuilder() = default;
+//
+//     WindowBuilder& set_width(int width) {
+//         m_width = width;
+//         return *this;
+//     }
+//
+//     WindowBuilder& set_height(int height) {
+//         m_height = height;
+//         return *this;
+//     }
+//
+//     WindowBuilder& set_title(const char* title) {
+//         m_title = title;
+//         return *this;
+//     }
+//
+//     WindowBuilder& resizable(bool resizable) {
+//         return *this;
+//     }
+//
+//     WindowBuilder& enable_cursor(bool enable_cursor) {
+//         return *this;
+//     }
+//
+//     WindowBuilder& enable_vsync(bool vsync) {
+//         return *this;
+//     }
+//
+//     [[nodiscard]] Window build() const {
+//         return Window { m_width, m_height, m_title, 0 };
+//     }
+//
+// };
 
 } // namespace gfx

@@ -16,6 +16,7 @@
 #include <vec.hh>
 #include <window.hh>
 
+// TODO: finish gfx::WindowBuilder
 // TODO: remove gfx::Texture m_channels member
 // TODO: do copying of textures on the gpu, instead of cpu
 // TODO: camera rotation
