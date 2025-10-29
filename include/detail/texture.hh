@@ -17,7 +17,6 @@ class Texture {
     friend detail::TextureRenderer;
 
     GLuint m_texture;
-    int m_channels;
 
 public:
     // construct a texture from a file
@@ -31,24 +30,21 @@ public:
     }
 
     // construct a texture from memory
-    Texture(int width, int height, int channels, unsigned char* bytes)
-        : m_channels(channels)
-    {
-        generate_opengl_texture(bytes, width, height);
+    Texture(int width, int height, int channels, unsigned char* bytes) {
+        generate_opengl_texture(bytes, width, height, channels);
     }
 
-    Texture(const Texture& other)
-        : m_channels(other.m_channels)
-    {
+    Texture(const Texture& other) {
         int width = other.get_width();
         int height = other.get_height();
+        int channels = other.get_channels();
+        auto format = get_opengl_texture_format(channels);
 
-        auto format = get_opengl_texture_format();
-        unsigned char* buf = new unsigned char[width * height * m_channels];
+        unsigned char* buf = new unsigned char[width * height * channels];
         glBindTexture(GL_TEXTURE_2D, other.m_texture);
         glGetTexImage(GL_TEXTURE_2D, 0, format, GL_UNSIGNED_BYTE, buf);
         glBindTexture(GL_TEXTURE_2D, 0);
-        generate_opengl_texture(buf, width, height);
+        generate_opengl_texture(buf, width, height, channels);
         delete[] buf;
     }
 
@@ -75,19 +71,33 @@ public:
     }
 
     [[nodiscard]] int get_channels() const {
-        return m_channels;
+        int internal_format;
+        glBindTexture(GL_TEXTURE_2D, m_texture);
+        glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_INTERNAL_FORMAT, &internal_format);
+        glBindTexture(GL_TEXTURE_2D, 0);
+        return get_channels_from_opengl_texture_format(internal_format);
     }
 
 private:
     void load_texture_from_file(const char* path);
-    void generate_opengl_texture(const unsigned char* data, int width, int height);
+    void generate_opengl_texture(const unsigned char* data, int width, int height, int channels);
 
-    [[nodiscard]] constexpr GLint get_opengl_texture_format() const {
-        switch (m_channels) {
+    [[nodiscard]] static constexpr
+    GLint get_opengl_texture_format(int channels) {
+        switch (channels) {
             case 3: return GL_RGB;
             case 4: return GL_RGBA;
         }
         throw std::runtime_error("invalid channel count");
+    }
+
+    [[nodiscard]] static constexpr
+    GLint get_channels_from_opengl_texture_format(GLint format) {
+        switch (format) {
+            case GL_RGB: return 3;
+            case GL_RGBA: return 4;
+        }
+        throw std::runtime_error("invalid texture format");
     }
 
 };
