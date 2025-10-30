@@ -3,8 +3,6 @@
 #include <cmath>
 #include <cstdint>
 
-#include <GLFW/glfw3.h>
-
 namespace gfx {
 
 struct Rect {

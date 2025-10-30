@@ -2,9 +2,6 @@
 
 #include <functional>
 
-#include <glm/glm.hpp>
-#include <glm/ext.hpp>
-
 #include <detail/rectangle.hh>
 #include <detail/circle.hh>
 #include <detail/triangle.hh>

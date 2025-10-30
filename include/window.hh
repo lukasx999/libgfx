@@ -4,8 +4,6 @@
 
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <glm/ext.hpp>
 
 #include <types.hh>
 #include <vec.hh>
