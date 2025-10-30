@@ -41,19 +41,18 @@ TextRenderer::~TextRenderer() {
     FT_Done_FreeType(m_ft);
 }
 
-void TextRenderer::draw(float x, float y, unsigned int text_size, const char* text, const gfx::Font& font, gfx::Color color, glm::mat4 view) {
+void TextRenderer::draw(float x, float y, int text_size, const char* text, const gfx::Font& font, gfx::Color color, glm::mat4 view) {
     int offset = 0;
 
     for (const char* c = text; *c; ++c) {
         auto glyph = font.load_glyph(*c, text_size);
-        draw_char(x+offset, y, glyph, color, view);
-        offset += glyph.advance;
+        draw_char(x+offset, y, glyph, color, text_size, view);
+        offset += glyph.advance_x;
     }
 
 }
 
-// TODO: render text under x,y instead of above?
-void TextRenderer::draw_char(float x, float y, const Glyph& glyph, gfx::Color color, glm::mat4 view) {
+void TextRenderer::draw_char(float x, float y, const Glyph& glyph, gfx::Color color, int text_size, glm::mat4 view) {
 
     glUseProgram(m_program);
     glBindVertexArray(m_vertex_array);
@@ -62,7 +61,7 @@ void TextRenderer::draw_char(float x, float y, const Glyph& glyph, gfx::Color co
     unsigned int height = glyph.height;
 
     glm::mat4 model(1.0f);
-    model = glm::translate(model, glm::vec3(x + glyph.bearing_x, y - glyph.bearing_y, 0.0f));
+    model = glm::translate(model, glm::vec3(x + glyph.bearing_x, y - glyph.bearing_y + text_size, 0.0f));
     model = glm::scale(model, glm::vec3(width, height, 0.0f));
 
     glm::mat4 projection = glm::ortho(

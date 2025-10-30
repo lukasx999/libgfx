@@ -17,7 +17,7 @@ struct Glyph {
     unsigned int height;
     int bearing_x;
     int bearing_y;
-    unsigned int advance;
+    unsigned int advance_x;
     unsigned char* buffer;
 };
 
@@ -44,7 +44,7 @@ public:
     }
 
     [[nodiscard]] int measure_char(char c, int size) const {
-        return load_glyph(c, size).advance;
+        return load_glyph(c, size).advance_x;
     }
 
     [[nodiscard]] int measure_text(const char* text, int size) const {
@@ -73,7 +73,7 @@ private:
         unsigned int height = glyph->bitmap.rows;
         int bearing_x = glyph->bitmap_left;
         int bearing_y = glyph->bitmap_top;
-        unsigned int advance = glyph->advance.x;
+        unsigned int advance_x = glyph->advance.x;
         unsigned char* buffer = glyph->bitmap.buffer;
 
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // disable byte-alignment restriction
@@ -99,7 +99,7 @@ private:
             bearing_x,
             bearing_y,
             // advance is pixels * 64
-            advance / 64,
+            advance_x / 64,
             buffer,
         };
     }
@@ -149,14 +149,14 @@ public:
     TextRenderer& operator=(const TextRenderer&) = delete;
     TextRenderer& operator=(TextRenderer&&) = delete;
 
-    void draw(float x, float y, unsigned int text_size, const char* text, const gfx::Font& font, gfx::Color color, glm::mat4 view);
+    void draw(float x, float y, int text_size, const char* text, const gfx::Font& font, gfx::Color color, glm::mat4 view);
 
     [[nodiscard]] gfx::Font load_font(const char* path) const {
         return { m_ft, path };
     }
 
 private:
-    void draw_char(float x, float y, const Glyph& glyph, gfx::Color color, glm::mat4 view);
+    void draw_char(float x, float y, const Glyph& glyph, gfx::Color color, int text_size, glm::mat4 view);
 
 };
 

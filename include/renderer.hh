@@ -17,7 +17,6 @@
 #include <window.hh>
 
 // TODO: destroy Glyph texture
-// TODO: render text below x/y
 // TODO: pimpl to hide headers
 // TODO: camera rotation
 // TODO: finish gfx::WindowBuilder
@@ -220,11 +219,11 @@ public:
         draw_line(v0.x, v0.y, v1.x, v1.y, color);
     }
 
-    void draw_text(float x, float y, unsigned int text_size, const char* text, const gfx::Font& font, gfx::Color color) {
+    void draw_text(float x, float y, int text_size, const char* text, const gfx::Font& font, gfx::Color color) {
         m_text.draw(x, y, text_size, text, font, color, m_view_active);
     }
 
-    void draw_text(gfx::Vec vec, unsigned int text_size, const char* text, const gfx::Font& font, gfx::Color color) {
+    void draw_text(gfx::Vec vec, int text_size, const char* text, const gfx::Font& font, gfx::Color color) {
         draw_text(vec.x, vec.y, text_size, text, font, color);
     }
 
