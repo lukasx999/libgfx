@@ -44,6 +44,20 @@ void Texture::generate_opengl_texture(const unsigned char* data, int width, int 
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
+Texture::Texture(const Texture& other) {
+    int width = other.get_width();
+    int height = other.get_height();
+    int channels = other.get_channels();
+    auto format = channels_to_opengl_format(channels);
+
+    unsigned char* buf = new unsigned char[width * height * channels];
+    glBindTexture(GL_TEXTURE_2D, other.m_texture);
+    glGetTexImage(GL_TEXTURE_2D, 0, format, GL_UNSIGNED_BYTE, buf);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    generate_opengl_texture(buf, width, height, channels);
+    delete[] buf;
+}
+
 Texture::~Texture() {
     glDeleteTextures(1, &m_texture);
 }

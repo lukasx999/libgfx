@@ -2,6 +2,7 @@
 
 #include <unordered_map>
 #include <vector>
+#include <utility>
 
 #include <window.hh>
 #include <detail/detail.hh>
@@ -34,21 +35,11 @@ public:
         generate_opengl_texture(bytes, width, height, channels);
     }
 
-    Texture(const Texture& other) {
-        int width = other.get_width();
-        int height = other.get_height();
-        int channels = other.get_channels();
-        auto format = channels_to_opengl_format(channels);
+    Texture(const Texture& other);
 
-        unsigned char* buf = new unsigned char[width * height * channels];
-        glBindTexture(GL_TEXTURE_2D, other.m_texture);
-        glGetTexImage(GL_TEXTURE_2D, 0, format, GL_UNSIGNED_BYTE, buf);
-        glBindTexture(GL_TEXTURE_2D, 0);
-        generate_opengl_texture(buf, width, height, channels);
-        delete[] buf;
-    }
-
-    Texture(Texture&& other) = delete;
+    Texture(Texture&& other)
+    : m_texture(std::exchange(other.m_texture, 0))
+    { }
 
     Texture& operator=(const Texture& other) {
         Texture temp(other);
@@ -56,7 +47,10 @@ public:
         return *this;
     }
 
-    Texture& operator=(Texture&& other) = delete;
+    Texture& operator=(Texture&& other) {
+        std::swap(m_texture, other.m_texture);
+        return *this;
+    }
 
     ~Texture();
 
