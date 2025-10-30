@@ -16,6 +16,7 @@
 #include <vec.hh>
 #include <window.hh>
 
+// TODO: destroy Glyph texture
 // TODO: render text below x/y
 // TODO: pimpl to hide headers
 // TODO: camera rotation

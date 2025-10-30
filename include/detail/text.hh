@@ -10,6 +10,17 @@ namespace gfx {
 
 namespace detail {
 class TextRenderer;
+
+struct Glyph {
+    GLuint texture;
+    unsigned int width;
+    unsigned int height;
+    int bearing_x;
+    int bearing_y;
+    unsigned int advance;
+    unsigned char* buffer;
+};
+
 } // namespace detail
 
 class Font {

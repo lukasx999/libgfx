@@ -11,31 +11,6 @@
 
 namespace gfx::detail {
 
-struct IDeferredRenderer {
-    virtual void flush() = 0;
-    virtual ~IDeferredRenderer() { }
-};
-
-struct Glyph {
-    GLuint texture;
-    unsigned int width;
-    unsigned int height;
-    int bearing_x;
-    int bearing_y;
-    unsigned int advance;
-    unsigned char* buffer;
-};
-
-[[nodiscard]] inline constexpr
-float x_to_ndc(const gfx::Window& window, float x) {
-    return x / window.get_width() * 2.0f - 1.0f;
-}
-
-[[nodiscard]] inline constexpr
-float y_to_ndc(const gfx::Window& window, float y) {
-    return -(y / window.get_height() * 2.0f - 1.0f);
-}
-
 [[nodiscard]] inline GLuint create_shader(GLenum type, const char* src) {
     GLuint shader = glCreateShader(type);
     glShaderSource(shader, 1, &src, nullptr);
