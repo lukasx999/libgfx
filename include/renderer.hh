@@ -13,6 +13,9 @@
 #include <vec.hh>
 #include <window.hh>
 
+// TODO: cache for Font::load_glyph()
+// TODO: replace runtime_error with custom exception type
+// TODO: font copy/move ctor
 // TODO: destroy Glyph texture
 // TODO: pimpl to hide headers
 // TODO: camera rotation

@@ -17,10 +17,8 @@ void Texture::load_texture_from_file(const char* path) {
 
     int width, height, channels;
     unsigned char* data = stbi_load(path, &width, &height, &channels, 0);
-    if (data == nullptr) {
-        // TODO: custom exception type
+    if (data == nullptr)
         throw std::runtime_error(std::format("failed to load texture: {}", stbi_failure_reason()));
-    }
 
     generate_opengl_texture(data, width, height, channels);
     stbi_image_free(data);

@@ -60,13 +60,11 @@ public:
 private:
     [[nodiscard]] detail::Glyph load_glyph(char c, unsigned int size) const {
 
-        if (FT_Set_Pixel_Sizes(m_face, 0, size)) {
+        if (FT_Set_Pixel_Sizes(m_face, 0, size))
             throw std::runtime_error("failed to set pixel size");
-        }
 
-        if (FT_Load_Char(m_face, c, FT_LOAD_RENDER) != 0) {
+        if (FT_Load_Char(m_face, c, FT_LOAD_RENDER) != 0)
             throw std::runtime_error("failed to load char");
-        }
 
         auto glyph = m_face->glyph;
         unsigned int width = glyph->bitmap.width;
