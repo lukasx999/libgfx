@@ -102,42 +102,7 @@ void TextureRenderer::draw(
     const gfx::Texture& texture,
     glm::mat4 view
 ) {
-
-    glUseProgram(m_program);
-    glBindVertexArray(m_vertex_array);
-
-    auto vertices = std::to_array<Vertex>({
-        { { x,       y        }, { 0.0f, 0.0f } }, // top-left
-        { { x+width, y        }, { 1.0f, 0.0f } }, // top-right
-        { { x,       y+height }, { 0.0f, 1.0f } }, // bottom-left
-        { { x+width, y+height }, { 1.0f, 1.0f } }, // bottom-right
-    });
-
-    glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer);
-    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), vertices.data(), GL_DYNAMIC_DRAW);
-
-    // the translations are needed to subtract the world space coordinates (x,y)
-    // since we want the rectangle to rotate around its top left corner, and
-    // to set the center of rotation to the middle of the rectangle
-    glm::mat4 model(1.0);
-    model = glm::translate(model, glm::vec3(x+width/2.0, y+height/2.0, 0.0));
-    model = glm::rotate(model, rotation.get_radians(), glm::vec3(0.0f, 0.0f, 1.0f));
-    model = glm::translate(model, glm::vec3(-x-width/2.0, -y-height/2.0, 0.0));
-
-    glm::mat4 projection = glm::ortho(
-        0.0f,
-        static_cast<float>(m_window.get_width()),
-        static_cast<float>(m_window.get_height()),
-        0.0f
-    );
-
-    glm::mat4 mvp = projection * view * model;
-
-    GLint u_mvp = glGetUniformLocation(m_program, "u_mvp");
-    glUniformMatrix4fv(u_mvp, 1, false, glm::value_ptr(mvp));
-
-    glBindTexture(GL_TEXTURE_2D, texture.m_texture);
-    glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr);
+    draw_sub(x, y, width, height, 0, 0, texture.get_width(), texture.get_height(), rotation, texture, view);
 }
 
 void TextureRenderer::draw_sub(
