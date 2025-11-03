@@ -47,7 +47,7 @@ void TextRenderer::draw(float x, float y, int text_size, const char* text, const
     for (const char* c = text; *c; ++c) {
         auto glyph = font.load_glyph(*c, text_size);
         draw_char(x+offset, y, glyph, color, text_size, view);
-        offset += glyph.advance_x;
+        offset += glyph.m_advance_x;
     }
 
 }
@@ -57,11 +57,11 @@ void TextRenderer::draw_char(float x, float y, const Glyph& glyph, gfx::Color co
     glUseProgram(m_program);
     glBindVertexArray(m_vertex_array);
 
-    unsigned int width = glyph.width;
-    unsigned int height = glyph.height;
+    unsigned int width = glyph.get_width();
+    unsigned int height = glyph.get_height();
 
     glm::mat4 model(1.0f);
-    model = glm::translate(model, glm::vec3(x + glyph.bearing_x, y - glyph.bearing_y + text_size, 0.0f));
+    model = glm::translate(model, glm::vec3(x + glyph.m_bearing_x, y - glyph.m_bearing_y + text_size, 0.0f));
     model = glm::scale(model, glm::vec3(width, height, 0.0f));
 
     glm::mat4 projection = glm::ortho(
@@ -79,7 +79,7 @@ void TextRenderer::draw_char(float x, float y, const Glyph& glyph, gfx::Color co
     auto c = color.normalized();
     glUniform4f(u_color, c.r, c.g, c.b, c.a);
 
-    glBindTexture(GL_TEXTURE_2D, glyph.texture);
+    glBindTexture(GL_TEXTURE_2D, glyph.m_texture);
     glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr);
 }
 
