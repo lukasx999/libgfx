@@ -194,6 +194,14 @@ public:
         m_texture.draw_sub(dest_x, dest_y, dest_width, dest_height, src_x, src_y, src_width, src_height, rotation, texture, m_view_active);
     }
 
+    void draw_texture_sub(gfx::Rect dest, gfx::Rect src, const gfx::IRotation& rotation, const gfx::Texture& texture) {
+        m_texture.draw_sub(dest.x, dest.y, dest.width, dest.height, src.x, src.y, src.width, src.height, rotation, texture, m_view_active);
+    }
+
+    void draw_texture_sub(gfx::Rect dest, gfx::Rect src, const gfx::Texture& texture) {
+        m_texture.draw_sub(dest.x, dest.y, dest.width, dest.height, src.x, src.y, src.width, src.height, 0_deg, texture, m_view_active);
+    }
+
     void draw_circle(float x, float y, float radius, gfx::Color color) {
         m_circle.draw(x, y, radius, color, m_view_active);
     }
