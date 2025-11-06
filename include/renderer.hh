@@ -245,6 +245,8 @@ public:
     }
 
 private:
+    // TODO: zoom
+    // TODO: provide rectangle instead of center
     [[nodiscard]] static constexpr
     glm::mat4 gen_view_matrix(const Window& window, float center_x, float center_y) {
         glm::vec3 camera_position(
