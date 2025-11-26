@@ -101,17 +101,3 @@ struct std::formatter<gfx::Vec> : std::formatter<std::string> {
         return std::formatter<std::string>::format(fmt, ctx);
     }
 };
-
-template <>
-struct std::formatter<gfx::Color> : std::formatter<std::string> {
-    auto format(const gfx::Color& color, std::format_context& ctx) const {
-        auto fmt = std::format(
-            "{{ r: {}, g: {}, b: {}, a: {} }}",
-            color.r,
-            color.g,
-            color.b,
-            color.a
-        );
-        return std::formatter<std::string>::format(fmt, ctx);
-    }
-};

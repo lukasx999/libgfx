@@ -1,8 +1,7 @@
-#include "shaders.hh"
-#include <detail/text.hh>
-#include <detail/detail.hh>
-
-namespace gfx::detail {
+#include "../util.hh"
+#include "../shaders.hh"
+#include "text.hh"
+#include "../font.hh"
 
 TextRenderer::TextRenderer(gfx::Window& window)
 : m_window(window)
@@ -45,7 +44,7 @@ void TextRenderer::draw(float x, float y, int text_size, const char* text, const
     int offset = 0;
 
     for (const char* c = text; *c; ++c) {
-        auto glyph = font.load_glyph(*c, text_size);
+        auto glyph = font.m_pimpl->load_glyph(font, *c, text_size);
         draw_char(x+offset, y, glyph, color, text_size, view);
         offset += glyph.m_advance_x;
     }
@@ -82,5 +81,3 @@ void TextRenderer::draw_char(float x, float y, const Glyph& glyph, gfx::Color co
     glBindTexture(GL_TEXTURE_2D, glyph.m_texture);
     glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr);
 }
-
-} // namespace gfx::detail

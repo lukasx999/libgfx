@@ -5,16 +5,15 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 
-#include <detail/triangle.hh>
-#include "shaders.hh"
-
-namespace gfx::detail {
+#include "triangle.hh"
+#include "../util.hh"
+#include "../shaders.hh"
 
 TriangleRenderer::TriangleRenderer(gfx::Window& window)
 : m_window(window)
 {
 
-    m_program = detail::create_shader_program(shaders::vertex::default_, shaders::fragment::default_);
+    m_program = create_shader_program(shaders::vertex::default_, shaders::fragment::default_);
 
     glGenVertexArrays(1, &m_vertex_array);
     glBindVertexArray(m_vertex_array);
@@ -65,5 +64,3 @@ void TriangleRenderer::draw(float x0, float y0, float x1, float y1, float x2, fl
     glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 
 }
-
-} // namespace gfx::detail

@@ -1,12 +1,11 @@
 #pragma once
 
-#include <vector>
+#include <array>
 
 #include <types.hh>
 #include <window.hh>
-#include <detail/detail.hh>
 
-namespace gfx::detail {
+#include "../util.hh"
 
 class CircleRenderer {
     gfx::Window& m_window;
@@ -30,5 +29,3 @@ public:
     void draw(float x, float y, float radius, gfx::Color color, glm::mat4 view);
 
 };
-
-} // namespace gfx::detail

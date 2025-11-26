@@ -8,8 +8,7 @@
 #include <glm/ext.hpp>
 
 #include <window.hh>
-
-namespace gfx::detail {
+#include <color.hh>
 
 [[nodiscard]] inline GLuint create_shader(GLenum type, const char* src) {
     GLuint shader = glCreateShader(type);
@@ -54,5 +53,3 @@ namespace gfx::detail {
 
     return program;
 }
-
-} // namespace gfx::detail

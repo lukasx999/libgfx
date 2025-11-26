@@ -1,8 +1,74 @@
+#include <memory>
 #include <print>
 
+#include <glad/gl.h>
+#include <GLFW/glfw3.h>
+
+#include <window.hh>
+#include <io.hh>
 #include "window.hh"
 
-GLFWwindow* gfx::Window::init_glfw(int width, int height, const char* window_title, uint8_t flags) {
+namespace gfx {
+
+Window::Window(int width, int height, const char* window_title, uint8_t flags)
+: m_pimpl(std::make_unique<Window::Impl>(Window::Impl::init_glfw(width, height, window_title, flags)))
+{ }
+
+Window::~Window() {
+    glfwDestroyWindow(m_pimpl->m_window);
+    glfwTerminate();
+}
+
+bool Window::should_close() const {
+    return glfwWindowShouldClose(m_pimpl->m_window);
+}
+
+void Window::close() {
+    glfwSetWindowShouldClose(m_pimpl->m_window, true);
+}
+
+const char* Window::get_title() const {
+    return glfwGetWindowTitle(m_pimpl->m_window);
+}
+
+void Window::set_title(const char* title) {
+    glfwSetWindowTitle(m_pimpl->m_window, title);
+}
+
+int Window::get_width() const {
+    int width;
+    glfwGetFramebufferSize(m_pimpl->m_window, &width, nullptr);
+    return width;
+}
+
+int Window::get_height() const {
+    int height;
+    glfwGetFramebufferSize(m_pimpl->m_window, nullptr, &height);
+    return height;
+}
+
+double Window::get_time() const {
+    return glfwGetTime();
+}
+
+gfx::KeyState Window::get_mouse_button_state(MouseButton mb) const {
+    return KeyState(glfwGetMouseButton(m_pimpl->m_window, gfx_mouse_button_to_glfw_mouse_button(mb)));
+}
+
+gfx::KeyState Window::get_key_state(Key key) const {
+    return KeyState(glfwGetKey(m_pimpl->m_window, gfx_key_to_glfw_key(key)));
+}
+
+gfx::Vec Window::get_mouse_pos() const {
+    double x, y;
+    glfwGetCursorPos(m_pimpl->m_window, &x, &y);
+    return {
+        static_cast<float>(x),
+        static_cast<float>(y),
+    };
+}
+
+GLFWwindow* Window::Impl::init_glfw(int width, int height, const char* window_title, uint8_t flags) {
 
     glfwSetErrorCallback([]([[maybe_unused]] int error, const char* desc) {
         std::println(stderr, "glfw error: {}", desc);
@@ -108,3 +174,19 @@ int gfx::Window::gfx_key_to_glfw_key(Key key) {
         case Z: return GLFW_KEY_Z;
     }
 }
+
+void Window::Impl::debug_message_callback(
+    [[maybe_unused]] GLenum source,
+    [[maybe_unused]] GLenum type,
+    [[maybe_unused]] GLuint id,
+    GLenum severity,
+    [[maybe_unused]] GLsizei length,
+    const GLchar *message,
+    [[maybe_unused]] const void *user_param
+) {
+
+    if (severity == GL_DEBUG_SEVERITY_NOTIFICATION) return;
+    std::println(stderr, "opengl error: {}", message);
+}
+
+} // namespace gfx

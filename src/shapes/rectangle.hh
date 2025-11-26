@@ -4,9 +4,7 @@
 
 #include <window.hh>
 #include <types.hh>
-#include <detail/detail.hh>
-
-namespace gfx::detail {
+#include "../util.hh"
 
 class RectangleRenderer {
     gfx::Window& m_window;
@@ -38,5 +36,3 @@ public:
     );
 
 };
-
-} // namespace gfx::detail

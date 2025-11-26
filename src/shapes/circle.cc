@@ -1,12 +1,10 @@
 #include <glad/gl.h>
-#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 
-#include <detail/circle.hh>
-#include "shaders.hh"
-
-namespace gfx::detail {
+#include "circle.hh"
+#include "../shaders.hh"
+#include "../util.hh"
 
 CircleRenderer::CircleRenderer(gfx::Window& window)
 : m_window(window)
@@ -81,4 +79,3 @@ void CircleRenderer::draw(float x, float y, float radius, gfx::Color color, glm:
 
 }
 
-} // namespace gfx::detail

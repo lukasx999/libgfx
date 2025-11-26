@@ -1,12 +1,9 @@
 #pragma once
 
-#include <vector>
-
 #include <window.hh>
 #include <types.hh>
-#include <detail/detail.hh>
 
-namespace gfx::detail {
+#include "../util.hh"
 
 class TriangleRenderer {
     gfx::Window& m_window;
@@ -20,5 +17,3 @@ public:
     void draw(float x0, float y0, float x1, float y1, float x2, float y2, gfx::Color color, glm::mat4 view);
 
 };
-
-} // namespace gfx::detail

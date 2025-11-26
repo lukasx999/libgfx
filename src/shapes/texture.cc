@@ -1,5 +1,6 @@
+#include <utility>
+
 #include <glad/gl.h>
-#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 #include <GLFW/glfw3.h>
@@ -8,10 +9,64 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-#include <detail/texture.hh>
-#include "shaders.hh"
+#include <texture.hh>
+#include "texture.hh"
+#include "../shaders.hh"
+#include "../util.hh"
 
 namespace gfx {
+
+struct Texture::Impl {
+    GLuint m_texture;
+
+    [[nodiscard]] static constexpr GLint channels_to_opengl_format(int channels);
+    [[nodiscard]] static constexpr int opengl_format_to_channels(GLint format);
+};
+
+Texture::Texture(const char* path) {
+    load_texture_from_file(path);
+}
+
+Texture::Texture(const std::string& path) {
+    load_texture_from_file(path.c_str());
+}
+
+Texture::Texture(int width, int height, int channels, unsigned char* bytes) {
+    generate_texture(bytes, width, height, channels);
+}
+
+Texture::~Texture() {
+    glDeleteTextures(1, &m_pimpl->m_texture);
+}
+
+Texture::Texture(const Texture& other) {
+    int width = other.get_width();
+    int height = other.get_height();
+    int channels = other.get_channels();
+    auto format = m_pimpl->channels_to_opengl_format(channels);
+
+    unsigned char* buf = new unsigned char[width * height * channels];
+    glBindTexture(GL_TEXTURE_2D, other.m_pimpl->m_texture);
+    glGetTexImage(GL_TEXTURE_2D, 0, format, GL_UNSIGNED_BYTE, buf);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    generate_texture(buf, width, height, channels);
+    delete[] buf;
+}
+
+Texture::Texture(Texture&& other)
+: m_pimpl(std::make_unique<Texture::Impl>(std::exchange(other.m_pimpl->m_texture, 0)))
+{ }
+
+Texture& Texture::operator=(const Texture& other) {
+    Texture temp(other);
+    std::swap(m_pimpl->m_texture, temp.m_pimpl->m_texture);
+    return *this;
+}
+
+Texture& Texture::operator=(Texture&& other) {
+    std::swap(m_pimpl->m_texture, other.m_pimpl->m_texture);
+    return *this;
+}
 
 void Texture::load_texture_from_file(const char* path) {
 
@@ -20,47 +75,71 @@ void Texture::load_texture_from_file(const char* path) {
     if (data == nullptr)
         throw std::runtime_error(std::format("failed to load texture: {}", stbi_failure_reason()));
 
-    generate_opengl_texture(data, width, height, channels);
+    generate_texture(data, width, height, channels);
     stbi_image_free(data);
 }
 
-void Texture::generate_opengl_texture(const unsigned char* data, int width, int height, int channels) {
+void Texture::generate_texture(const unsigned char* data, int width, int height, int channels) {
 
-    glGenTextures(1, &m_texture);
+    glGenTextures(1, &m_pimpl->m_texture);
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, m_texture);
+    glBindTexture(GL_TEXTURE_2D, m_pimpl->m_texture);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-    auto format = channels_to_opengl_format(channels);
+    auto format = m_pimpl->channels_to_opengl_format(channels);
     glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
     glGenerateMipmap(GL_TEXTURE_2D);
 
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-Texture::Texture(const Texture& other) {
-    int width = other.get_width();
-    int height = other.get_height();
-    int channels = other.get_channels();
-    auto format = channels_to_opengl_format(channels);
-
-    unsigned char* buf = new unsigned char[width * height * channels];
-    glBindTexture(GL_TEXTURE_2D, other.m_texture);
-    glGetTexImage(GL_TEXTURE_2D, 0, format, GL_UNSIGNED_BYTE, buf);
+int Texture::get_width() const {
+    int width;
+    glBindTexture(GL_TEXTURE_2D, m_pimpl->m_texture);
+    glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width);
     glBindTexture(GL_TEXTURE_2D, 0);
-    generate_opengl_texture(buf, width, height, channels);
-    delete[] buf;
+    return width;
 }
 
-Texture::~Texture() {
-    glDeleteTextures(1, &m_texture);
+int Texture::get_height() const {
+    int height;
+    glBindTexture(GL_TEXTURE_2D, m_pimpl->m_texture);
+    glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &height);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    return height;
 }
 
-namespace detail {
+int Texture::get_channels() const {
+    int internal_format;
+    glBindTexture(GL_TEXTURE_2D, m_pimpl->m_texture);
+    glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_INTERNAL_FORMAT, &internal_format);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    return m_pimpl->opengl_format_to_channels(internal_format);
+}
+
+constexpr GLint Texture::Impl::channels_to_opengl_format(int channels) {
+    switch (channels) {
+        case 3: return GL_RGB;
+        case 4: return GL_RGBA;
+    }
+    throw std::runtime_error("invalid channel count");
+}
+
+constexpr int Texture::Impl::opengl_format_to_channels(GLint format) {
+    switch (format) {
+        case GL_RGB: return 3;
+        case GL_RGBA: return 4;
+    }
+    throw std::runtime_error("invalid texture format");
+}
+
+} // namespace gfx
+
+
 
 TextureRenderer::TextureRenderer(gfx::Window& window)
 : m_window(window)
@@ -165,10 +244,6 @@ void TextureRenderer::draw_sub(
     GLint u_mvp = glGetUniformLocation(m_program, "u_mvp");
     glUniformMatrix4fv(u_mvp, 1, false, glm::value_ptr(mvp));
 
-    glBindTexture(GL_TEXTURE_2D, texture.m_texture);
+    glBindTexture(GL_TEXTURE_2D, texture.m_pimpl->m_texture);
     glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr);
 }
-
-} // namespace detail
-
-} // namespace gfx

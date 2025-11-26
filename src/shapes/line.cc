@@ -1,16 +1,12 @@
-#include <array>
-
 #include <glad/gl.h>
-#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 
-#include <detail/rectangle.hh>
-#include "shaders.hh"
+#include "line.hh"
+#include "../util.hh"
+#include "../shaders.hh"
 
-namespace gfx::detail {
-
-RectangleRenderer::RectangleRenderer(gfx::Window& window)
+LineRenderer::LineRenderer(gfx::Window& window)
 : m_window(window)
 {
 
@@ -18,10 +14,6 @@ RectangleRenderer::RectangleRenderer(gfx::Window& window)
 
     glGenVertexArrays(1, &m_vertex_array);
     glBindVertexArray(m_vertex_array);
-
-    glGenBuffers(1, &m_index_buffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_index_buffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(unsigned int), m_indices.data(), GL_STATIC_DRAW);
 
     glGenBuffers(1, &m_vertex_buffer);
     glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer);
@@ -33,40 +25,23 @@ RectangleRenderer::RectangleRenderer(gfx::Window& window)
     // modify opengl state after running the ctor
     glBindVertexArray(0);
     glUseProgram(0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void RectangleRenderer::draw(
-    float x,
-    float y,
-    float width,
-    float height,
-    const gfx::IRotation& rotation,
-    gfx::Color color,
-    glm::mat4 view
-) {
+void LineRenderer::draw(float x0, float y0, float x1, float y1, gfx::Color color, glm::mat4 view) {
 
     glUseProgram(m_program);
     glBindVertexArray(m_vertex_array);
 
     auto vertices = std::to_array<glm::vec2>({
-        { x,       y        }, // top-left
-        { x+width, y        }, // top-right
-        { x,       y+height }, // bottom-left
-        { x+width, y+height }, // bottom-right
+        { x0, y0 },
+        { x1, y1 },
     });
 
     glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec2), vertices.data(), GL_DYNAMIC_DRAW);
 
-    // the translations are needed to subtract the world space coordinates (x,y)
-    // since we want the rectangle to rotate around its top left corner, and
-    // to set the center of rotation to the middle of the rectangle
     glm::mat4 model(1.0);
-    model = glm::translate(model, glm::vec3(x+width/2.0, y+height/2.0, 0.0));
-    model = glm::rotate(model, rotation.get_radians(), glm::vec3(0.0f, 0.0f, 1.0f));
-    model = glm::translate(model, glm::vec3(-x-width/2.0, -y-height/2.0, 0.0));
 
     glm::mat4 projection = glm::ortho(
         0.0f,
@@ -84,8 +59,5 @@ void RectangleRenderer::draw(
     GLint u_color = glGetUniformLocation(m_program, "u_color");
     glUniform4f(u_color, c.r, c.g, c.b, c.a);
 
-    glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr);
-
+    glDrawArrays(GL_LINES, 0, vertices.size());
 }
-
-} // namespace gfx::detail
