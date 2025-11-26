@@ -1,9 +1,9 @@
 target_sources(gfx PRIVATE
 gfx.cc
-window.cc
-renderer.cc
+Window.cc
+Renderer.cc
 io.cc
-font.cc
+Font.cc
 )
 
 add_subdirectory(shapes)

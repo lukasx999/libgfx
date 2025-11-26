@@ -1,8 +1,8 @@
 #pragma once
 
-#include <window.hh>
-#include <texture.hh>
-#include "../util.hh"
+#include <Window.h>
+#include <Texture.h>
+#include "../util.h"
 
 class TextureRenderer {
     gfx::Window& m_window;

@@ -3,12 +3,12 @@
 #include <functional>
 #include <memory>
 
-#include <types.hh>
-#include <vec.hh>
-#include <window.hh>
-#include <texture.hh>
-#include <font.hh>
-#include <color.hh>
+#include <types.h>
+#include <Vec.h>
+#include <Window.h>
+#include <Texture.h>
+#include <Font.h>
+#include <Color.h>
 
 // TODO: cache for Font::load_glyph()
 // TODO: replace runtime_error with custom exception type

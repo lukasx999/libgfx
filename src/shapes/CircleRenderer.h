@@ -2,11 +2,12 @@
 
 #include <array>
 
-#include <window.hh>
-#include <types.hh>
-#include "../util.hh"
+#include <types.h>
+#include <Window.h>
 
-class RectangleRenderer {
+#include "../util.h"
+
+class CircleRenderer {
     gfx::Window& m_window;
 
     GLuint m_program;
@@ -24,15 +25,7 @@ class RectangleRenderer {
     };
 
 public:
-    explicit RectangleRenderer(gfx::Window& window);
-    void draw(
-        float x,
-        float y,
-        float width,
-        float height,
-        const gfx::IRotation& rotation,
-        gfx::Color color,
-        glm::mat4 view
-    );
+    explicit CircleRenderer(gfx::Window& window);
+    void draw(float x, float y, float radius, gfx::Color color, glm::mat4 view);
 
 };

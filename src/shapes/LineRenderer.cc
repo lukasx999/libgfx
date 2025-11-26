@@ -1,15 +1,12 @@
-#include <array>
-
 #include <glad/gl.h>
-#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 
-#include "triangle.hh"
-#include "../util.hh"
-#include "../shaders.hh"
+#include "LineRenderer.h"
+#include "../util.h"
+#include "../shaders.h"
 
-TriangleRenderer::TriangleRenderer(gfx::Window& window)
+LineRenderer::LineRenderer(gfx::Window& window)
 : m_window(window)
 {
 
@@ -24,12 +21,14 @@ TriangleRenderer::TriangleRenderer(gfx::Window& window)
     glVertexAttribPointer(a_pos, 2, GL_FLOAT, false, sizeof(glm::vec2), nullptr);
     glEnableVertexAttribArray(a_pos);
 
+    // just to make sure everything still works after unbinding, as other classes/functions may
+    // modify opengl state after running the ctor
     glBindVertexArray(0);
     glUseProgram(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void TriangleRenderer::draw(float x0, float y0, float x1, float y1, float x2, float y2, gfx::Color color, glm::mat4 view) {
+void LineRenderer::draw(float x0, float y0, float x1, float y1, gfx::Color color, glm::mat4 view) {
 
     glUseProgram(m_program);
     glBindVertexArray(m_vertex_array);
@@ -37,7 +36,6 @@ void TriangleRenderer::draw(float x0, float y0, float x1, float y1, float x2, fl
     auto vertices = std::to_array<glm::vec2>({
         { x0, y0 },
         { x1, y1 },
-        { x2, y2 },
     });
 
     glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer);
@@ -61,6 +59,5 @@ void TriangleRenderer::draw(float x0, float y0, float x1, float y1, float x2, fl
     GLint u_color = glGetUniformLocation(m_program, "u_color");
     glUniform4f(u_color, c.r, c.g, c.b, c.a);
 
-    glDrawArrays(GL_TRIANGLES, 0, vertices.size());
-
+    glDrawArrays(GL_LINES, 0, vertices.size());
 }

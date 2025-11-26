@@ -3,7 +3,7 @@
 #include <cmath>
 #include <format>
 
-#include <types.hh>
+#include <types.h>
 
 namespace gfx {
 

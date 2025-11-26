@@ -7,8 +7,8 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 
-#include <window.hh>
-#include <color.hh>
+#include <Window.h>
+#include <Color.h>
 
 [[nodiscard]] inline GLuint create_shader(GLenum type, const char* src) {
     GLuint shader = glCreateShader(type);

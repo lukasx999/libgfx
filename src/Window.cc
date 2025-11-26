@@ -4,9 +4,9 @@
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 
-#include <window.hh>
-#include <io.hh>
-#include "window.hh"
+#include <Window.h>
+#include <io.h>
+#include "WindowImpl.h"
 
 namespace gfx {
 

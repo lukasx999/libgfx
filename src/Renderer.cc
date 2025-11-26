@@ -1,13 +1,12 @@
-#include <renderer.hh>
-#include <window.hh>
-
-#include "shapes/rectangle.hh"
-#include "shapes/circle.hh"
-#include "shapes/triangle.hh"
-#include "shapes/texture.hh"
-#include "shapes/line.hh"
-#include "shapes/text.hh"
-#include "window.hh"
+#include <Renderer.h>
+#include <Window.h>
+#include "shapes/RectangleRenderer.h"
+#include "shapes/CircleRenderer.h"
+#include "shapes/TriangleRenderer.h"
+#include "shapes/TextureRenderer.h"
+#include "shapes/LineRenderer.h"
+#include "shapes/TextRenderer.h"
+#include "WindowImpl.h"
 
 #include <glm/ext/matrix_transform.hpp>
 

@@ -1,7 +1,7 @@
 #pragma once
 
-#include <window.hh>
-#include "util.hh"
+#include <Window.h>
+#include "util.h"
 
 namespace gfx {
 

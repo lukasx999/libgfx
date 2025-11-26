@@ -1,7 +1,7 @@
 #include <print>
 #include <cassert>
 
-#include <gfx.hh>
+#include <gfx.h>
 
 using gfx::Vec;
 

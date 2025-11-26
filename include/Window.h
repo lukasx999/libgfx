@@ -2,9 +2,9 @@
 
 #include <memory>
 
-#include <types.hh>
-#include <vec.hh>
-#include <io.hh>
+#include <types.h>
+#include <Vec.h>
+#include <io.h>
 
 namespace gfx {
 

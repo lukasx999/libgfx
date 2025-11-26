@@ -1,8 +1,8 @@
 target_sources(gfx PRIVATE
-rectangle.cc
-circle.cc
-triangle.cc
-texture.cc
-line.cc
-text.cc
+RectangleRenderer.cc
+CircleRenderer.cc
+TriangleRenderer.cc
+TextureRenderer.cc
+LineRenderer.cc
+TextRenderer.cc
 )

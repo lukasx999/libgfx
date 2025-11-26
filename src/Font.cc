@@ -1,8 +1,8 @@
 #include <stdexcept>
 
-#include <font.hh>
-#include "glyph.hh"
-#include "font.hh"
+#include <Font.h>
+#include "Glyph.h"
+#include "FontImpl.h"
 
 namespace gfx {
 

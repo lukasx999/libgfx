@@ -9,10 +9,10 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-#include <texture.hh>
-#include "texture.hh"
-#include "../shaders.hh"
-#include "../util.hh"
+#include <Texture.h>
+#include "TextureRenderer.h"
+#include "../shaders.h"
+#include "../util.h"
 
 namespace gfx {
 

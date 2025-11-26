@@ -2,15 +2,14 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 
-#include "rectangle.hh"
-#include "../shaders.hh"
-#include "../util.hh"
+#include "CircleRenderer.h"
+#include "../shaders.h"
+#include "../util.h"
 
-RectangleRenderer::RectangleRenderer(gfx::Window& window)
+CircleRenderer::CircleRenderer(gfx::Window& window)
 : m_window(window)
 {
-
-    m_program = create_shader_program(shaders::vertex::default_, shaders::fragment::default_);
+    m_program = create_shader_program(shaders::vertex::default_, shaders::fragment::circle);
 
     glGenVertexArrays(1, &m_vertex_array);
     glBindVertexArray(m_vertex_array);
@@ -33,36 +32,22 @@ RectangleRenderer::RectangleRenderer(gfx::Window& window)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void RectangleRenderer::draw(
-    float x,
-    float y,
-    float width,
-    float height,
-    const gfx::IRotation& rotation,
-    gfx::Color color,
-    glm::mat4 view
-) {
+void CircleRenderer::draw(float x, float y, float radius, gfx::Color color, glm::mat4 view) {
 
     glUseProgram(m_program);
     glBindVertexArray(m_vertex_array);
 
     auto vertices = std::to_array<glm::vec2>({
-        { x,       y        }, // top-left
-        { x+width, y        }, // top-right
-        { x,       y+height }, // bottom-left
-        { x+width, y+height }, // bottom-right
+        { x - radius, y - radius }, // top-left
+        { x + radius, y - radius }, // top-right
+        { x - radius, y + radius }, // bottom-left
+        { x + radius, y + radius }, // bottom-right
     });
 
     glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec2), vertices.data(), GL_DYNAMIC_DRAW);
 
-    // the translations are needed to subtract the world space coordinates (x,y)
-    // since we want the rectangle to rotate around its top left corner, and
-    // to set the center of rotation to the middle of the rectangle
     glm::mat4 model(1.0);
-    model = glm::translate(model, glm::vec3(x+width/2.0, y+height/2.0, 0.0));
-    model = glm::rotate(model, rotation.get_radians(), glm::vec3(0.0f, 0.0f, 1.0f));
-    model = glm::translate(model, glm::vec3(-x-width/2.0, -y-height/2.0, 0.0));
 
     glm::mat4 projection = glm::ortho(
         0.0f,
@@ -80,6 +65,17 @@ void RectangleRenderer::draw(
     GLint u_color = glGetUniformLocation(m_program, "u_color");
     glUniform4f(u_color, c.r, c.g, c.b, c.a);
 
+    GLint u_center = glGetUniformLocation(m_program, "u_center");
+    auto center = view * glm::vec4(x, y, 0.0, 1.0);
+    glUniform2f(u_center, center.x, center.y);
+
+    GLint u_radius = glGetUniformLocation(m_program, "u_radius");
+    glUniform1f(u_radius, radius);
+
+    GLint u_window_height = glGetUniformLocation(m_program, "u_window_height");
+    glUniform1i(u_window_height, m_window.get_height());
+
     glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr);
 
 }
+

@@ -1,8 +1,8 @@
 #pragma once
 
-#include <window.hh>
-#include <types.hh>
-#include "../util.hh"
+#include <Window.h>
+#include <types.h>
+#include "../util.h"
 
 class LineRenderer {
     gfx::Window& m_window;

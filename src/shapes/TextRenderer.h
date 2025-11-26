@@ -1,9 +1,9 @@
 #pragma once
 
-#include <window.hh>
-#include <font.hh>
-#include "../util.hh"
-#include "../glyph.hh"
+#include <Window.h>
+#include <Font.h>
+#include "../util.h"
+#include "../Glyph.h"
 
 class TextRenderer {
     gfx::Window& m_window;

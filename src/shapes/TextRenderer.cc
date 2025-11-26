@@ -1,7 +1,7 @@
-#include "../util.hh"
-#include "../shaders.hh"
-#include "text.hh"
-#include "../font.hh"
+#include "../util.h"
+#include "../shaders.h"
+#include "TextRenderer.h"
+#include "../FontImpl.h"
 
 TextRenderer::TextRenderer(gfx::Window& window)
 : m_window(window)

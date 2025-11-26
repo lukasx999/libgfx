@@ -1,7 +1,7 @@
 #pragma once
 
-#include <font.hh>
-#include "glyph.hh"
+#include <Font.h>
+#include "Glyph.h"
 
 namespace gfx {
 

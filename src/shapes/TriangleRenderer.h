@@ -1,9 +1,9 @@
 #pragma once
 
-#include <window.hh>
-#include <types.hh>
+#include <Window.h>
+#include <types.h>
 
-#include "../util.hh"
+#include "../util.h"
 
 class TriangleRenderer {
     gfx::Window& m_window;
