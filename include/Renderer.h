@@ -10,6 +10,7 @@
 #include <Font.h>
 #include <Color.h>
 
+// TODO: fix texture rendering crashing the application
 // TODO: cache for Font::load_glyph()
 // TODO: replace runtime_error with custom exception type
 // TODO: font copy/move ctor
