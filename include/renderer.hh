@@ -179,18 +179,7 @@ public:
         draw_texture(rect.x, rect.y, rect.width, rect.height, 0_deg, texture);
     }
 
-    void draw_texture_sub(
-        float dest_x,
-        float dest_y,
-        float dest_width,
-        float dest_height,
-        float src_x,
-        float src_y,
-        float src_width,
-        float src_height,
-        const gfx::IRotation& rotation,
-        const gfx::Texture& texture
-    ) {
+    void draw_texture_sub(float dest_x, float dest_y, float dest_width, float dest_height, float src_x, float src_y, float src_width, float src_height, const gfx::IRotation& rotation, const gfx::Texture& texture) {
         m_texture.draw_sub(dest_x, dest_y, dest_width, dest_height, src_x, src_y, src_width, src_height, rotation, texture, m_view_active);
     }
 
