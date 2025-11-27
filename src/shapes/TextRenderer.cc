@@ -43,7 +43,7 @@ void TextRenderer::draw(float x, float y, int text_size, const char* text, const
     int offset = 0;
 
     for (const char* c = text; *c; ++c) {
-        auto glyph = font.m_pimpl->load_glyph(font, *c, text_size);
+        auto glyph = font.m_pimpl->load_glyph(*c, text_size);
         draw_char(x+offset, y, glyph, color, text_size, view);
         offset += glyph.m_advance_x;
     }
