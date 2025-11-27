@@ -30,9 +30,8 @@ TextRenderer::TextRenderer(gfx::Window& window)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_index_buffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(unsigned int), m_indices.data(), GL_STATIC_DRAW);
 
-    if (FT_Init_FreeType(&m_ft) != 0) {
-        throw std::runtime_error("failed to initialize ft2");
-    }
+    if (FT_Init_FreeType(&m_ft) != 0)
+        throw gfx::Error("failed to initialize ft2");
 
 }
 

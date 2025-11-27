@@ -8,7 +8,7 @@ namespace gfx {
 
 Font::Font(FT_Library ft, const char* path) : m_pimpl(std::make_unique<Font::Impl>()) {
     if (FT_New_Face(ft, path, 0, &m_face) != 0) {
-        throw std::runtime_error("failed to load font");
+        throw gfx::Error("failed to load font");
     }
 }
 
@@ -33,10 +33,10 @@ int Font::measure_char(char c, int size) const {
 Glyph Font::Impl::load_glyph(const Font& font, char c, unsigned int size) const {
 
     if (FT_Set_Pixel_Sizes(font.m_face, 0, size))
-        throw std::runtime_error("failed to set pixel size");
+        throw gfx::Error("failed to set pixel size");
 
     if (FT_Load_Char(font.m_face, c, FT_LOAD_RENDER) != 0)
-        throw std::runtime_error("failed to load char");
+        throw gfx::Error("failed to load char");
 
     auto glyph = font.m_face->glyph;
     int width = glyph->bitmap.width;

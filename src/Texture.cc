@@ -62,7 +62,7 @@ void Texture::load_texture_from_file(const char* path) {
     int width, height, channels;
     unsigned char* data = stbi_load(path, &width, &height, &channels, 0);
     if (data == nullptr)
-        throw std::runtime_error(std::format("failed to load texture: {}", stbi_failure_reason()));
+        throw gfx::Error(std::format("failed to load texture: {}", stbi_failure_reason()));
 
     generate_texture(data, width, height, channels);
     stbi_image_free(data);
@@ -72,7 +72,7 @@ void Texture::generate_texture(const unsigned char* data, int width, int height,
 
     glGenTextures(1, &m_pimpl->m_texture);
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, m_pimpl->m_texture); // BUG:
+    glBindTexture(GL_TEXTURE_2D, m_pimpl->m_texture);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -115,7 +115,7 @@ GLint Texture::Impl::channels_to_opengl_format(int channels) {
         case 3: return GL_RGB;
         case 4: return GL_RGBA;
     }
-    throw std::runtime_error("invalid channel count");
+    throw gfx::Error("invalid channel count");
 }
 
 int Texture::Impl::opengl_format_to_channels(GLint format) {
@@ -123,7 +123,7 @@ int Texture::Impl::opengl_format_to_channels(GLint format) {
         case GL_RGB: return 3;
         case GL_RGBA: return 4;
     }
-    throw std::runtime_error("invalid texture format");
+    throw gfx::Error("invalid texture format");
 }
 
 } // namespace gfx

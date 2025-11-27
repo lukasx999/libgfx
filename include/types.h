@@ -1,8 +1,14 @@
 #pragma once
 
 #include <cmath>
+#include <stdexcept>
 
 namespace gfx {
+
+struct Error : std::runtime_error {
+    explicit Error(const char* msg) : std::runtime_error(msg) { }
+    explicit Error(const std::string& msg) : std::runtime_error(msg) { }
+};
 
 struct Rect {
     float x, y, width, height;

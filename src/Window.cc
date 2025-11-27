@@ -130,16 +130,15 @@ Window::Impl::Impl(int width, int height, const char* window_title, uint8_t flag
     });
 
     if (!glfwInit())
-        throw std::runtime_error("failed to create window");
+        throw gfx::Error("failed to create window");
 
     glfwWindowHint(GLFW_RESIZABLE, flags & WindowFlags::Resizable);
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
     glfwWindowHint(GLFW_SAMPLES, 4);
 
     m_window = glfwCreateWindow(width, height, window_title, nullptr, nullptr);
-    if (m_window == nullptr) {
-        throw std::runtime_error("failed to create window");
-    }
+    if (m_window == nullptr)
+        throw gfx::Error("failed to create window");
 
     glfwMakeContextCurrent(m_window);
     gladLoadGL(glfwGetProcAddress);

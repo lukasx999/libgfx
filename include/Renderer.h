@@ -12,7 +12,6 @@
 
 // TODO: hide freetype headers
 // TODO: cache for Font::load_glyph()
-// TODO: replace runtime_error with custom exception type
 // TODO: font copy/move ctor
 // TODO: camera rotation
 // TODO: finish gfx::WindowBuilder
