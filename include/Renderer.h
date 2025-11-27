@@ -11,7 +11,6 @@
 #include <Color.h>
 
 // TODO: hide freetype headers
-// TODO: fix texture rendering crashing the application
 // TODO: cache for Font::load_glyph()
 // TODO: replace runtime_error with custom exception type
 // TODO: font copy/move ctor
