@@ -108,7 +108,7 @@ int Texture::get_channels() const {
     return m_pimpl->opengl_format_to_channels(internal_format);
 }
 
-constexpr GLint Texture::Impl::channels_to_opengl_format(int channels) {
+GLint Texture::Impl::channels_to_opengl_format(int channels) {
     switch (channels) {
         case 3: return GL_RGB;
         case 4: return GL_RGBA;
@@ -116,7 +116,7 @@ constexpr GLint Texture::Impl::channels_to_opengl_format(int channels) {
     throw std::runtime_error("invalid channel count");
 }
 
-constexpr int Texture::Impl::opengl_format_to_channels(GLint format) {
+int Texture::Impl::opengl_format_to_channels(GLint format) {
     switch (format) {
         case GL_RGB: return 3;
         case GL_RGBA: return 4;
