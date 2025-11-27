@@ -2,7 +2,7 @@
 
 #include <Texture.h>
 
-#include "util.h"
+#include <glad/gl.h>
 
 struct gfx::Texture::Impl {
     GLuint m_texture;

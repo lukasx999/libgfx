@@ -1,4 +1,5 @@
 #include <utility>
+#include <memory>
 
 #define STBI_FAILURE_USERMSG
 #define STB_IMAGE_IMPLEMENTATION
@@ -10,15 +11,16 @@
 
 namespace gfx {
 
-Texture::Texture(const char* path) {
+Texture::Texture(const char* path) : m_pimpl(std::make_unique<Texture::Impl>()) {
     load_texture_from_file(path);
 }
 
-Texture::Texture(const std::string& path) {
+Texture::Texture(const std::string& path) : m_pimpl(std::make_unique<Texture::Impl>()) {
     load_texture_from_file(path.c_str());
 }
 
-Texture::Texture(int width, int height, int channels, unsigned char* bytes) {
+Texture::Texture(int width, int height, int channels, unsigned char* bytes)
+: m_pimpl(std::make_unique<Texture::Impl>()) {
     generate_texture(bytes, width, height, channels);
 }
 
@@ -70,7 +72,7 @@ void Texture::generate_texture(const unsigned char* data, int width, int height,
 
     glGenTextures(1, &m_pimpl->m_texture);
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, m_pimpl->m_texture);
+    glBindTexture(GL_TEXTURE_2D, m_pimpl->m_texture); // BUG:
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
