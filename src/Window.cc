@@ -11,7 +11,7 @@
 namespace gfx {
 
 Window::Window(int width, int height, const char* window_title, uint8_t flags)
-: m_pimpl(std::make_unique<Window::Impl>(Window::Impl::init_glfw(width, height, window_title, flags)))
+: m_pimpl(std::make_unique<Window::Impl>(width, height, window_title, flags))
 { }
 
 Window::~Window() {
@@ -68,58 +68,6 @@ gfx::Vec Window::get_mouse_pos() const {
     };
 }
 
-GLFWwindow* Window::Impl::init_glfw(int width, int height, const char* window_title, uint8_t flags) {
-
-    glfwSetErrorCallback([]([[maybe_unused]] int error, const char* desc) {
-        std::println(stderr, "glfw error: {}", desc);
-    });
-
-    if (!glfwInit())
-        throw std::runtime_error("failed to create window");
-
-    glfwWindowHint(GLFW_RESIZABLE, flags & WindowFlags::Resizable);
-    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
-    glfwWindowHint(GLFW_SAMPLES, 4);
-
-    auto window = glfwCreateWindow(width, height, window_title, nullptr, nullptr);
-    if (window == nullptr) {
-        throw std::runtime_error("failed to create window");
-    }
-
-    glfwMakeContextCurrent(window);
-    gladLoadGL(glfwGetProcAddress);
-    glfwSwapInterval(flags & WindowFlags::DisableVsync ? 0 : 1);
-
-    glfwSetInputMode(window, GLFW_CURSOR, flags & WindowFlags::DisableCursor ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
-
-    glEnable(GL_MULTISAMPLE);
-
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-
-    // TODO: option for this
-    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-    glDebugMessageCallback(debug_message_callback, nullptr);
-
-    glfwSetWindowSizeCallback(window, []([[maybe_unused]] GLFWwindow* window, int width, int height) {
-        glViewport(0, 0, width, height);
-    });
-
-    // when setting the window to not be resizable via glfwWindowHint(), glfw may
-    // decide to resize the window, so in order to process the resize event before
-    // the library user may access the window width/height, we have to poll the events first.
-    // we also have to swap buffers exactly three times, probably because the driver
-    // is using triple buffering.
-    glfwSwapBuffers(window);
-    glfwSwapBuffers(window);
-    glfwSwapBuffers(window);
-    glfwPollEvents();
-
-    return window;
-}
-
 int gfx::Window::gfx_mouse_button_to_glfw_mouse_button(MouseButton mb) {
     switch (mb) {
         using enum gfx::MouseButton;
@@ -173,6 +121,56 @@ int gfx::Window::gfx_key_to_glfw_key(Key key) {
         case Y: return GLFW_KEY_Y;
         case Z: return GLFW_KEY_Z;
     }
+}
+
+Window::Impl::Impl(int width, int height, const char* window_title, uint8_t flags) {
+
+    glfwSetErrorCallback([]([[maybe_unused]] int error, const char* desc) {
+        std::println(stderr, "glfw error: {}", desc);
+    });
+
+    if (!glfwInit())
+        throw std::runtime_error("failed to create window");
+
+    glfwWindowHint(GLFW_RESIZABLE, flags & WindowFlags::Resizable);
+    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
+    glfwWindowHint(GLFW_SAMPLES, 4);
+
+    m_window = glfwCreateWindow(width, height, window_title, nullptr, nullptr);
+    if (m_window == nullptr) {
+        throw std::runtime_error("failed to create window");
+    }
+
+    glfwMakeContextCurrent(m_window);
+    gladLoadGL(glfwGetProcAddress);
+    glfwSwapInterval(flags & WindowFlags::DisableVsync ? 0 : 1);
+
+    glfwSetInputMode(m_window, GLFW_CURSOR, flags & WindowFlags::DisableCursor ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
+
+    glEnable(GL_MULTISAMPLE);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+
+    // TODO: option for this
+    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+    glDebugMessageCallback(debug_message_callback, nullptr);
+
+    glfwSetWindowSizeCallback(m_window, []([[maybe_unused]] GLFWwindow* window, int width, int height) {
+        glViewport(0, 0, width, height);
+    });
+
+    // when setting the window to not be resizable via glfwWindowHint(), glfw may
+    // decide to resize the window, so in order to process the resize event before
+    // the library user may access the window width/height, we have to poll the events first.
+    // we also have to swap buffers exactly three times, probably because the driver
+    // is using triple buffering.
+    glfwSwapBuffers(m_window);
+    glfwSwapBuffers(m_window);
+    glfwSwapBuffers(m_window);
+    glfwPollEvents();
 }
 
 void Window::Impl::debug_message_callback(
