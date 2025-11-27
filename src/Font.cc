@@ -6,7 +6,7 @@
 
 namespace gfx {
 
-Font::Font(FT_Library ft, const char* path) {
+Font::Font(FT_Library ft, const char* path) : m_pimpl(std::make_unique<Font::Impl>()) {
     if (FT_New_Face(ft, path, 0, &m_face) != 0) {
         throw std::runtime_error("failed to load font");
     }
