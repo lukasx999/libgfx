@@ -4,6 +4,7 @@ Window.cc
 Renderer.cc
 io.cc
 Font.cc
+Texture.cc
 )
 
 add_subdirectory(shapes)
