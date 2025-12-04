@@ -50,7 +50,7 @@ public:
     void draw(float x, float y, int text_size, const char* text, const gfx::Font& font, gfx::Color color, glm::mat4 view);
 
     [[nodiscard]] gfx::Font load_font(const char* path) const {
-        return std::make_unique<gfx::Font::Impl>(m_ft, path);
+        return gfx::Font(std::make_unique<gfx::Font::Impl>(m_ft, path));
     }
 
 private:

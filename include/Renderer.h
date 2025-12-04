@@ -10,7 +10,6 @@
 #include <Font.h>
 #include <Color.h>
 
-// TODO: hide freetype headers
 // TODO: cache for Font::load_glyph()
 // TODO: font copy/move ctor
 // TODO: camera rotation

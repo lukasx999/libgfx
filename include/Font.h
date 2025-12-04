@@ -11,7 +11,7 @@ class Font {
     struct Impl;
     std::unique_ptr<Impl> m_pimpl;
 
-    Font(std::unique_ptr<Impl> pimpl);
+    explicit Font(std::unique_ptr<Impl> pimpl);
 
 public:
     ~Font();
