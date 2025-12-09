@@ -12,6 +12,10 @@ class Spritesheet {
 public:
     explicit Spritesheet(const gfx::Texture& texture) : m_texture(texture) { }
 
+    [[nodiscard]] const gfx::Texture& get_texture() const {
+        return m_texture;
+    }
+
     void set_sprite(Key key, gfx::Rect src) {
         m_sprite_map[key] = src;
     }

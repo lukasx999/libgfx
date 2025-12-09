@@ -34,6 +34,7 @@ public:
     void set_title(const char* title);
     [[nodiscard]] int get_width() const;
     [[nodiscard]] int get_height() const;
+    // returns the current time in seconds
     [[nodiscard]] double get_time() const;
     [[nodiscard]] KeyState get_mouse_button_state(MouseButton mb) const;
     [[nodiscard]] KeyState get_key_state(Key key) const;
