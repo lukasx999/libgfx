@@ -20,4 +20,11 @@ public:
         rd.draw_texture_sub(dest, m_sprite_map.at(key), m_texture);
     }
 
+    // mirrors the sprite along the y-axis
+    void draw_mirrored(gfx::Renderer& rd, Key key, gfx::Rect dest) const {
+        dest.x += dest.width;
+        dest.width *= -1;
+        rd.draw_texture_sub(dest, m_sprite_map.at(key), m_texture);
+    }
+
 };
