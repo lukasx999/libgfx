@@ -32,7 +32,7 @@ Texture::Texture(const Texture& other) {
     int width = other.get_width();
     int height = other.get_height();
     int channels = other.get_channels();
-    auto format = m_pimpl->channels_to_opengl_format(channels);
+    auto format = Impl::channels_to_opengl_format(channels);
 
     unsigned char* buf = new unsigned char[width * height * channels];
     glBindTexture(GL_TEXTURE_2D, other.m_pimpl->m_texture);
@@ -79,7 +79,7 @@ void Texture::generate_texture(const unsigned char* data, int width, int height,
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-    auto format = m_pimpl->channels_to_opengl_format(channels);
+    auto format = Impl::channels_to_opengl_format(channels);
     glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
     glGenerateMipmap(GL_TEXTURE_2D);
 
@@ -107,7 +107,7 @@ int Texture::get_channels() const {
     glBindTexture(GL_TEXTURE_2D, m_pimpl->m_texture);
     glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_INTERNAL_FORMAT, &internal_format);
     glBindTexture(GL_TEXTURE_2D, 0);
-    return m_pimpl->opengl_format_to_channels(internal_format);
+    return Impl::opengl_format_to_channels(internal_format);
 }
 
 GLint Texture::Impl::channels_to_opengl_format(int channels) {
