@@ -28,7 +28,7 @@ Texture::~Texture() {
     glDeleteTextures(1, &m_pimpl->m_texture);
 }
 
-Texture::Texture(const Texture& other) {
+Texture::Texture(const Texture& other) : m_pimpl(std::make_unique<Texture::Impl>()) {
     int width = other.get_width();
     int height = other.get_height();
     int channels = other.get_channels();
