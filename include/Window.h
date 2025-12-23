@@ -13,6 +13,8 @@ enum WindowFlags : uint8_t {
     Resizable     = 1 << 1,
     DisableCursor = 1 << 2,
     DisableVsync  = 1 << 3,
+    Logging       = 1 << 4,
+    Wireframe     = 1 << 5,
 };
 
 class Window {

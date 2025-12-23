@@ -10,6 +10,7 @@
 #include <Font.h>
 #include <Color.h>
 
+// TODO: make texture parameters configurable
 // TODO: hot reloading?
 // TODO: font copy/move ctor
 // TODO: camera rotation
@@ -23,7 +24,6 @@
 // TODO: build system for non-cmake
 // TODO: auto-invoke python script for generating shader glue code
 // TODO: catch2 unit tests
-// TODO: fix todos
 // TODO: tui for statistics
 // TODO: disable opengl/glfw logs
 // TODO: asset packer

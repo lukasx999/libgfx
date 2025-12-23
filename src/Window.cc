@@ -125,9 +125,11 @@ int gfx::Window::gfx_key_to_glfw_key(Key key) {
 
 Window::Impl::Impl(int width, int height, const char* window_title, uint8_t flags) {
 
-    glfwSetErrorCallback([]([[maybe_unused]] int error, const char* desc) {
-        std::println(stderr, "glfw error: {}", desc);
-    });
+    if (flags & WindowFlags::Logging) {
+        glfwSetErrorCallback([]([[maybe_unused]] int error, const char* desc) {
+            std::println(stderr, "glfw error: {}", desc);
+        });
+    }
 
     if (!glfwInit())
         throw gfx::Error("failed to create window");
@@ -150,10 +152,11 @@ Window::Impl::Impl(int width, int height, const char* window_title, uint8_t flag
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    // TODO: option for this
-    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    if (flags & WindowFlags::Wireframe)
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-    glDebugMessageCallback(debug_message_callback, nullptr);
+    if (flags & WindowFlags::Logging)
+        glDebugMessageCallback(debug_message_callback, nullptr);
 
     glfwSetWindowSizeCallback(m_window, []([[maybe_unused]] GLFWwindow* window, int width, int height) {
         glViewport(0, 0, width, height);
