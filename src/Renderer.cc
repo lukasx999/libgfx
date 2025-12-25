@@ -7,11 +7,10 @@ namespace gfx {
 
 // TODO: zoom
 // TODO: provide rectangle instead of center
-// TODO: replace two floats with gfx::Vec
-glm::mat4 Renderer::Impl::gen_view_matrix(const Window& window, float center_x, float center_y) {
+glm::mat4 Renderer::Impl::gen_view_matrix(const Window& window, gfx::Vec center) {
     glm::vec3 camera_position(
-        center_x - window.get_width() / 2.0f,
-        center_y - window.get_height() / 2.0f,
+        center.x - window.get_width() / 2.0f,
+        center.y - window.get_height() / 2.0f,
         0.0f
     );
 
@@ -64,7 +63,7 @@ void Renderer::with_camera(std::function<void()> draw_fn) {
 }
 
 void Renderer::set_camera(float center_x, float center_y) {
-    m_pimpl->m_view_camera = m_pimpl->gen_view_matrix(m_window, center_x, center_y);
+    m_pimpl->m_view_camera = m_pimpl->gen_view_matrix(m_window, { center_x, center_y });
 }
 
 void Renderer::draw_rectangle(float x, float y, float width, float height, const gfx::IRotation& rotation, gfx::Color color) {

@@ -10,24 +10,19 @@
 #include <Font.h>
 #include <Color.h>
 
-// TODO: make texture parameters configurable
-// TODO: hot reloading?
+// TODO: merge gfx::Window and gfx::Renderer into one gfx::Context type?
+// TODO: fix spritesheet
+// TODO: add rendering to textures/files using opengl fbo
 // TODO: font copy/move ctor
 // TODO: camera rotation
 // TODO: finish gfx::WindowBuilder
-// TODO: do copying of textures on the gpu, instead of cpu
-// TODO: merge gfx::Window and gfx::Renderer into one gfx::Context type?
-// TODO: merge draw_texture and draw_texture sub implementations
-// TODO: add rendering to textures/files using opengl fbo
-// TODO: lighting and reflections
-// TODO: stencil buffer
 // TODO: build system for non-cmake
 // TODO: auto-invoke python script for generating shader glue code
-// TODO: catch2 unit tests
-// TODO: tui for statistics
-// TODO: disable opengl/glfw logs
-// TODO: asset packer
 // TODO: merge get_key_state and get_mouse_button_state?
+// TODO: stencil buffer
+// TODO: make texture parameters configurable
+// TODO: hot reloading?
+// TODO: do copying of textures on the gpu, instead of cpu
 
 namespace gfx {
 

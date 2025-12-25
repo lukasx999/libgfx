@@ -24,8 +24,7 @@ struct Renderer::Impl {
 
     glm::mat4 m_view_default = gen_view_matrix(
         m_window,
-        m_window.get_width() / 2.0f,
-        m_window.get_height() / 2.0f
+        { m_window.get_width() / 2.0f, m_window.get_height() / 2.0f }
     );
     glm::mat4 m_view_camera = m_view_default;
     glm::mat4 m_view_active = m_view_default;
@@ -40,7 +39,7 @@ struct Renderer::Impl {
         , m_text(m_window)
     { }
 
-    [[nodiscard]] static glm::mat4 gen_view_matrix(const Window& window, float center_x, float center_y);
+    [[nodiscard]] static glm::mat4 gen_view_matrix(const gfx::Window& window, gfx::Vec center);
 
 };
 
