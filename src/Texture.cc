@@ -55,6 +55,10 @@ Texture& Texture::operator=(Texture&& other) {
     return *this;
 }
 
+Texture Texture::slice(gfx::Rect region) const {
+    return slice(region.x, region.y, region.width, region.height);
+}
+
 Texture Texture::slice(int x, int y, int width, int height) const {
 
     int channels = get_channels();

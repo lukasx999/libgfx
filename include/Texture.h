@@ -1,5 +1,6 @@
 #pragma once
 
+#include "types.h"
 #include <memory>
 
 class TextureRenderer;
@@ -29,6 +30,7 @@ public:
 
     // construct a new texture from a sub region of the current texture
     [[nodiscard]] Texture slice(int x, int y, int width, int height) const;
+    [[nodiscard]] Texture slice(gfx::Rect region) const;
 
     [[nodiscard]] int get_width() const;
     [[nodiscard]] int get_height() const;
