@@ -10,8 +10,10 @@
 #include <Font.h>
 #include <Color.h>
 
+// TODO: add global variable for checking that context has been initialized before using textures and so on
+// TODO: texture slicing
 // TODO: remove ridiculous rotation types
-// TODO: merge gfx::Window and gfx::Renderer into one gfx::Context type?
+// TODO: merge gfx::Window and gfx::Renderer into one gfx::Context type
 // TODO: fix spritesheet
 // TODO: add rendering to textures/files using opengl fbo
 // TODO: font copy/move ctor

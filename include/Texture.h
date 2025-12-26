@@ -27,13 +27,15 @@ public:
     Texture& operator=(const Texture& other);
     Texture& operator=(Texture&& other);
 
+    // construct a new texture from a sub region of the current texture
+    [[nodiscard]] Texture slice(int x, int y, int width, int height) const;
+
     [[nodiscard]] int get_width() const;
     [[nodiscard]] int get_height() const;
     [[nodiscard]] int get_channels() const;
 
 private:
     void load_texture_from_file(const char* path);
-    void generate_texture(const unsigned char* data, int width, int height, int channels);
 
 };
 

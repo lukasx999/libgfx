@@ -1,5 +1,6 @@
 #include <print>
 #include <cassert>
+#include <cstring>
 
 #include <gfx.h>
 
@@ -13,7 +14,7 @@ int main() {
     assert(v1 + v2 == Vec(2, 2));
     assert(v1 * v2 == Vec(1, 1));
     assert(v1 / v2 == Vec(1, 1));
-    // TODO:
-    // assert(v1.rotated(gfx::Degrees(90)) == Vec(0, 1));
+
+    gfx::Window window(500, 500, "test", gfx::WindowFlags::None);
 
 }

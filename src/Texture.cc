@@ -19,9 +19,8 @@ Texture::Texture(const std::string& path) : m_pimpl(std::make_unique<Texture::Im
     load_texture_from_file(path.c_str());
 }
 
-Texture::Texture(int width, int height, int channels, unsigned char* bytes)
-: m_pimpl(std::make_unique<Texture::Impl>()) {
-    generate_texture(bytes, width, height, channels);
+Texture::Texture(int width, int height, int channels, unsigned char* bytes) : m_pimpl(std::make_unique<Texture::Impl>()) {
+    m_pimpl->m_texture = Impl::generate_texture(bytes, width, height, channels);
 }
 
 Texture::~Texture() {
@@ -32,14 +31,13 @@ Texture::Texture(const Texture& other) : m_pimpl(std::make_unique<Texture::Impl>
     int width = other.get_width();
     int height = other.get_height();
     int channels = other.get_channels();
-    auto format = Impl::channels_to_opengl_format(channels);
+    GLint format = Impl::channels_to_opengl_format(channels);
 
-    unsigned char* buf = new unsigned char[width * height * channels];
+    std::vector<unsigned char> buf(width * height * channels);
     glBindTexture(GL_TEXTURE_2D, other.m_pimpl->m_texture);
-    glGetTexImage(GL_TEXTURE_2D, 0, format, GL_UNSIGNED_BYTE, buf);
+    glGetTexImage(GL_TEXTURE_2D, 0, format, GL_UNSIGNED_BYTE, buf.data());
     glBindTexture(GL_TEXTURE_2D, 0);
-    generate_texture(buf, width, height, channels);
-    delete[] buf;
+    m_pimpl->m_texture = Impl::generate_texture(buf.data(), width, height, channels);
 }
 
 Texture::Texture(Texture&& other)
@@ -57,6 +55,17 @@ Texture& Texture::operator=(Texture&& other) {
     return *this;
 }
 
+Texture Texture::slice(int x, int y, int width, int height) const {
+
+    int channels = get_channels();
+    GLint format = Impl::channels_to_opengl_format(channels);
+
+    std::vector<unsigned char> buf(width * height * channels);
+    glGetTextureSubImage(m_pimpl->m_texture, 0, x, y, 0, width, height, 1, format, GL_UNSIGNED_BYTE, buf.size() * sizeof(unsigned char), buf.data());
+
+    return Texture(width, height, channels, buf.data());
+}
+
 void Texture::load_texture_from_file(const char* path) {
 
     int width, height, channels;
@@ -64,26 +73,8 @@ void Texture::load_texture_from_file(const char* path) {
     if (data == nullptr)
         throw gfx::Error(std::format("failed to load texture: {}", stbi_failure_reason()));
 
-    generate_texture(data, width, height, channels);
+    m_pimpl->m_texture = Impl::generate_texture(data, width, height, channels);
     stbi_image_free(data);
-}
-
-void Texture::generate_texture(const unsigned char* data, int width, int height, int channels) {
-
-    glGenTextures(1, &m_pimpl->m_texture);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, m_pimpl->m_texture);
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-    auto format = Impl::channels_to_opengl_format(channels);
-    glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-    glGenerateMipmap(GL_TEXTURE_2D);
-
-    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 int Texture::get_width() const {
@@ -124,6 +115,27 @@ int Texture::Impl::opengl_format_to_channels(GLint format) {
         case GL_RGBA: return 4;
     }
     throw gfx::Error("invalid texture format");
+}
+
+GLuint Texture::Impl::generate_texture(const unsigned char* data, int width, int height, int channels) {
+
+    GLuint id;
+    glGenTextures(1, &id);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, id);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+    auto format = Impl::channels_to_opengl_format(channels);
+    glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+    glGenerateMipmap(GL_TEXTURE_2D);
+
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    return id;
 }
 
 } // namespace gfx
