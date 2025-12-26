@@ -9,3 +9,4 @@
 #include <io.h>
 #include <Texture.h>
 #include <Spritesheet.h>
+#include <AnimatedTexture.h>
