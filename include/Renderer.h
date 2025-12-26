@@ -10,6 +10,7 @@
 #include <Font.h>
 #include <Color.h>
 
+// TODO: remove ridiculous rotation types
 // TODO: merge gfx::Window and gfx::Renderer into one gfx::Context type?
 // TODO: fix spritesheet
 // TODO: add rendering to textures/files using opengl fbo

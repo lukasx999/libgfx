@@ -1,6 +1,8 @@
 #pragma once
 
 #include <cmath>
+#include <string>
+#include <format>
 #include <stdexcept>
 
 namespace gfx {
@@ -77,3 +79,11 @@ inline consteval gfx::Degrees operator""_deg(unsigned long long value) {
 inline consteval gfx::Radians operator""_rad(unsigned long long value) {
     return gfx::Radians(value);
 }
+
+template <>
+struct std::formatter<gfx::Rect> : std::formatter<std::string> {
+    auto format(const gfx::Rect& rect, std::format_context& ctx) const {
+        auto fmt = std::format("{{ x: {}, y: {}, width: {}, height: {} }}", rect.x, rect.y, rect.width, rect.height);
+        return std::formatter<std::string>::format(fmt, ctx);
+    }
+};
