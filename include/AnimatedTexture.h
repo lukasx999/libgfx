@@ -59,11 +59,11 @@ private:
             case Running: {
                 double time_passed = m_window.get_time() - m_start_time;
                 size_t idx = time_passed / m_animation_delay_secs;
-                size_t last_idx = m_frames.size() - 1;
+                size_t frame_count = m_frames.size();
 
                 return m_is_looping
-                ? idx % last_idx
-                : std::min(idx, last_idx);
+                ? idx % frame_count
+                : std::min(idx, frame_count-1);
 
             }
         }
