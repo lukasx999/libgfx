@@ -23,6 +23,10 @@ struct Vec {
         return std::sqrt(x*x + y*y);
     }
 
+    [[nodiscard]] constexpr float dot(const Vec& other) const {
+        return *this * other;
+    }
+
     [[nodiscard]] constexpr float distance(const Vec& other) const {
         auto diff = other - *this;
         return std::sqrt(diff.x*diff.x + diff.y*diff.y);
@@ -62,11 +66,8 @@ struct Vec {
         return *this;
     }
 
-    constexpr Vec operator*(const Vec& other) const {
-        return {
-            x * other.x,
-            y * other.y,
-        };
+    constexpr float operator*(const Vec& other) const {
+        return x * other.x + y * other.y;
     }
 
     constexpr Vec operator*(float value) const {
@@ -80,20 +81,6 @@ struct Vec {
         return {
             x - other.x,
             y - other.y,
-        };
-    }
-
-    constexpr Vec operator/(const Vec& other) const {
-        return {
-            x / other.x,
-            y / other.y,
-        };
-    }
-
-    constexpr Vec operator/(float value) const {
-        return {
-            x / value,
-            y / value,
         };
     }
 

@@ -12,8 +12,6 @@ int main() {
     Vec v2(1, 1);
     assert(v1 - v2 == Vec(0, 0));
     assert(v1 + v2 == Vec(2, 2));
-    assert(v1 * v2 == Vec(1, 1));
-    assert(v1 / v2 == Vec(1, 1));
 
     gfx::Window window(500, 500, "test", gfx::WindowFlags::None);
 
