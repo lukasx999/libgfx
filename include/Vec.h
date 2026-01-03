@@ -90,6 +90,13 @@ struct Vec {
         };
     }
 
+    constexpr Vec operator/(float value) const {
+        return {
+            x / value,
+            y / value,
+        };
+    }
+
 };
 
 } // namespace gfx

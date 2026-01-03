@@ -63,7 +63,7 @@ private:
 
                 return m_is_looping
                 ? idx % frame_count
-                : std::min(idx, frame_count-1);
+                : std::min(idx, frame_count - 1);
 
             }
         }

@@ -156,6 +156,14 @@ public:
         draw_text(vec.x, vec.y, text_size, text, font, color);
     }
 
+    void draw_text(float x, float y, int text_size, const std::string& text, const gfx::Font& font, gfx::Color color) {
+        draw_text(x, y, text_size, text.c_str(), font, color);
+    }
+
+    void draw_text(gfx::Vec vec, int text_size, const std::string& text, const gfx::Font& font, gfx::Color color) {
+        draw_text(vec.x, vec.y, text_size, text.c_str(), font, color);
+    }
+
     [[nodiscard]] gfx::Font load_font(const char* path) const;
     void clear_background(Color color);
 
