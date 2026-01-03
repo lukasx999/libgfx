@@ -10,6 +10,7 @@
 #include <Font.h>
 #include <Color.h>
 
+// TODO: animated clock example
 // TODO: add global variable for checking that context has been initialized before using textures and so on
 // TODO: remove ridiculous rotation types
 // TODO: merge gfx::Window and gfx::Renderer into one gfx::Context type

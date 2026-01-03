@@ -27,6 +27,10 @@ struct Vec {
         return *this * other;
     }
 
+    [[nodiscard]] constexpr float angle(const Vec& other) const {
+        return std::acos((*this * other) / (length() * other.length()));
+    }
+
     [[nodiscard]] constexpr float distance(const Vec& other) const {
         auto diff = other - *this;
         return std::sqrt(diff.x*diff.x + diff.y*diff.y);
