@@ -17,6 +17,3 @@ include_directories(deps/stb ${include_dirs})
 target_include_directories(gfx PUBLIC ${include_dirs})
 add_subdirectory(src)
 target_link_libraries(gfx PRIVATE glfw freetype)
-
-add_executable(tests test.cc)
-target_link_libraries(tests PRIVATE gfx)
