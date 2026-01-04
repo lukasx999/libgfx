@@ -79,6 +79,10 @@ struct Color {
         return 0x808080ff;
     }
 
+    [[nodiscard]] static constexpr Color gray() {
+        return grey();
+    }
+
     [[nodiscard]] static constexpr Color red() {
         return 0xff0000ff;
     }
