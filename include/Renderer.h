@@ -165,6 +165,11 @@ public:
         draw_text(vec.x, vec.y, text_size, text.c_str(), font, color);
     }
 
+    void draw_text_centered(float x, float y, int text_size, const char* text, const gfx::Font& font, gfx::Color color) {
+        int text_width = font.measure_text(text, text_size);
+        draw_text(x - text_width/2.0, y, text_size, text, font, color);
+    }
+
     [[nodiscard]] gfx::Font load_font(const char* path) const;
     void clear_background(Color color);
 
