@@ -12,17 +12,6 @@ struct Error : std::runtime_error {
     explicit Error(const std::string& msg) : std::runtime_error(msg) { }
 };
 
-struct Rect {
-    float x, y, width, height;
-
-    [[nodiscard]] constexpr bool check_collision(Rect other) const {
-        bool collision_x = x+width >= other.x && other.x+other.width >= x;
-        bool collision_y = y+height >= other.y && other.y+other.height >= y;
-        return collision_x && collision_y;
-    }
-
-};
-
 [[nodiscard]] inline constexpr float deg_to_rad(float deg) {
     return deg * (M_PI / 180.0);
 }
@@ -79,11 +68,3 @@ inline consteval gfx::Degrees operator""_deg(unsigned long long value) {
 inline consteval gfx::Radians operator""_rad(unsigned long long value) {
     return gfx::Radians(value);
 }
-
-template <>
-struct std::formatter<gfx::Rect> : std::formatter<std::string> {
-    auto format(const gfx::Rect& rect, std::format_context& ctx) const {
-        auto fmt = std::format("{{ x: {}, y: {}, width: {}, height: {} }}", rect.x, rect.y, rect.width, rect.height);
-        return std::formatter<std::string>::format(fmt, ctx);
-    }
-};

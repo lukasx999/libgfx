@@ -5,6 +5,7 @@
 
 #include <types.h>
 #include <Vec.h>
+#include <Rect.h>
 #include <Window.h>
 #include <Texture.h>
 #include <Font.h>

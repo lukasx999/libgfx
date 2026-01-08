@@ -1,7 +1,8 @@
 #pragma once
 
-#include "types.h"
 #include <memory>
+
+#include "Rect.h"
 
 class TextureRenderer;
 

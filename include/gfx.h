@@ -8,5 +8,6 @@
 #include <Font.h>
 #include <io.h>
 #include <Texture.h>
+#include <Rect.h>
 #include <Spritesheet.h>
 #include <AnimatedTexture.h>
