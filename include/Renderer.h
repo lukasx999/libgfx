@@ -11,6 +11,7 @@
 #include <Font.h>
 #include <Color.h>
 
+// TODO: cursor always starts out at 0 0
 // TODO: animated clock example
 // TODO: add global variable for checking that context has been initialized before using textures and so on
 // TODO: remove ridiculous rotation types
