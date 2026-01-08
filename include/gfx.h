@@ -4,6 +4,7 @@
 #include <Renderer.h>
 #include <Window.h>
 #include <types.h>
+#include <Button.h>
 #include <Vec.h>
 #include <Font.h>
 #include <io.h>

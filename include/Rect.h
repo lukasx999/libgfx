@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Vec.h"
+#include <Vec.h>
 
 namespace gfx {
 
