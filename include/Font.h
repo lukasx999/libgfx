@@ -6,7 +6,10 @@ class TextRenderer;
 
 namespace gfx {
 
+class Window;
+
 class Font {
+    friend Window;
     friend TextRenderer;
     struct Impl;
     std::unique_ptr<Impl> m_pimpl;

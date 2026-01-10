@@ -7,6 +7,7 @@
 #include <Window.h>
 #include <io.h>
 #include "WindowImpl.h"
+#include "FontImpl.h"
 
 namespace gfx {
 
@@ -123,7 +124,14 @@ int gfx::Window::gfx_key_to_glfw_key(Key key) {
     }
 }
 
+gfx::Font Window::load_font(const char* path) const {
+    return m_pimpl->load_font(path);
+}
+
 Window::Impl::Impl(int width, int height, const char* window_title, uint8_t flags) {
+
+    if (FT_Init_FreeType(&m_ft) != 0)
+        throw gfx::Error("failed to initialize ft2");
 
     if (flags & WindowFlags::Logging) {
         glfwSetErrorCallback([]([[maybe_unused]] int error, const char* desc) {
@@ -185,6 +193,10 @@ void Window::Impl::debug_message_callback(
 
     if (severity == GL_DEBUG_SEVERITY_NOTIFICATION) return;
     std::println(stderr, "opengl error: {}", message);
+}
+
+gfx::Font Window::Impl::load_font(const char* path) const {
+    return gfx::Font(std::make_unique<gfx::Font::Impl>(m_ft, path));
 }
 
 } // namespace gfx

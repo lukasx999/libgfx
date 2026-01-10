@@ -171,7 +171,6 @@ public:
         draw_text(x - text_width/2.0, y, text_size, text, font, color);
     }
 
-    [[nodiscard]] gfx::Font load_font(const char* path) const;
     void clear_background(gfx::Color color);
 
 };

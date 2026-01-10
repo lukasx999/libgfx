@@ -10,7 +10,7 @@ namespace gfx {
 
 Font::Impl::Impl(FT_Library ft, const char* path) {
     if (FT_New_Face(ft, path, 0, &m_face) != 0)
-        throw gfx::Error("failed to load font");
+        throw gfx::Error(std::format("failed to load font: {}", path));
 }
 
 Font::Impl::~Impl() {

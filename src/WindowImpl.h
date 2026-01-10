@@ -1,14 +1,26 @@
 #pragma once
 
 #include <Window.h>
+#include "Font.h"
 #include "util.h"
+
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 namespace gfx {
 
 struct Window::Impl {
     GLFWwindow* m_window;
 
+    FT_Library m_ft;
+
     Impl(int width, int height, const char *window_title, uint8_t flags);
+
+    ~Impl() {
+        FT_Done_FreeType(m_ft);
+    }
+
+    [[nodiscard]] gfx::Font load_font(const char* path) const;
 
     static void debug_message_callback(
         [[maybe_unused]] GLenum source,

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Font.h"
 #include <memory>
 
 #include <types.h>
@@ -41,6 +42,7 @@ public:
     [[nodiscard]] KeyState get_mouse_button_state(MouseButton mb) const;
     [[nodiscard]] KeyState get_key_state(Key key) const;
     [[nodiscard]] gfx::Vec get_mouse_pos() const;
+    [[nodiscard]] gfx::Font load_font(const char* path) const;
 
 private:
     [[nodiscard]] static int gfx_mouse_button_to_glfw_mouse_button(MouseButton mb);

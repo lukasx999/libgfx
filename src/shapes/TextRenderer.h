@@ -11,8 +11,6 @@
 class TextRenderer {
     const gfx::Window& m_window;
 
-    FT_Library m_ft;
-
     GLuint m_program;
     GLuint m_vertex_array;
     GLuint m_vertex_buffer;
@@ -41,17 +39,12 @@ class TextRenderer {
 public:
     TextRenderer(const gfx::Window& window);
 
-    ~TextRenderer();
     TextRenderer(const TextRenderer&) = delete;
     TextRenderer(TextRenderer&&) = delete;
     TextRenderer& operator=(const TextRenderer&) = delete;
     TextRenderer& operator=(TextRenderer&&) = delete;
 
     void draw(float x, float y, int text_size, const char* text, const gfx::Font& font, gfx::Color color, glm::mat4 view);
-
-    [[nodiscard]] gfx::Font load_font(const char* path) const {
-        return gfx::Font(std::make_unique<gfx::Font::Impl>(m_ft, path));
-    }
 
 private:
     void draw_char(float x, float y, const Glyph& glyph, gfx::Color color, int text_size, glm::mat4 view);

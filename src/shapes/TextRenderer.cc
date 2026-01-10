@@ -29,14 +29,6 @@ TextRenderer::TextRenderer(const gfx::Window& window)
     glGenBuffers(1, &m_index_buffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_index_buffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(unsigned int), m_indices.data(), GL_STATIC_DRAW);
-
-    if (FT_Init_FreeType(&m_ft) != 0)
-        throw gfx::Error("failed to initialize ft2");
-
-}
-
-TextRenderer::~TextRenderer() {
-    FT_Done_FreeType(m_ft);
 }
 
 void TextRenderer::draw(float x, float y, int text_size, const char* text, const gfx::Font& font, gfx::Color color, glm::mat4 view) {

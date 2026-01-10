@@ -96,10 +96,6 @@ void Renderer::draw_text(float x, float y, int text_size, const char* text, cons
     m_pimpl->m_text.draw(x, y, text_size, text, font, color, m_pimpl->m_view_active);
 }
 
-gfx::Font Renderer::load_font(const char* path) const {
-    return m_pimpl->m_text.load_font(path);
-}
-
 void Renderer::clear_background(Color color) {
     auto normalized = color.normalized();
     glClearColor(normalized.r, normalized.g, normalized.b, normalized.a);
