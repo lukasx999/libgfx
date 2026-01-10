@@ -33,18 +33,17 @@
 namespace gfx {
 
 class Renderer {
-    Window& m_window;
+    gfx::Window& m_window;
 
     struct Impl;
     std::unique_ptr<Impl> m_pimpl;
 
     double m_frame_time = 0.0;
     double m_last_frame = 0.0;
-
     double m_desired_fps = 0.0;
 
 public:
-    explicit Renderer(Window& window);
+    explicit Renderer(gfx::Window& window);
     ~Renderer();
 
     // 0.0 means no limit
@@ -175,7 +174,7 @@ public:
     }
 
     [[nodiscard]] gfx::Font load_font(const char* path) const;
-    void clear_background(Color color);
+    void clear_background(gfx::Color color);
 
 };
 
