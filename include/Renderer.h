@@ -56,9 +56,8 @@ public:
 
     // calls the given function in a draw loop
     void draw(std::function<void()> draw_fn) {
-        while (!m_window.should_close()) {
+        while (!m_window.should_close())
             with_draw_context(draw_fn);
-        }
     }
 
     [[nodiscard]] Window& get_window() const {

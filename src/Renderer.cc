@@ -54,8 +54,8 @@ void Renderer::with_draw_context(std::function<void()> draw_fn) {
     double frame_end = glfwGetTime() - frame_start;
 
     struct timespec ts{};
-    ts.tv_nsec = (1.0 / m_desired_fps - frame_end) * 1e9,
-        nanosleep(&ts, nullptr);
+    ts.tv_nsec = (1.0 / m_desired_fps - frame_end) * 1e9;
+    nanosleep(&ts, nullptr);
 }
 
 void Renderer::with_camera(std::function<void()> draw_fn) {
