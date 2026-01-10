@@ -11,6 +11,7 @@
 #include <Font.h>
 #include <Color.h>
 
+// TODO: gfx::InputHandler type
 // TODO: gameobject interface for button
 // TODO: cursor always starts out at 0 0
 // TODO: animated clock example
