@@ -15,7 +15,6 @@
 // TODO: gameobject interface for button
 // TODO: cursor always starts out at 0 0
 // TODO: animated clock example
-// TODO: add global variable for checking that context has been initialized before using textures and so on
 // TODO: remove ridiculous rotation types
 // TODO: merge gfx::Window and gfx::Renderer into one gfx::Context type
 // TODO: add rendering to textures/files using opengl fbo
