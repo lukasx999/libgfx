@@ -20,8 +20,8 @@ inline constexpr char texture[] = {
 
 namespace fragment {
 
-inline constexpr char text[] = {
-#embed "../shaders/text.frag" suffix(,)
+inline constexpr char circle[] = {
+#embed "../shaders/circle.frag" suffix(,)
 '\0'
 };
 
@@ -35,8 +35,8 @@ inline constexpr char texture[] = {
 '\0'
 };
 
-inline constexpr char circle[] = {
-#embed "../shaders/circle.frag" suffix(,)
+inline constexpr char text[] = {
+#embed "../shaders/text.frag" suffix(,)
 '\0'
 };
 
