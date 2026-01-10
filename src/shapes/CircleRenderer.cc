@@ -6,7 +6,7 @@
 #include "../shaders.h"
 #include "../util.h"
 
-CircleRenderer::CircleRenderer(gfx::Window& window)
+CircleRenderer::CircleRenderer(const gfx::Window& window)
 : m_window(window)
 {
     m_program = create_shader_program(shaders::vertex::default_, shaders::fragment::circle);

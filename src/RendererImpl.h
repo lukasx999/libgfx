@@ -13,7 +13,7 @@
 namespace gfx {
 
 struct Renderer::Impl {
-    gfx::Window& m_window;
+    const gfx::Window& m_window;
 
     RectangleRenderer m_rectangle;
     CircleRenderer m_circle;
@@ -29,7 +29,7 @@ struct Renderer::Impl {
     glm::mat4 m_view_camera = m_view_default;
     glm::mat4 m_view_active = m_view_default;
 
-    explicit Impl(gfx::Window& window)
+    explicit Impl(const gfx::Window& window)
         : m_window(window)
         , m_rectangle(m_window)
         , m_circle(m_window)

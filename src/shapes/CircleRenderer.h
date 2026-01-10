@@ -8,7 +8,7 @@
 #include "../util.h"
 
 class CircleRenderer {
-    gfx::Window& m_window;
+    const gfx::Window& m_window;
 
     GLuint m_program;
     GLuint m_vertex_array;
@@ -25,7 +25,7 @@ class CircleRenderer {
     };
 
 public:
-    explicit CircleRenderer(gfx::Window& window);
+    explicit CircleRenderer(const gfx::Window& window);
     void draw(float x, float y, float radius, gfx::Color color, glm::mat4 view);
 
 };

@@ -9,7 +9,7 @@
 #include "../FontImpl.h"
 
 class TextRenderer {
-    gfx::Window& m_window;
+    const gfx::Window& m_window;
 
     FT_Library m_ft;
 
@@ -39,7 +39,7 @@ class TextRenderer {
     };
 
 public:
-    TextRenderer(gfx::Window& window);
+    TextRenderer(const gfx::Window& window);
 
     ~TextRenderer();
     TextRenderer(const TextRenderer&) = delete;

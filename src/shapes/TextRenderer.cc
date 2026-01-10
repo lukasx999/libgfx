@@ -3,7 +3,7 @@
 #include "TextRenderer.h"
 #include "../FontImpl.h"
 
-TextRenderer::TextRenderer(gfx::Window& window)
+TextRenderer::TextRenderer(const gfx::Window& window)
 : m_window(window)
 {
 

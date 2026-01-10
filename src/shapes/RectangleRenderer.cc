@@ -6,7 +6,7 @@
 #include "../shaders.h"
 #include "../util.h"
 
-RectangleRenderer::RectangleRenderer(gfx::Window& window)
+RectangleRenderer::RectangleRenderer(const gfx::Window& window)
 : m_window(window)
 {
 

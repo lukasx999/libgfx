@@ -7,7 +7,7 @@
 #include "../util.h"
 
 class RectangleRenderer {
-    gfx::Window& m_window;
+    const gfx::Window& m_window;
 
     GLuint m_program;
     GLuint m_vertex_array;
@@ -24,7 +24,7 @@ class RectangleRenderer {
     };
 
 public:
-    explicit RectangleRenderer(gfx::Window& window);
+    explicit RectangleRenderer(const gfx::Window& window);
     void draw(
         float x,
         float y,

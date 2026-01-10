@@ -10,7 +10,7 @@
 #include "../util.h"
 #include "../TextureImpl.h"
 
-TextureRenderer::TextureRenderer(gfx::Window& window)
+TextureRenderer::TextureRenderer(const gfx::Window& window)
 : m_window(window)
 {
     m_program = create_shader_program(shaders::vertex::texture, shaders::fragment::texture);

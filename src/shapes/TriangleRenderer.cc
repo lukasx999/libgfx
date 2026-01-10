@@ -9,7 +9,7 @@
 #include "../util.h"
 #include "../shaders.h"
 
-TriangleRenderer::TriangleRenderer(gfx::Window& window)
+TriangleRenderer::TriangleRenderer(const gfx::Window& window)
 : m_window(window)
 {
 

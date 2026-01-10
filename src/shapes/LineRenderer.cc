@@ -6,7 +6,7 @@
 #include "../util.h"
 #include "../shaders.h"
 
-LineRenderer::LineRenderer(gfx::Window& window)
+LineRenderer::LineRenderer(const gfx::Window& window)
 : m_window(window)
 {
 
