@@ -3,6 +3,8 @@
 #include "WindowImpl.h"
 #include "RendererImpl.h"
 
+bool library_has_been_initialized = false;
+
 namespace gfx {
 
 // TODO: zoom

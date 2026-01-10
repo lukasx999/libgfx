@@ -12,7 +12,9 @@ namespace gfx {
 
 Window::Window(int width, int height, const char* window_title, uint8_t flags)
 : m_pimpl(std::make_unique<Window::Impl>(width, height, window_title, flags))
-{ }
+{
+    library_has_been_initialized = true;
+}
 
 Window::~Window() {
     glfwDestroyWindow(m_pimpl->m_window);

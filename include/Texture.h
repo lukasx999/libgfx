@@ -13,6 +13,8 @@ class Texture {
     struct Impl;
     std::unique_ptr<Impl> m_pimpl;
 
+    Texture();
+
 public:
     // construct a texture from a file
     explicit Texture(const char* path);

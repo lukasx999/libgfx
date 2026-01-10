@@ -10,6 +10,8 @@
 #include <Window.h>
 #include <Color.h>
 
+extern bool library_has_been_initialized;
+
 [[nodiscard]] inline GLuint create_shader(GLenum type, const char* src) {
     GLuint shader = glCreateShader(type);
     glShaderSource(shader, 1, &src, nullptr);
