@@ -12,3 +12,4 @@
 #include <Rect.h>
 #include <Spritesheet.h>
 #include <AnimatedTexture.h>
+#include <Animation.h>
