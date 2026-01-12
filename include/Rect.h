@@ -19,6 +19,10 @@ struct Rect {
         return collision_x && collision_y;
     }
 
+    // TODO:
+    // [[nodiscard]] constexpr bool check_collision_circle(gfx::Vec p, float radius) const {
+    // }
+
 };
 
 } // namespace gfx
