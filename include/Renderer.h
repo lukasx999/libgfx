@@ -11,6 +11,7 @@
 #include <Font.h>
 #include <Color.h>
 
+// TODO: event system for input handling
 // TODO: key state rising edge detection
 // TODO: check_collision_circle
 // TODO: add lerp concept to Animation.h
