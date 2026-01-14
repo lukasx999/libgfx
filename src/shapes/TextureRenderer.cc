@@ -46,7 +46,7 @@ void TextureRenderer::draw(
     float y,
     float width,
     float height,
-    const gfx::IRotation& rotation,
+    gfx::Rotation rotation,
     const gfx::Texture& texture,
     glm::mat4 view
 ) {
@@ -62,7 +62,7 @@ void TextureRenderer::draw_sub(
     float src_y,
     float src_width,
     float src_height,
-    const gfx::IRotation& rotation,
+    gfx::Rotation rotation,
     const gfx::Texture& texture,
     glm::mat4 view
 ) {

@@ -83,7 +83,7 @@ public:
         set_camera(vec.x, vec.y);
     }
 
-    void draw_rectangle(float x, float y, float width, float height, const gfx::IRotation& rotation, gfx::Color color);
+    void draw_rectangle(float x, float y, float width, float height, gfx::Rotation rotation, gfx::Color color);
 
     void draw_rectangle(float x, float y, float width, float height, gfx::Color color) {
         draw_rectangle(x, y, width, height, 0_deg, color);
@@ -93,11 +93,11 @@ public:
         draw_rectangle(rect.x, rect.y, rect.width, rect.height, 0_deg, color);
     }
 
-    void draw_rectangle(gfx::Rect rect, const gfx::IRotation& rotation, gfx::Color color) {
+    void draw_rectangle(gfx::Rect rect, gfx::Rotation rotation, gfx::Color color) {
         draw_rectangle(rect.x, rect.y, rect.width, rect.height, rotation, color);
     }
 
-    void draw_rectangle(gfx::Vec vec, float width, float height, const gfx::IRotation& rotation, gfx::Color color) {
+    void draw_rectangle(gfx::Vec vec, float width, float height, gfx::Rotation rotation, gfx::Color color) {
         draw_rectangle(vec.x, vec.y, width, height, rotation, color);
     }
 
@@ -105,13 +105,13 @@ public:
         draw_rectangle(vec.x, vec.y, width, height, 0_deg, color);
     }
 
-    void draw_texture(float x, float y, float width, float height, const gfx::IRotation& rotation, const gfx::Texture& texture);
+    void draw_texture(float x, float y, float width, float height, gfx::Rotation rotation, const gfx::Texture& texture);
 
     void draw_texture(float x, float y, float width, float height, const gfx::Texture& texture) {
         draw_texture(x, y, width, height, 0_deg, texture);
     }
 
-    void draw_texture(gfx::Vec vec, float width, float height, const gfx::IRotation& rotation, const gfx::Texture& texture) {
+    void draw_texture(gfx::Vec vec, float width, float height, gfx::Rotation rotation, const gfx::Texture& texture) {
         draw_texture(vec.x, vec.y, width, height, rotation, texture);
     }
 
@@ -119,7 +119,7 @@ public:
         draw_texture(vec.x, vec.y, width, height, 0_deg, texture);
     }
 
-    void draw_texture(gfx::Rect rect, const gfx::IRotation& rotation, const gfx::Texture& texture) {
+    void draw_texture(gfx::Rect rect, gfx::Rotation rotation, const gfx::Texture& texture) {
         draw_texture(rect.x, rect.y, rect.width, rect.height, rotation, texture);
     }
 
@@ -127,9 +127,9 @@ public:
         draw_texture(rect.x, rect.y, rect.width, rect.height, 0_deg, texture);
     }
 
-    void draw_texture_sub(float dest_x, float dest_y, float dest_width, float dest_height, float src_x, float src_y, float src_width, float src_height, const gfx::IRotation& rotation, const gfx::Texture& texture);
+    void draw_texture_sub(float dest_x, float dest_y, float dest_width, float dest_height, float src_x, float src_y, float src_width, float src_height, gfx::Rotation rotation, const gfx::Texture& texture);
 
-    void draw_texture_sub(gfx::Rect dest, gfx::Rect src, const gfx::IRotation& rotation, const gfx::Texture& texture) {
+    void draw_texture_sub(gfx::Rect dest, gfx::Rect src, gfx::Rotation rotation, const gfx::Texture& texture) {
         draw_texture_sub(dest.x, dest.y, dest.width, dest.height, src.x, src.y, src.width, src.height, rotation, texture);
     }
 

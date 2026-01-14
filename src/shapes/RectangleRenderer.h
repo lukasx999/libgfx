@@ -30,7 +30,7 @@ public:
         float y,
         float width,
         float height,
-        const gfx::IRotation& rotation,
+        gfx::Rotation rotation,
         gfx::Color color,
         glm::mat4 view
     );

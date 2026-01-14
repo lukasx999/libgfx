@@ -20,41 +20,44 @@ struct Error : std::runtime_error {
     return rad * (180.0 / M_PI);
 }
 
-class IRotation {
-public:
-    [[nodiscard]] virtual float get_radians() const = 0;
-    [[nodiscard]] virtual float get_degrees() const = 0;
-    virtual ~IRotation() = default;
-};
-
-class Radians : public IRotation {
-    float m_radians;
+class Degrees {
+    const float m_value;
 
 public:
-    explicit constexpr Radians(float radians) : m_radians(radians) { }
+    explicit constexpr Degrees(float value) : m_value(value) { }
 
-    [[nodiscard]] constexpr float get_radians() const override {
-        return m_radians;
+    [[nodiscard]] constexpr operator float() const {
+        return m_value;
     }
 
-    [[nodiscard]] constexpr float get_degrees() const override {
+};
+
+class Radians {
+    const float m_value;
+
+public:
+    explicit constexpr Radians(float value) : m_value(value) { }
+
+    [[nodiscard]] constexpr operator float() const {
+        return m_value;
+    }
+
+};
+
+class Rotation {
+    const float m_radians = 0.0f;
+
+public:
+    constexpr Rotation() = default;
+    constexpr Rotation(gfx::Degrees degrees) : m_radians(deg_to_rad(degrees)) { }
+    constexpr Rotation(gfx::Radians radians) : m_radians(radians) { }
+
+    [[nodiscard]] constexpr float get_degrees() const {
         return rad_to_deg(m_radians);
     }
 
-};
-
-class Degrees : public IRotation {
-    float m_degrees;
-
-public:
-    explicit constexpr Degrees(float degrees) : m_degrees(degrees) { }
-
-    [[nodiscard]] constexpr float get_radians() const override {
-        return deg_to_rad(m_degrees);
-    }
-
-    [[nodiscard]] constexpr float get_degrees() const override {
-        return m_degrees;
+    [[nodiscard]] constexpr float get_radians() const {
+        return m_radians;
     }
 
 };

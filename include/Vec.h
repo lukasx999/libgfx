@@ -36,7 +36,7 @@ struct Vec {
         return std::sqrt(diff.x*diff.x + diff.y*diff.y);
     }
 
-    [[nodiscard]] constexpr Vec rotated(const gfx::IRotation& angle) const {
+    [[nodiscard]] constexpr Vec rotated(gfx::Rotation angle) const {
         Vec result;
 
         float cos_ = std::cosf(angle.get_radians());
@@ -48,7 +48,7 @@ struct Vec {
         return result;
     }
 
-    constexpr void rotate(const gfx::IRotation& angle) {
+    constexpr void rotate(gfx::Rotation angle) {
         Vec v = rotated(angle);
         x = v.x;
         y = v.y;
