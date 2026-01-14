@@ -13,6 +13,6 @@ class LineRenderer final {
 
 public:
     explicit LineRenderer(const gfx::Window& window);
-    void draw(float x0, float y0, float x1, float y1, gfx::Color color, glm::mat4 view);
+    void draw(gfx::Vec start, gfx::Vec end, gfx::Color color, glm::mat4 view);
 
 };

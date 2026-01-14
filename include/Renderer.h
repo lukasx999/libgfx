@@ -149,10 +149,10 @@ public:
         draw_triangle(v0.x, v0.y, v1.x, v1.y, v2.x, v2.y, color);
     }
 
-    void draw_line(float x0, float y0, float x1, float y1, gfx::Color color);
+    void draw_line(gfx::Vec v0, gfx::Vec v1, gfx::Color color);
 
-    void draw_line(gfx::Vec v0, gfx::Vec v1, gfx::Color color) {
-        draw_line(v0.x, v0.y, v1.x, v1.y, color);
+    void draw_line(float x0, float y0, float x1, float y1, gfx::Color color) {
+        draw_line({ x0, y0 }, { x1, y1 }, color);
     }
 
     void draw_text(float x, float y, int text_size, const char* text, const gfx::Font& font, gfx::Color color);

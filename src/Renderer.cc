@@ -67,8 +67,8 @@ void Renderer::draw_triangle(float x0, float y0, float x1, float y1, float x2, f
     m_pimpl->m_triangle.draw(x0, y0, x1, y1, x2, y2, color, m_pimpl->m_view_active);
 }
 
-void Renderer::draw_line(float x0, float y0, float x1, float y1, gfx::Color color) {
-    m_pimpl->m_line.draw(x0, y0, x1, y1, color, m_pimpl->m_view_active);
+void Renderer::draw_line(gfx::Vec start, gfx::Vec end, gfx::Color color) {
+    m_pimpl->m_line.draw(start, end, color, m_pimpl->m_view_active);
 }
 
 void Renderer::draw_text(float x, float y, int text_size, const char* text, const gfx::Font& font, gfx::Color color) {

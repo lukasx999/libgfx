@@ -28,14 +28,14 @@ LineRenderer::LineRenderer(const gfx::Window& window)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void LineRenderer::draw(float x0, float y0, float x1, float y1, gfx::Color color, glm::mat4 view) {
+void LineRenderer::draw(gfx::Vec start, gfx::Vec end, gfx::Color color, glm::mat4 view) {
 
     glUseProgram(m_program);
     glBindVertexArray(m_vertex_array);
 
     auto vertices = std::to_array<glm::vec2>({
-        { x0, y0 },
-        { x1, y1 },
+        { start.x, start.y },
+        { end.x, end.y },
     });
 
     glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer);
