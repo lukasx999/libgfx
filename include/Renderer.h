@@ -12,24 +12,19 @@
 #include <Color.h>
 
 // TODO: add rendering to textures/files using opengl fbo
-// TODO: event system for input handling
+// TODO: use gfx types for shape renderers
 // TODO: key state rising edge detection
 // TODO: check_collision_circle
 // TODO: add lerp concept to Animation.h
-// TODO: gfx::InputHandler type
-// TODO: gameobject interface for button
 // TODO: cursor always starts out at 0 0
 // TODO: animated clock example
-// TODO: remove ridiculous rotation types
 // TODO: font copy/move ctor
 // TODO: camera rotation
 // TODO: finish gfx::WindowBuilder
 // TODO: build system for non-cmake
 // TODO: auto-invoke python script for generating shader glue code
-// TODO: merge get_key_state and get_mouse_button_state?
 // TODO: stencil buffer
 // TODO: make texture parameters configurable
-// TODO: hot reloading?
 // TODO: do copying of textures on the gpu, instead of cpu
 
 namespace gfx {
