@@ -32,10 +32,12 @@ CircleRenderer::CircleRenderer(const gfx::Window& window)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void CircleRenderer::draw(float x, float y, float radius, gfx::Color color, glm::mat4 view) {
+void CircleRenderer::draw(gfx::Vec center, float radius, gfx::Color color, glm::mat4 view) {
 
     glUseProgram(m_program);
     glBindVertexArray(m_vertex_array);
+
+    auto [x, y] = center;
 
     auto vertices = std::to_array<glm::vec2>({
         { x - radius, y - radius }, // top-left
@@ -66,8 +68,8 @@ void CircleRenderer::draw(float x, float y, float radius, gfx::Color color, glm:
     glUniform4f(u_color, c.r, c.g, c.b, c.a);
 
     GLint u_center = glGetUniformLocation(m_program, "u_center");
-    auto center = view * glm::vec4(x, y, 0.0, 1.0);
-    glUniform2f(u_center, center.x, center.y);
+    auto view_center = view * glm::vec4(x, y, 0.0, 1.0);
+    glUniform2f(u_center, view_center.x, view_center.y);
 
     GLint u_radius = glGetUniformLocation(m_program, "u_radius");
     glUniform1f(u_radius, radius);

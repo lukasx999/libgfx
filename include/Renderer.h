@@ -137,10 +137,10 @@ public:
         draw_texture_sub(dest.x, dest.y, dest.width, dest.height, src.x, src.y, src.width, src.height, 0_deg, texture);
     }
 
-    void draw_circle(float x, float y, float radius, gfx::Color color);
+    void draw_circle(gfx::Vec center, float radius, gfx::Color color);
 
-    void draw_circle(gfx::Vec center, float radius, gfx::Color color) {
-        draw_circle(center.x, center.y, radius, color);
+    void draw_circle(float x, float y, float radius, gfx::Color color) {
+        draw_circle({ x, y }, radius, color);
     }
 
     void draw_triangle(float x0, float y0, float x1, float y1, float x2, float y2, gfx::Color color);

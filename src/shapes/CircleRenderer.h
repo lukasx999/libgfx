@@ -26,6 +26,6 @@ class CircleRenderer final {
 
 public:
     explicit CircleRenderer(const gfx::Window& window);
-    void draw(float x, float y, float radius, gfx::Color color, glm::mat4 view);
+    void draw(gfx::Vec center, float radius, gfx::Color color, glm::mat4 view);
 
 };

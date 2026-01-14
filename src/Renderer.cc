@@ -59,8 +59,8 @@ void Renderer::draw_texture_sub(float dest_x, float dest_y, float dest_width, fl
     m_pimpl->m_texture.draw_sub(dest_x, dest_y, dest_width, dest_height, src_x, src_y, src_width, src_height, rotation, texture, m_pimpl->m_view_active);
 }
 
-void Renderer::draw_circle(float x, float y, float radius, gfx::Color color) {
-    m_pimpl->m_circle.draw(x, y, radius, color, m_pimpl->m_view_active);
+void Renderer::draw_circle(gfx::Vec center, float radius, gfx::Color color) {
+    m_pimpl->m_circle.draw(center, radius, color, m_pimpl->m_view_active);
 }
 
 void Renderer::draw_triangle(float x0, float y0, float x1, float y1, float x2, float y2, gfx::Color color) {
