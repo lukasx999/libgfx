@@ -5,7 +5,7 @@
 
 #include "../util.h"
 
-class TriangleRenderer {
+class TriangleRenderer final {
     const gfx::Window& m_window;
 
     GLuint m_program;

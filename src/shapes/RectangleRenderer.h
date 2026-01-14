@@ -6,7 +6,7 @@
 #include <types.h>
 #include "../util.h"
 
-class RectangleRenderer {
+class RectangleRenderer final {
     const gfx::Window& m_window;
 
     GLuint m_program;

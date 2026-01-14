@@ -8,7 +8,7 @@
 #include "../Glyph.h"
 #include "../FontImpl.h"
 
-class TextRenderer {
+class TextRenderer final {
     const gfx::Window& m_window;
 
     GLuint m_program;

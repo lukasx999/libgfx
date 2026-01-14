@@ -18,7 +18,7 @@ enum WindowFlags : uint8_t {
     Wireframe     = 1 << 5,
 };
 
-class Window {
+class Window final {
     friend class Renderer;
     struct Impl;
     std::unique_ptr<Impl> m_pimpl;

@@ -11,6 +11,7 @@
 #include <Font.h>
 #include <Color.h>
 
+// TODO: add rendering to textures/files using opengl fbo
 // TODO: event system for input handling
 // TODO: key state rising edge detection
 // TODO: check_collision_circle
@@ -20,8 +21,6 @@
 // TODO: cursor always starts out at 0 0
 // TODO: animated clock example
 // TODO: remove ridiculous rotation types
-// TODO: merge gfx::Window and gfx::Renderer into one gfx::Context type
-// TODO: add rendering to textures/files using opengl fbo
 // TODO: font copy/move ctor
 // TODO: camera rotation
 // TODO: finish gfx::WindowBuilder
@@ -35,7 +34,7 @@
 
 namespace gfx {
 
-class Renderer {
+class Renderer final {
     gfx::Window& m_window;
 
     struct Impl;
@@ -54,17 +53,7 @@ public:
         m_desired_fps = fps;
     }
 
-    // calls the given function in a draw context, issuing draw calls outside
-    // of this context, will result in undefined behavior
-    void with_draw_context(std::function<void()> draw_fn);
-
-    // calls the given function in a draw loop
-    void draw(std::function<void()> draw_fn) {
-        while (!m_window.should_close())
-            with_draw_context(draw_fn);
-    }
-
-    [[nodiscard]] Window& get_window() const {
+    [[nodiscard]] gfx::Window& get_window() const {
         return m_window;
     }
 
@@ -74,6 +63,16 @@ public:
 
     [[nodiscard]] double get_fps() const {
         return 1.0 / m_frame_time;
+    }
+
+    // calls the given function in a draw context, issuing draw calls outside
+    // of this context, will result in undefined behavior
+    void with_draw_context(std::function<void()> draw_fn);
+
+    // calls the given function in a draw loop
+    void draw(std::function<void()> draw_fn) {
+        while (!m_window.should_close())
+            with_draw_context(draw_fn);
     }
 
     void with_camera(std::function<void()> draw_fn);

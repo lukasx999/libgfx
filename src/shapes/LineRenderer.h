@@ -4,7 +4,7 @@
 #include <types.h>
 #include "../util.h"
 
-class LineRenderer {
+class LineRenderer final {
     const gfx::Window& m_window;
 
     GLuint m_program;
