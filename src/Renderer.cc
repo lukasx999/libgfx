@@ -2,6 +2,7 @@
 #include <Window.h>
 #include "WindowImpl.h"
 #include "RendererImpl.h"
+#include "TextureImpl.h"
 
 bool library_has_been_initialized = false;
 
@@ -35,6 +36,25 @@ void Renderer::with_draw_context(std::function<void()> draw_fn) {
     struct timespec ts{};
     ts.tv_nsec = (1.0 / m_desired_fps - frame_end) * 1e9;
     nanosleep(&ts, nullptr);
+}
+
+gfx::Texture Renderer::to_texture(std::function<void()> draw_fn) {
+
+    gfx::Texture texture(m_window.get_width(), m_window.get_height(), 3, nullptr);
+
+    GLuint framebuffer;
+    glGenFramebuffers(1, &framebuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.m_pimpl->m_texture, 0);
+    assert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
+
+    draw_fn();
+
+    // TODO:
+    // glDeleteFramebuffers(1, &framebuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    return texture;
 }
 
 void Renderer::with_camera(std::function<void()> draw_fn) {

@@ -7,9 +7,14 @@
 class TextureRenderer;
 
 namespace gfx {
+class Renderer;
+} // namespace gfx
+
+namespace gfx {
 
 class Texture {
     friend TextureRenderer;
+    friend gfx::Renderer;
     struct Impl;
     std::unique_ptr<Impl> m_pimpl;
 
@@ -23,6 +28,7 @@ public:
     explicit Texture(const std::string& path);
 
     // construct a texture from memory
+    // passing nullptr to bytes will reserve memory only
     Texture(int width, int height, int channels, unsigned char* bytes);
 
     ~Texture();

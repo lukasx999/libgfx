@@ -11,7 +11,7 @@
 #include <Font.h>
 #include <Color.h>
 
-// TODO: add rendering to textures/files using opengl fbo
+// TODO: delete framebuffers after every iteration
 // TODO: delete opengl objects in dtors
 // TODO: use gfx types for shape renderers
 // TODO: key state rising edge detection
@@ -70,6 +70,8 @@ public:
         while (!m_window.should_close())
             with_draw_context(draw_fn);
     }
+
+    [[nodiscard]] gfx::Texture to_texture(std::function<void()> draw_fn);
 
     void with_camera(std::function<void()> draw_fn);
 
