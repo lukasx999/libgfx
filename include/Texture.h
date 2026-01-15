@@ -45,6 +45,8 @@ public:
     [[nodiscard]] int get_height() const;
     [[nodiscard]] int get_channels() const;
 
+    void write_to_file(const char* filename) const;
+
 private:
     void load_texture_from_file(const char* path);
 
