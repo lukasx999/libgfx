@@ -67,8 +67,8 @@ void Renderer::set_camera(float center_x, float center_y) {
     m_pimpl->m_view_camera = m_pimpl->gen_view_matrix(m_window, { center_x, center_y });
 }
 
-void Renderer::draw_rectangle(float x, float y, float width, float height, gfx::Rotation rotation, gfx::Color color) {
-    m_pimpl->m_rectangle.draw(x, y, width, height, rotation, color, m_pimpl->m_view_active);
+void Renderer::draw_rectangle(gfx::Rect dest, gfx::Rotation rotation, gfx::Color color) {
+    m_pimpl->m_rectangle.draw(dest, rotation, color, m_pimpl->m_view_active);
 }
 
 void Renderer::draw_texture(float x, float y, float width, float height, gfx::Rotation rotation, const gfx::Texture& texture) {

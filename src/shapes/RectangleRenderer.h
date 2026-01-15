@@ -5,6 +5,7 @@
 #include <Window.h>
 #include <types.h>
 #include "../util.h"
+#include "Rect.h"
 
 class RectangleRenderer final {
     const gfx::Window& m_window;
@@ -25,14 +26,6 @@ class RectangleRenderer final {
 
 public:
     explicit RectangleRenderer(const gfx::Window& window);
-    void draw(
-        float x,
-        float y,
-        float width,
-        float height,
-        gfx::Rotation rotation,
-        gfx::Color color,
-        glm::mat4 view
-    );
+    void draw(gfx::Rect dest, gfx::Rotation rotation, gfx::Color color, glm::mat4 view);
 
 };
