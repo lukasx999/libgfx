@@ -114,9 +114,26 @@ int Texture::get_channels() const {
     return Impl::opengl_format_to_channels(internal_format);
 }
 
-void Texture::write_to_file(const char* filename) const {
+void Texture::write_to_file(FileType filetype, const char* filename) const {
+
+    int width = get_width();
+    int height = get_height();
+    int channels = get_channels();
     auto buf = copy_to_cpu();
-    stbi_write_png(filename, get_width(), get_height(), get_channels(), buf.data(), 0);
+
+    int ret = [&] {
+        switch (filetype) {
+            using enum FileType;
+            case Png: return stbi_write_png(filename, width, height, channels, buf.data(), 0);
+            case Bmp: return stbi_write_bmp(filename, width, height, channels, buf.data());
+            case Tga: return stbi_write_tga(filename, width, height, channels, buf.data());
+            case Jpg: return stbi_write_jpg(filename, width, height, channels, buf.data(), 100);
+        }
+    }();
+
+    if (ret == 0)
+        throw gfx::Error("failed to write texture to file");
+
 }
 
 std::vector<unsigned char> Texture::copy_to_cpu() const {
