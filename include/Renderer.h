@@ -12,6 +12,7 @@
 #include <Color.h>
 
 // TODO: add rendering to textures/files using opengl fbo
+// TODO: delete opengl objects in dtors
 // TODO: use gfx types for shape renderers
 // TODO: key state rising edge detection
 // TODO: check_collision_circle
