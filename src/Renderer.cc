@@ -63,8 +63,8 @@ void Renderer::draw_circle(gfx::Vec center, float radius, gfx::Color color) {
     m_pimpl->m_circle.draw(center, radius, color, m_pimpl->m_view_active);
 }
 
-void Renderer::draw_triangle(float x0, float y0, float x1, float y1, float x2, float y2, gfx::Color color) {
-    m_pimpl->m_triangle.draw(x0, y0, x1, y1, x2, y2, color, m_pimpl->m_view_active);
+void Renderer::draw_triangle(gfx::Vec a, gfx::Vec b, gfx::Vec c, gfx::Color color) {
+    m_pimpl->m_triangle.draw(a, b, c, color, m_pimpl->m_view_active);
 }
 
 void Renderer::draw_line(gfx::Vec start, gfx::Vec end, gfx::Color color) {

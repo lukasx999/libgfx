@@ -29,15 +29,15 @@ TriangleRenderer::TriangleRenderer(const gfx::Window& window)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void TriangleRenderer::draw(float x0, float y0, float x1, float y1, float x2, float y2, gfx::Color color, glm::mat4 view) {
+void TriangleRenderer::draw(gfx::Vec a, gfx::Vec b, gfx::Vec c, gfx::Color color, glm::mat4 view) {
 
     glUseProgram(m_program);
     glBindVertexArray(m_vertex_array);
 
     auto vertices = std::to_array<glm::vec2>({
-        { x0, y0 },
-        { x1, y1 },
-        { x2, y2 },
+        { a.x, a.y },
+        { b.x, b.y },
+        { c.x, c.y },
     });
 
     glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer);
@@ -57,9 +57,9 @@ void TriangleRenderer::draw(float x0, float y0, float x1, float y1, float x2, fl
     GLint u_mvp = glGetUniformLocation(m_program, "u_mvp");
     glUniformMatrix4fv(u_mvp, 1, false, glm::value_ptr(mvp));
 
-    auto c = color.normalized();
+    auto col = color.normalized();
     GLint u_color = glGetUniformLocation(m_program, "u_color");
-    glUniform4f(u_color, c.r, c.g, c.b, c.a);
+    glUniform4f(u_color, col.r, col.g, col.b, col.a);
 
     glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 

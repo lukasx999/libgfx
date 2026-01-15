@@ -138,11 +138,11 @@ public:
         draw_circle({ x, y }, radius, color);
     }
 
-    void draw_triangle(float x0, float y0, float x1, float y1, float x2, float y2, gfx::Color color);
-
-    void draw_triangle(gfx::Vec v0, gfx::Vec v1, gfx::Vec v2, gfx::Color color) {
-        draw_triangle(v0.x, v0.y, v1.x, v1.y, v2.x, v2.y, color);
+    void draw_triangle(float x0, float y0, float x1, float y1, float x2, float y2, gfx::Color color) {
+        draw_triangle({ x0, y0 }, { x1, y1 }, { x2, y2 }, color);
     }
+
+    void draw_triangle(gfx::Vec a, gfx::Vec b, gfx::Vec c, gfx::Color color);
 
     void draw_line(gfx::Vec v0, gfx::Vec v1, gfx::Color color);
 

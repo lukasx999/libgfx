@@ -14,6 +14,6 @@ class TriangleRenderer final {
 
 public:
     explicit TriangleRenderer(const gfx::Window& window);
-    void draw(float x0, float y0, float x1, float y1, float x2, float y2, gfx::Color color, glm::mat4 view);
+    void draw(gfx::Vec a, gfx::Vec b, gfx::Vec c, gfx::Color color, glm::mat4 view);
 
 };
