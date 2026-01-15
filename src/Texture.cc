@@ -40,16 +40,13 @@ Texture::~Texture() {
 // without already having another gfx::Texture
 
 Texture::Texture(const Texture& other) : m_pimpl(std::make_unique<Texture::Impl>()) {
-    int width = other.get_width();
-    int height = other.get_height();
-    int channels = other.get_channels();
-    GLint format = Impl::channels_to_opengl_format(channels);
-
-    std::vector<unsigned char> buf(width * height * channels);
-    glBindTexture(GL_TEXTURE_2D, other.m_pimpl->m_texture);
-    glGetTexImage(GL_TEXTURE_2D, 0, format, GL_UNSIGNED_BYTE, buf.data());
-    glBindTexture(GL_TEXTURE_2D, 0);
-    m_pimpl->m_texture = Impl::generate_texture(buf.data(), width, height, channels);
+    auto buf = other.copy_to_cpu();
+    m_pimpl->m_texture = Impl::generate_texture(
+        buf.data(),
+        other.get_width(),
+        other.get_height(),
+        other.get_channels()
+    );
 }
 
 Texture::Texture(Texture&& other)
@@ -118,18 +115,20 @@ int Texture::get_channels() const {
 }
 
 void Texture::write_to_file(const char* filename) const {
-    int width = get_width();
-    int height = get_height();
-    int channels = get_channels();
-    GLint format = Impl::channels_to_opengl_format(channels);
+    auto buf = copy_to_cpu();
+    stbi_write_png(filename, get_width(), get_height(), get_channels(), buf.data(), 0);
+}
 
-    std::vector<unsigned char> buf(width * height * channels);
+std::vector<unsigned char> Texture::copy_to_cpu() const {
+    GLint format = Impl::channels_to_opengl_format(get_channels());
+
+    std::vector<unsigned char> buf(get_width() * get_height() * get_channels());
 
     glBindTexture(GL_TEXTURE_2D, m_pimpl->m_texture);
     glGetTexImage(GL_TEXTURE_2D, 0, format, GL_UNSIGNED_BYTE, buf.data());
     glBindTexture(GL_TEXTURE_2D, 0);
 
-    stbi_write_png(filename, width, height, channels, buf.data(), 0);
+    return buf;
 }
 
 } // namespace gfx

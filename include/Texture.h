@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <vector>
 
 #include "Rect.h"
 
@@ -49,6 +50,7 @@ public:
 
 private:
     void load_texture_from_file(const char* path);
+    [[nodiscard]] std::vector<unsigned char> copy_to_cpu() const;
 
 };
 
