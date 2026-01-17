@@ -13,9 +13,6 @@
 
 // TODO: raii wrapper for texture
 // TODO: support for off-screen rendering without opening a window
-// TODO: delete framebuffers after every iteration
-// TODO: delete opengl objects in dtors
-// TODO: use gfx types for shape renderers
 // TODO: key state rising edge detection
 // TODO: check_collision_circle
 // TODO: add lerp concept to Animation.h
