@@ -83,6 +83,19 @@ struct Shader : GLObject {
     Shader& operator=(Shader&&) = default;
 };
 
+struct GLTexture : GLObject {
+    GLTexture() {
+        glGenTextures(1, &id);
+    }
+
+    ~GLTexture() {
+        glDeleteTextures(1, &id);
+    }
+
+    GLTexture(GLTexture&&) = default;
+    GLTexture& operator=(GLTexture&&) = default;
+};
+
 [[nodiscard]] inline Shader create_shader(GLenum type, const char* src) {
     Shader shader(type);
     glShaderSource(shader, 1, &src, nullptr);
