@@ -11,10 +11,8 @@ LineRenderer::LineRenderer(const gfx::Window& window)
 
     m_program = create_shader_program(shaders::vertex::default_, shaders::fragment::default_);
 
-    glGenVertexArrays(1, &m_vertex_array);
     glBindVertexArray(m_vertex_array);
 
-    glGenBuffers(1, &m_vertex_buffer);
     glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer);
     GLint a_pos = glGetAttribLocation(m_program, "a_pos");
     glVertexAttribPointer(a_pos, 2, GL_FLOAT, false, sizeof(glm::vec2), nullptr);

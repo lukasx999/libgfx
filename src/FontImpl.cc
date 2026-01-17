@@ -1,3 +1,4 @@
+#include <gfx.h>
 #include "FontImpl.h"
 
 namespace gfx {

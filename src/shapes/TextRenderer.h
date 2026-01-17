@@ -4,6 +4,7 @@
 
 #include <Window.h>
 #include <Font.h>
+#include <Color.h>
 #include "../opengl.h"
 #include "../Glyph.h"
 #include "../FontImpl.h"
@@ -11,11 +12,11 @@
 class TextRenderer final {
     const gfx::Window& m_window;
 
-    GLuint m_program;
-    GLuint m_vertex_array;
-    GLuint m_vertex_buffer;
-    GLuint m_uv_buffer;
-    GLuint m_index_buffer;
+    Program m_program;
+    VertexArray m_vertex_array;
+    Buffer m_vertex_buffer;
+    Buffer m_uv_buffer;
+    Buffer m_index_buffer;
 
     static constexpr std::array m_vertices {
         glm::vec2(1.0, 1.0), // top-right
@@ -38,11 +39,6 @@ class TextRenderer final {
 
 public:
     TextRenderer(const gfx::Window& window);
-
-    TextRenderer(const TextRenderer&) = delete;
-    TextRenderer(TextRenderer&&) = delete;
-    TextRenderer& operator=(const TextRenderer&) = delete;
-    TextRenderer& operator=(TextRenderer&&) = delete;
 
     void draw(float x, float y, int text_size, const char* text, const gfx::Font& font, gfx::Color color, glm::mat4 view);
 

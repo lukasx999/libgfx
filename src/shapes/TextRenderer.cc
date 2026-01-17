@@ -8,24 +8,20 @@ TextRenderer::TextRenderer(const gfx::Window& window)
 
     m_program = create_shader_program(shaders::vertex::texture, shaders::fragment::text);
 
-    glGenVertexArrays(1, &m_vertex_array);
     glBindVertexArray(m_vertex_array);
 
-    glGenBuffers(1, &m_vertex_buffer);
     glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer);
     glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(glm::vec2), m_vertices.data(), GL_STATIC_DRAW);
     GLint a_pos = glGetAttribLocation(m_program, "a_pos");
     glVertexAttribPointer(a_pos, 2, GL_FLOAT, false, sizeof(glm::vec2), nullptr);
     glEnableVertexAttribArray(a_pos);
 
-    glGenBuffers(1, &m_uv_buffer);
     glBindBuffer(GL_ARRAY_BUFFER, m_uv_buffer);
     glBufferData(GL_ARRAY_BUFFER, m_uvs.size() * sizeof(glm::vec2), m_uvs.data(), GL_STATIC_DRAW);
     GLint a_uv = glGetAttribLocation(m_program, "a_uv");
     glVertexAttribPointer(a_uv, 2, GL_FLOAT, false, sizeof(glm::vec2), nullptr);
     glEnableVertexAttribArray(a_uv);
 
-    glGenBuffers(1, &m_index_buffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_index_buffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(unsigned int), m_indices.data(), GL_STATIC_DRAW);
 }

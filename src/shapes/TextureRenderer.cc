@@ -15,14 +15,11 @@ TextureRenderer::TextureRenderer(const gfx::Window& window)
 {
     m_program = create_shader_program(shaders::vertex::texture, shaders::fragment::texture);
 
-    glGenVertexArrays(1, &m_vertex_array);
     glBindVertexArray(m_vertex_array);
 
-    glGenBuffers(1, &m_index_buffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_index_buffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(unsigned int), m_indices.data(), GL_STATIC_DRAW);
 
-    glGenBuffers(1, &m_vertex_buffer);
     glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer);
 
     GLint a_pos = glGetAttribLocation(m_program, "a_pos");
