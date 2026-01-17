@@ -10,18 +10,18 @@
 
 // light raii wrappers for opengl objects
 
-struct OpenGLObject {
+struct GLObject {
     GLuint id;
 
-    OpenGLObject() = default;
-    virtual ~OpenGLObject() = default;
+    GLObject() = default;
+    virtual ~GLObject() = default;
 
-    OpenGLObject(const OpenGLObject& other) = delete;
-    OpenGLObject& operator=(const OpenGLObject& other) = delete;
+    GLObject(const GLObject& other) = delete;
+    GLObject& operator=(const GLObject& other) = delete;
 
-    OpenGLObject(OpenGLObject&& other) : id(std::exchange(other.id, 0)) { }
+    GLObject(GLObject&& other) : id(std::exchange(other.id, 0)) { }
 
-    OpenGLObject& operator=(OpenGLObject&& other) {
+    GLObject& operator=(GLObject&& other) {
         std::swap(id, other.id);
         return *this;
     }
@@ -31,7 +31,7 @@ struct OpenGLObject {
     }
 };
 
-struct VertexArray : OpenGLObject {
+struct VertexArray : GLObject {
     VertexArray() {
         glGenVertexArrays(1, &id);
     }
@@ -44,7 +44,7 @@ struct VertexArray : OpenGLObject {
     VertexArray& operator=(VertexArray&&) = default;
 };
 
-struct Buffer : OpenGLObject {
+struct Buffer : GLObject {
     Buffer() {
         glGenBuffers(1, &id);
     }
@@ -57,7 +57,7 @@ struct Buffer : OpenGLObject {
     Buffer& operator=(Buffer&&) = default;
 };
 
-struct Program : OpenGLObject {
+struct Program : GLObject {
     Program() {
         id = glCreateProgram();
     }
@@ -70,7 +70,7 @@ struct Program : OpenGLObject {
     Program& operator=(Program&&) = default;
 };
 
-struct Shader : OpenGLObject {
+struct Shader : GLObject {
     Shader(GLenum type) {
         id = glCreateShader(type);
     }
