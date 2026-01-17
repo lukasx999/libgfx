@@ -3,7 +3,7 @@
 #include <Window.h>
 #include <types.h>
 
-#include "../util.h"
+#include "../opengl.h"
 
 class TriangleRenderer final {
     const gfx::Window& m_window;

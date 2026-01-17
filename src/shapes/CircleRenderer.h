@@ -5,7 +5,7 @@
 #include <types.h>
 #include <Window.h>
 
-#include "../util.h"
+#include "../opengl.h"
 
 class CircleRenderer final {
     const gfx::Window& m_window;

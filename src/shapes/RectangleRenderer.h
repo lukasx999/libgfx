@@ -4,7 +4,7 @@
 
 #include <Window.h>
 #include <types.h>
-#include "../util.h"
+#include "../opengl.h"
 #include "Rect.h"
 
 class RectangleRenderer final {

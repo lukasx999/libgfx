@@ -4,7 +4,6 @@
 
 #include "CircleRenderer.h"
 #include "../shaders.h"
-#include "../util.h"
 
 CircleRenderer::CircleRenderer(const gfx::Window& window)
 : m_window(window)

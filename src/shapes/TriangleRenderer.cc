@@ -6,7 +6,6 @@
 #include <glm/ext.hpp>
 
 #include "TriangleRenderer.h"
-#include "../util.h"
 #include "../shaders.h"
 
 TriangleRenderer::TriangleRenderer(const gfx::Window& window)

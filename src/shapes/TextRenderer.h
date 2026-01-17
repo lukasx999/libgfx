@@ -4,7 +4,7 @@
 
 #include <Window.h>
 #include <Font.h>
-#include "../util.h"
+#include "../opengl.h"
 #include "../Glyph.h"
 #include "../FontImpl.h"
 

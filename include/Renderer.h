@@ -11,7 +11,7 @@
 #include <Font.h>
 #include <Color.h>
 
-// TODO: finish raii wrapper
+// TODO: support for off-screen rendering without opening a window
 // TODO: delete framebuffers after every iteration
 // TODO: delete opengl objects in dtors
 // TODO: use gfx types for shape renderers

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "util.h"
+#include "opengl.h"
 
 struct Glyph {
     GLuint m_texture;

@@ -1,4 +1,3 @@
-#include "../util.h"
 #include "../shaders.h"
 #include "TextRenderer.h"
 #include "../FontImpl.h"

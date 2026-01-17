@@ -7,7 +7,7 @@
 
 #include "TextureRenderer.h"
 #include "../shaders.h"
-#include "../util.h"
+#include "../opengl.h"
 #include "../TextureImpl.h"
 
 TextureRenderer::TextureRenderer(const gfx::Window& window)

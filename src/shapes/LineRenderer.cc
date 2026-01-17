@@ -3,7 +3,6 @@
 #include <glm/ext.hpp>
 
 #include "LineRenderer.h"
-#include "../util.h"
 #include "../shaders.h"
 
 LineRenderer::LineRenderer(const gfx::Window& window)

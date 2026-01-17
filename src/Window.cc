@@ -4,6 +4,7 @@
 #include <Window.h>
 #include <io.h>
 #include "WindowImpl.h"
+#include "util.h"
 
 namespace gfx {
 

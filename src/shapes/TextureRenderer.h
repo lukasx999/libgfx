@@ -2,7 +2,6 @@
 
 #include <Window.h>
 #include <Texture.h>
-#include "../util.h"
 
 class TextureRenderer final {
     const gfx::Window& m_window;
