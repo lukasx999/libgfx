@@ -149,7 +149,7 @@ public:
 
     void draw_triangle(gfx::Vec a, gfx::Vec b, gfx::Vec c, gfx::Color color);
 
-    void draw_line(gfx::Vec v0, gfx::Vec v1, gfx::Color color);
+    void draw_line(gfx::Vec a, gfx::Vec b, gfx::Color color);
 
     void draw_line(float x0, float y0, float x1, float y1, gfx::Color color) {
         draw_line({ x0, y0 }, { x1, y1 }, color);

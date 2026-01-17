@@ -87,8 +87,8 @@ void Renderer::draw_triangle(gfx::Vec a, gfx::Vec b, gfx::Vec c, gfx::Color colo
     m_pimpl->m_triangle.draw(a, b, c, color, m_pimpl->m_view_active);
 }
 
-void Renderer::draw_line(gfx::Vec start, gfx::Vec end, gfx::Color color) {
-    m_pimpl->m_line.draw(start, end, color, m_pimpl->m_view_active);
+void Renderer::draw_line(gfx::Vec a, gfx::Vec b, gfx::Color color) {
+    m_pimpl->m_line.draw(a, b, color, m_pimpl->m_view_active);
 }
 
 void Renderer::draw_text(float x, float y, int text_size, const char* text, const gfx::Font& font, gfx::Color color) {
