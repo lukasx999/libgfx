@@ -11,6 +11,9 @@
 #include <Font.h>
 #include <Color.h>
 
+// TODO: gfx::Renderer SMF defaulted
+// TODO: texture ctor overload for reserving bytes
+// TODO: Window::get_screen_as_rect()
 // TODO: raii wrapper for texture
 // TODO: support for off-screen rendering without opening a window
 // TODO: key state rising edge detection

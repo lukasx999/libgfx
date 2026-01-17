@@ -18,12 +18,11 @@ int Texture::Impl::opengl_format_to_channels(GLint format) {
     throw gfx::Error("invalid texture format");
 }
 
-GLuint Texture::Impl::generate_texture(const unsigned char* data, int width, int height, int channels) {
+GLTexture Texture::Impl::generate_texture(const unsigned char* data, int width, int height, int channels) {
 
-    GLuint id;
-    glGenTextures(1, &id);
+    GLTexture texture;
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, id);
+    glBindTexture(GL_TEXTURE_2D, texture);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -36,7 +35,7 @@ GLuint Texture::Impl::generate_texture(const unsigned char* data, int width, int
 
     glBindTexture(GL_TEXTURE_2D, 0);
 
-    return id;
+    return texture;
 }
 
 } // namespace gfx

@@ -11,6 +11,7 @@
 #include <Texture.h>
 #include "TextureImpl.h"
 #include "util.h"
+#include "opengl.h"
 
 namespace gfx {
 
@@ -31,9 +32,11 @@ Texture::Texture(int width, int height, int channels, unsigned char* bytes) : Te
     m_pimpl->m_texture = Impl::generate_texture(bytes, width, height, channels);
 }
 
-Texture::~Texture() {
-    glDeleteTextures(1, &m_pimpl->m_texture);
-}
+// the pimpl pattern requires the destructor to "see" the complete
+// type of the Impl structure
+Texture::~Texture() = default;
+Texture::Texture(Texture&&) = default;
+Texture& Texture::operator=(Texture&&) = default;
 
 // there's no need for delegating to the default constructor to check if the library
 // has been initialized in the copy/move ctor, because there's no (reasonable) way to call these ctors
@@ -49,18 +52,9 @@ Texture::Texture(const Texture& other) : m_pimpl(std::make_unique<Texture::Impl>
     );
 }
 
-Texture::Texture(Texture&& other)
-: m_pimpl(std::make_unique<Texture::Impl>(std::exchange(other.m_pimpl->m_texture, 0)))
-{ }
-
 Texture& Texture::operator=(const Texture& other) {
     Texture temp(other);
     std::swap(m_pimpl->m_texture, temp.m_pimpl->m_texture);
-    return *this;
-}
-
-Texture& Texture::operator=(Texture&& other) {
-    std::swap(m_pimpl->m_texture, other.m_pimpl->m_texture);
     return *this;
 }
 

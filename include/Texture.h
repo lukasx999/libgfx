@@ -34,9 +34,9 @@ public:
 
     ~Texture();
     Texture(const Texture& other);
-    Texture(Texture&& other);
     Texture& operator=(const Texture& other);
-    Texture& operator=(Texture&& other);
+    Texture(Texture&&);
+    Texture& operator=(Texture&&);
 
     // construct a new texture from a sub region of the current texture
     [[nodiscard]] Texture slice(int x, int y, int width, int height) const;
