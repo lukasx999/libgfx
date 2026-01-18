@@ -73,10 +73,7 @@ public:
     [[nodiscard]] gfx::Texture draw_offscreen(DrawFn draw_fn);
 
     // calls the given function in a draw loop
-    void draw(DrawFn draw_fn) {
-        while (!m_window.should_close())
-            with_draw_context(draw_fn);
-    }
+    void draw_loop(DrawFn draw_fn);
 
     [[nodiscard]] gfx::Texture to_texture(DrawFn draw_fn);
 

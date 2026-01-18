@@ -17,6 +17,11 @@ Renderer::Renderer(Window& window)
 // type of the Impl structure
 Renderer::~Renderer() = default;
 
+void Renderer::draw_loop(DrawFn draw_fn) {
+    while (!m_window.should_close())
+        with_draw_context(draw_fn);
+}
+
 void Renderer::with_draw_context(DrawFn draw_fn) {
 
     // calculate frame time

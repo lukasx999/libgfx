@@ -13,7 +13,7 @@ int main() {
     gfx::Window window(1600, 900, "my gfx application");
     gfx::Renderer renderer(window);
 
-    renderer.draw([&] {
+    renderer.draw_loop([&] {
         renderer.clear_background(gfx::Color::black());
         renderer.draw_rectangle(0, 0, 100, 100, gfx::Color::white());
     });
