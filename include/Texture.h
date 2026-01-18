@@ -19,9 +19,10 @@ class Texture {
     struct Impl;
     std::unique_ptr<Impl> m_pimpl;
 
-    Texture();
 
 public:
+    Texture();
+
     // construct a texture from a file
     explicit Texture(const char* path);
 
@@ -30,7 +31,7 @@ public:
 
     // construct a texture from memory
     // passing nullptr to bytes will reserve memory only
-    Texture(int width, int height, int channels, unsigned char* bytes = nullptr);
+    Texture(int width, int height, int channels, const unsigned char* bytes = nullptr);
 
     ~Texture();
     Texture(const Texture& other);
@@ -53,6 +54,7 @@ public:
 private:
     void load_texture_from_file(const char* path);
     [[nodiscard]] std::vector<unsigned char> copy_to_cpu() const;
+    static void check_library_init();
 
 };
 

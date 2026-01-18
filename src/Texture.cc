@@ -22,20 +22,22 @@
 
 namespace gfx {
 
-Texture::Texture() : m_pimpl(std::make_unique<Texture::Impl>()) {
-    if (!library_has_been_initialized)
-        throw gfx::Error("cannot construct a gfx::Texture before the gfx library has been initialized. construct a gfx::Window to fix this issue.");
+Texture::Texture() : Texture(0, 0, 3) {
+    check_library_init();
 }
 
-Texture::Texture(const char* path) : Texture() {
+Texture::Texture(const char* path) : m_pimpl(std::make_unique<Texture::Impl>()) {
+    check_library_init();
     load_texture_from_file(path);
 }
 
-Texture::Texture(const std::string& path) : Texture() {
+Texture::Texture(const std::string& path) : m_pimpl(std::make_unique<Texture::Impl>()) {
+    check_library_init();
     load_texture_from_file(path.c_str());
 }
 
-Texture::Texture(int width, int height, int channels, unsigned char* bytes) : Texture() {
+Texture::Texture(int width, int height, int channels, const unsigned char* bytes) : m_pimpl(std::make_unique<Texture::Impl>()) {
+    check_library_init();
     m_pimpl->m_texture = Impl::generate_texture(bytes, width, height, channels);
 }
 
@@ -45,9 +47,8 @@ Texture::~Texture() = default;
 Texture::Texture(Texture&&) = default;
 Texture& Texture::operator=(Texture&&) = default;
 
-// there's no need for delegating to the default constructor to check if the library
-// has been initialized in the copy/move ctor, because there's no (reasonable) way to call these ctors
-// without already having another gfx::Texture
+// there's no need for checking if the library has been initialized in the copy/move ctor,
+// because there's no (reasonable) way to call these ctors without already having another gfx::Texture
 
 Texture::Texture(const Texture& other) : m_pimpl(std::make_unique<Texture::Impl>()) {
     auto buf = other.copy_to_cpu();
@@ -148,6 +149,11 @@ std::vector<unsigned char> Texture::copy_to_cpu() const {
     glBindTexture(GL_TEXTURE_2D, 0);
 
     return buf;
+}
+
+void Texture::check_library_init() {
+    if (!library_has_been_initialized)
+        throw gfx::Error("cannot construct a gfx::Texture before the gfx library has been initialized. construct a gfx::Window to fix this issue.");
 }
 
 } // namespace gfx
