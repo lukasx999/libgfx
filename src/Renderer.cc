@@ -17,7 +17,7 @@ Renderer::Renderer(Window& window)
 // type of the Impl structure
 Renderer::~Renderer() = default;
 
-void Renderer::with_draw_context(std::function<void()> draw_fn) {
+void Renderer::with_draw_context(DrawFn draw_fn) {
 
     // calculate frame time
     double frame_start = glfwGetTime();
@@ -38,7 +38,7 @@ void Renderer::with_draw_context(std::function<void()> draw_fn) {
     nanosleep(&ts, nullptr);
 }
 
-gfx::Texture Renderer::draw_offscreen(std::function<void()> draw_fn) {
+gfx::Texture Renderer::draw_offscreen(DrawFn draw_fn) {
     gfx::Texture texture;
 
     with_draw_context([&] {
@@ -48,7 +48,7 @@ gfx::Texture Renderer::draw_offscreen(std::function<void()> draw_fn) {
     return texture;
 }
 
-gfx::Texture Renderer::to_texture(std::function<void()> draw_fn) {
+gfx::Texture Renderer::to_texture(DrawFn draw_fn) {
 
     gfx::Texture texture(m_window.get_width(), m_window.get_height(), 3);
 
@@ -64,7 +64,7 @@ gfx::Texture Renderer::to_texture(std::function<void()> draw_fn) {
     return texture;
 }
 
-void Renderer::with_camera(std::function<void()> draw_fn) {
+void Renderer::with_camera(DrawFn draw_fn) {
     m_pimpl->m_view_active = m_pimpl->m_view_camera;
     draw_fn();
     m_pimpl-> m_view_active = m_pimpl->m_view_default;

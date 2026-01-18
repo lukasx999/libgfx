@@ -39,6 +39,8 @@ class Renderer final {
     double m_last_frame = 0.0;
     double m_desired_fps = 0.0;
 
+    using DrawFn = std::function<void()>;
+
 public:
     explicit Renderer(gfx::Window& window);
     Renderer(const Renderer&) = delete;
@@ -66,19 +68,19 @@ public:
 
     // calls the given function in a draw context, issuing draw calls outside
     // of this context, will result in undefined behavior
-    void with_draw_context(std::function<void()> draw_fn);
+    void with_draw_context(DrawFn draw_fn);
 
-    [[nodiscard]] gfx::Texture draw_offscreen(std::function<void()> draw_fn);
+    [[nodiscard]] gfx::Texture draw_offscreen(DrawFn draw_fn);
 
     // calls the given function in a draw loop
-    void draw(std::function<void()> draw_fn) {
+    void draw(DrawFn draw_fn) {
         while (!m_window.should_close())
             with_draw_context(draw_fn);
     }
 
-    [[nodiscard]] gfx::Texture to_texture(std::function<void()> draw_fn);
+    [[nodiscard]] gfx::Texture to_texture(DrawFn draw_fn);
 
-    void with_camera(std::function<void()> draw_fn);
+    void with_camera(DrawFn draw_fn);
 
     void set_camera(float center_x, float center_y);
 
