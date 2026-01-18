@@ -39,9 +39,9 @@ class Renderer final {
     double m_last_frame = 0.0;
     double m_desired_fps = 0.0;
 
+public:
     using DrawFn = std::function<void()>;
 
-public:
     explicit Renderer(gfx::Window& window);
     Renderer(const Renderer&) = delete;
     Renderer(Renderer&&) = delete;
