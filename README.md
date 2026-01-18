@@ -1,6 +1,6 @@
 # libgfx
 
-easy to use c++ 2d graphics/game library
+libgfx is an easy-to-use library for game/graphics programming written in modern C++23.
 
 ## Example
 
