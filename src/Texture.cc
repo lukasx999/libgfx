@@ -66,18 +66,19 @@ Texture& Texture::operator=(const Texture& other) {
 }
 
 Texture Texture::slice(gfx::Rect region) const {
-    return slice(region.x, region.y, region.width, region.height);
-}
-
-Texture Texture::slice(int x, int y, int width, int height) const {
-
     int channels = get_channels();
     GLint format = Impl::channels_to_opengl_format(channels);
+
+    auto [x, y, width, height] = region;
 
     std::vector<unsigned char> buf(width * height * channels);
     glGetTextureSubImage(m_pimpl->m_texture, 0, x, y, 0, width, height, 1, format, GL_UNSIGNED_BYTE, buf.size() * sizeof(unsigned char), buf.data());
 
     return Texture(width, height, channels, buf.data());
+}
+
+Texture Texture::slice(float x, float y, float width, float height) const {
+    return slice({ x, y, width, height });
 }
 
 void Texture::load_texture_from_file(const char* path) {

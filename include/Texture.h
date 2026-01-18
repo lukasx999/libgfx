@@ -39,8 +39,8 @@ public:
     Texture& operator=(Texture&&);
 
     // construct a new texture from a sub region of the current texture
-    [[nodiscard]] Texture slice(int x, int y, int width, int height) const;
     [[nodiscard]] Texture slice(gfx::Rect region) const;
+    [[nodiscard]] Texture slice(float x, float y, float width, float height) const;
 
     [[nodiscard]] int get_width() const;
     [[nodiscard]] int get_height() const;
