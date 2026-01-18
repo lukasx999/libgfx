@@ -11,7 +11,6 @@
 #include <Font.h>
 #include <Color.h>
 
-// TODO: gfx::Renderer SMF defaulted
 // TODO: texture ctor overload for reserving bytes
 // TODO: Window::get_screen_as_rect()
 // TODO: raii wrapper for texture
@@ -44,6 +43,10 @@ class Renderer final {
 
 public:
     explicit Renderer(gfx::Window& window);
+    Renderer(const Renderer&) = delete;
+    Renderer(Renderer&&) = delete;
+    Renderer& operator=(const Renderer&) = delete;
+    Renderer& operator=(Renderer&&) = delete;
     ~Renderer();
 
     // 0.0 means no limit
