@@ -38,6 +38,16 @@ void Renderer::with_draw_context(std::function<void()> draw_fn) {
     nanosleep(&ts, nullptr);
 }
 
+gfx::Texture Renderer::draw_offscreen(std::function<void()> draw_fn) {
+    gfx::Texture texture;
+
+    with_draw_context([&] {
+        texture = to_texture(draw_fn);
+    });
+
+    return texture;
+}
+
 gfx::Texture Renderer::to_texture(std::function<void()> draw_fn) {
 
     gfx::Texture texture(m_window.get_width(), m_window.get_height(), 3);

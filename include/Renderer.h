@@ -11,6 +11,8 @@
 #include <Font.h>
 #include <Color.h>
 
+// TODO: offscreen rendering without window popup
+// TODO: make texture default ctor public
 // TODO: texture ctor overload for reserving bytes
 // TODO: raii wrapper for framebuffer
 // TODO: support for off-screen rendering without opening a window
@@ -68,6 +70,8 @@ public:
     // calls the given function in a draw context, issuing draw calls outside
     // of this context, will result in undefined behavior
     void with_draw_context(std::function<void()> draw_fn);
+
+    [[nodiscard]] gfx::Texture draw_offscreen(std::function<void()> draw_fn);
 
     // calls the given function in a draw loop
     void draw(std::function<void()> draw_fn) {
