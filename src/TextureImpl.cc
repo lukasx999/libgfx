@@ -18,9 +18,9 @@ int Texture::Impl::opengl_format_to_channels(GLint format) {
     throw gfx::Error("invalid texture format");
 }
 
-GLTexture Texture::Impl::generate_texture(const unsigned char* data, int width, int height, int channels) {
+gl::GLTexture Texture::Impl::generate_texture(const unsigned char* data, int width, int height, int channels) {
 
-    GLTexture texture;
+    gl::GLTexture texture;
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture);
 

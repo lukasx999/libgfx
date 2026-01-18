@@ -10,6 +10,8 @@
 
 // light raii wrappers for opengl objects
 
+namespace gl {
+
 struct GLObject {
     GLuint id;
 
@@ -136,3 +138,5 @@ struct GLTexture : GLObject {
 
     return program;
 }
+
+} // namespace gl

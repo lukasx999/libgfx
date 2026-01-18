@@ -8,10 +8,10 @@
 class TextureRenderer final {
     const gfx::Window& m_window;
 
-    Program m_program;
-    VertexArray m_vertex_array;
-    Buffer m_vertex_buffer;
-    Buffer m_index_buffer;
+    gl::Program m_program;
+    gl::VertexArray m_vertex_array;
+    gl::Buffer m_vertex_buffer;
+    gl::Buffer m_index_buffer;
 
     static constexpr std::array m_indices {
         0u, // top-left

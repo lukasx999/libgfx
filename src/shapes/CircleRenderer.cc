@@ -8,7 +8,7 @@
 CircleRenderer::CircleRenderer(const gfx::Window& window)
 : m_window(window)
 {
-    m_program = create_shader_program(shaders::vertex::default_, shaders::fragment::circle);
+    m_program = gl::create_shader_program(shaders::vertex::default_, shaders::fragment::circle);
 
     glBindVertexArray(m_vertex_array);
 

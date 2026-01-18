@@ -9,7 +9,7 @@ LineRenderer::LineRenderer(const gfx::Window& window)
 : m_window(window)
 {
 
-    m_program = create_shader_program(shaders::vertex::default_, shaders::fragment::default_);
+    m_program = gl::create_shader_program(shaders::vertex::default_, shaders::fragment::default_);
 
     glBindVertexArray(m_vertex_array);
 

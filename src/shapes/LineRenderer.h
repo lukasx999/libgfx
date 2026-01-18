@@ -8,9 +8,9 @@
 class LineRenderer final {
     const gfx::Window& m_window;
 
-    Program m_program;
-    VertexArray m_vertex_array;
-    Buffer m_vertex_buffer;
+    gl::Program m_program;
+    gl::VertexArray m_vertex_array;
+    gl::Buffer m_vertex_buffer;
 
 public:
     explicit LineRenderer(const gfx::Window& window);

@@ -6,7 +6,7 @@ TextRenderer::TextRenderer(const gfx::Window& window)
 : m_window(window)
 {
 
-    m_program = create_shader_program(shaders::vertex::texture, shaders::fragment::text);
+    m_program = gl::create_shader_program(shaders::vertex::texture, shaders::fragment::text);
 
     glBindVertexArray(m_vertex_array);
 

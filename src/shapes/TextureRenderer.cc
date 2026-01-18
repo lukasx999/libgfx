@@ -13,7 +13,7 @@
 TextureRenderer::TextureRenderer(const gfx::Window& window)
 : m_window(window)
 {
-    m_program = create_shader_program(shaders::vertex::texture, shaders::fragment::texture);
+    m_program = gl::create_shader_program(shaders::vertex::texture, shaders::fragment::texture);
 
     glBindVertexArray(m_vertex_array);
 
