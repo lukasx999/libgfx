@@ -12,7 +12,6 @@
 #include <Color.h>
 
 // TODO: support for off-screen rendering without opening a window
-// TODO: make texture default ctor public
 // TODO: key state rising edge detection
 // TODO: check_collision_circle
 // TODO: add lerp concept to Animation.h

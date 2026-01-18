@@ -25,8 +25,6 @@ public:
 
     // construct a texture from a file
     explicit Texture(const char* path);
-
-    // construct a texture from a file
     explicit Texture(const std::string& path);
 
     // construct a texture from memory
