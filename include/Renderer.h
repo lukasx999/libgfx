@@ -12,7 +12,7 @@
 #include <Color.h>
 
 // TODO: texture ctor overload for reserving bytes
-// TODO: raii wrapper for texture
+// TODO: raii wrapper for framebuffer
 // TODO: support for off-screen rendering without opening a window
 // TODO: key state rising edge detection
 // TODO: check_collision_circle
