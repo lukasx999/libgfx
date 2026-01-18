@@ -11,11 +11,8 @@
 #include <Font.h>
 #include <Color.h>
 
-// TODO: offscreen rendering without window popup
-// TODO: make texture default ctor public
-// TODO: texture ctor overload for reserving bytes
-// TODO: raii wrapper for framebuffer
 // TODO: support for off-screen rendering without opening a window
+// TODO: make texture default ctor public
 // TODO: key state rising edge detection
 // TODO: check_collision_circle
 // TODO: add lerp concept to Animation.h
