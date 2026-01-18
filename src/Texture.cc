@@ -6,7 +6,14 @@
 #include <stb_image.h>
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
+
+// stb_image_write.h uses c-style initializers for their structs
+// eg: `Struct struct = { 0 }`, which yields a warning when compiling as C++
+// when not all members are mentioned
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
 #include <stb_image_write.h>
+#pragma GCC diagnostic pop
 
 #include <Texture.h>
 #include "TextureImpl.h"
