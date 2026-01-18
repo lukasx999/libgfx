@@ -98,6 +98,19 @@ struct Texture : Object {
     Texture& operator=(Texture&&) = default;
 };
 
+struct Framebuffer : Object {
+    Framebuffer() {
+        glGenFramebuffers(1, &id);
+    }
+
+    ~Framebuffer() {
+        glDeleteFramebuffers(1, &id);
+    }
+
+    Framebuffer(Framebuffer&&) = default;
+    Framebuffer& operator=(Framebuffer&&) = default;
+};
+
 [[nodiscard]] inline Shader create_shader(GLenum type, const char* src) {
     Shader shader(type);
     glShaderSource(shader, 1, &src, nullptr);

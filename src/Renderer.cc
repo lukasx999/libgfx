@@ -42,8 +42,7 @@ gfx::Texture Renderer::to_texture(std::function<void()> draw_fn) {
 
     gfx::Texture texture(m_window.get_width(), m_window.get_height(), 3, nullptr);
 
-    GLuint framebuffer;
-    glGenFramebuffers(1, &framebuffer);
+    gl::Framebuffer framebuffer;
     glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
 
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.m_pimpl->m_texture, 0);
@@ -51,8 +50,6 @@ gfx::Texture Renderer::to_texture(std::function<void()> draw_fn) {
 
     draw_fn();
 
-    // TODO:
-    // glDeleteFramebuffers(1, &framebuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     return texture;
 }
