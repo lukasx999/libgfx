@@ -2,7 +2,7 @@
 #include <GLFW/glfw3.h>
 
 #include <Window.h>
-#include <io.h>
+#include <input.h>
 #include "WindowImpl.h"
 #include "util.h"
 

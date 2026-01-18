@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Font.h"
-#include "Rect.h"
 #include <memory>
 
+#include "Font.h"
+#include "Rect.h"
 #include <types.h>
 #include <Vec.h>
-#include <io.h>
+#include <input.h>
 
 namespace gfx {
 
@@ -26,11 +26,11 @@ class Window final {
 
 public:
     Window(int width, int height, const char* window_title, uint8_t flags);
+    ~Window();
     Window(const Window&) = delete;
     Window(Window&&) = delete;
     Window& operator=(const Window&) = delete;
     Window& operator=(Window&&) = delete;
-    ~Window();
 
     [[nodiscard]] bool should_close() const;
     [[nodiscard]] const char* get_title() const;

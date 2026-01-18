@@ -2,7 +2,6 @@
 
 #include <cmath>
 #include <string>
-#include <format>
 #include <stdexcept>
 
 namespace gfx {

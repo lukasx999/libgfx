@@ -5,7 +5,7 @@ FontImpl.cc
 TextureImpl.cc
 Renderer.cc
 RendererImpl.cc
-io.cc
+input.cc
 Font.cc
 Texture.cc
 WindowImpl.cc

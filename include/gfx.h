@@ -7,7 +7,7 @@
 #include <Button.h>
 #include <Vec.h>
 #include <Font.h>
-#include <io.h>
+#include <input.h>
 #include <Texture.h>
 #include <Rect.h>
 #include <Spritesheet.h>
