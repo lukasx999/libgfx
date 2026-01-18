@@ -12,18 +12,18 @@
 
 namespace gl {
 
-struct GLObject {
+struct Object {
     GLuint id;
 
-    GLObject() = default;
-    virtual ~GLObject() = default;
+    Object() = default;
+    virtual ~Object() = default;
 
-    GLObject(const GLObject& other) = delete;
-    GLObject& operator=(const GLObject& other) = delete;
+    Object(const Object& other) = delete;
+    Object& operator=(const Object& other) = delete;
 
-    GLObject(GLObject&& other) : id(std::exchange(other.id, 0)) { }
+    Object(Object&& other) : id(std::exchange(other.id, 0)) { }
 
-    GLObject& operator=(GLObject&& other) {
+    Object& operator=(Object&& other) {
         std::swap(id, other.id);
         return *this;
     }
@@ -33,7 +33,7 @@ struct GLObject {
     }
 };
 
-struct VertexArray : GLObject {
+struct VertexArray : Object {
     VertexArray() {
         glGenVertexArrays(1, &id);
     }
@@ -46,7 +46,7 @@ struct VertexArray : GLObject {
     VertexArray& operator=(VertexArray&&) = default;
 };
 
-struct Buffer : GLObject {
+struct Buffer : Object {
     Buffer() {
         glGenBuffers(1, &id);
     }
@@ -59,7 +59,7 @@ struct Buffer : GLObject {
     Buffer& operator=(Buffer&&) = default;
 };
 
-struct Program : GLObject {
+struct Program : Object {
     Program() {
         id = glCreateProgram();
     }
@@ -72,7 +72,7 @@ struct Program : GLObject {
     Program& operator=(Program&&) = default;
 };
 
-struct Shader : GLObject {
+struct Shader : Object {
     Shader(GLenum type) {
         id = glCreateShader(type);
     }
@@ -85,17 +85,17 @@ struct Shader : GLObject {
     Shader& operator=(Shader&&) = default;
 };
 
-struct GLTexture : GLObject {
-    GLTexture() {
+struct Texture : Object {
+    Texture() {
         glGenTextures(1, &id);
     }
 
-    ~GLTexture() {
+    ~Texture() {
         glDeleteTextures(1, &id);
     }
 
-    GLTexture(GLTexture&&) = default;
-    GLTexture& operator=(GLTexture&&) = default;
+    Texture(Texture&&) = default;
+    Texture& operator=(Texture&&) = default;
 };
 
 [[nodiscard]] inline Shader create_shader(GLenum type, const char* src) {
