@@ -14,6 +14,10 @@ Window::Window(int width, int height, const char* window_title, WindowFlags flag
     library_has_been_initialized = true;
 }
 
+Window::Window(int width, int height, const char* window_title)
+: Window(width, height, window_title, WindowFlags())
+{ }
+
 Window::~Window() {
     glfwDestroyWindow(m_pimpl->m_window);
     glfwTerminate();

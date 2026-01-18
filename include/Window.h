@@ -51,6 +51,7 @@ class Window final {
 
 public:
     Window(int width, int height, const char* window_title, WindowFlags flags);
+    Window(int width, int height, const char* window_title);
     ~Window();
     Window(const Window&) = delete;
     Window(Window&&) = delete;
