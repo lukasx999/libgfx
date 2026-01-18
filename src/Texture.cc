@@ -39,8 +39,6 @@ Texture::Texture(int width, int height, int channels, unsigned char* bytes) : Te
     m_pimpl->m_texture = Impl::generate_texture(bytes, width, height, channels);
 }
 
-Texture::Texture(int width, int height, int channels) : Texture(width, height, channels, nullptr) { }
-
 // the pimpl pattern requires the destructor to "see" the complete
 // type of the Impl structure
 Texture::~Texture() = default;

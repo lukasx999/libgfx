@@ -30,10 +30,7 @@ public:
 
     // construct a texture from memory
     // passing nullptr to bytes will reserve memory only
-    Texture(int width, int height, int channels, unsigned char* bytes);
-
-    // reserve memory only
-    Texture(int width, int height, int channels);
+    Texture(int width, int height, int channels, unsigned char* bytes = nullptr);
 
     ~Texture();
     Texture(const Texture& other);

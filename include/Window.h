@@ -50,8 +50,8 @@ class Window final {
     std::unique_ptr<Impl> m_pimpl;
 
 public:
-    Window(int width, int height, const char* window_title, WindowFlags flags);
-    Window(int width, int height, const char* window_title);
+    Window(int width, int height, const char* window_title, WindowFlags flags = {});
+
     ~Window();
     Window(const Window&) = delete;
     Window(Window&&) = delete;
