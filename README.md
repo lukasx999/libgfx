@@ -10,7 +10,7 @@ easy to use c++ 2d graphics/game library
 
 int main() {
 
-    gfx::Window window(1600, 900, "my gfx application", gfx::WindowFlags::None);
+    gfx::Window window(1600, 900, "my gfx application");
     gfx::Renderer renderer(window);
 
     renderer.draw([&] {
