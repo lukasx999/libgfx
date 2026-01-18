@@ -24,7 +24,6 @@ void Renderer::draw_loop(DrawFn draw_fn) {
 
 void Renderer::with_draw_context(DrawFn draw_fn) {
 
-    // calculate frame time
     double frame_start = glfwGetTime();
     m_frame_time = frame_start - m_last_frame;
     m_last_frame = frame_start;
