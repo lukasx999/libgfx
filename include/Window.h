@@ -10,13 +10,38 @@
 
 namespace gfx {
 
-enum WindowFlags : uint8_t {
-    None          = 1 << 0,
-    Resizable     = 1 << 1,
-    DisableCursor = 1 << 2,
-    DisableVsync  = 1 << 3,
-    Logging       = 1 << 4,
-    Wireframe     = 1 << 5,
+struct WindowFlags {
+    bool m_enable_resizing  = false;
+    bool m_show_cursor      = true;
+    bool m_enable_vsync     = true;
+    bool m_enable_logging   = true;
+    bool m_enable_wireframe = false;
+
+    WindowFlags& enable_resizing(bool value) {
+        m_enable_resizing = value;
+        return *this;
+    }
+
+    WindowFlags& show_cursor(bool value) {
+        m_show_cursor = value;
+        return *this;
+    }
+
+    WindowFlags& enable_vsync(bool value) {
+        m_enable_vsync = value;
+        return *this;
+    }
+
+    WindowFlags& enable_logging(bool value) {
+        m_enable_logging = value;
+        return *this;
+    }
+
+    WindowFlags& enable_wireframe(bool value) {
+        m_enable_wireframe = value;
+        return *this;
+    }
+
 };
 
 class Window final {
@@ -25,7 +50,7 @@ class Window final {
     std::unique_ptr<Impl> m_pimpl;
 
 public:
-    Window(int width, int height, const char* window_title, uint8_t flags);
+    Window(int width, int height, const char* window_title, WindowFlags flags);
     ~Window();
     Window(const Window&) = delete;
     Window(Window&&) = delete;

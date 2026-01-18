@@ -8,7 +8,7 @@
 
 namespace gfx {
 
-Window::Window(int width, int height, const char* window_title, uint8_t flags)
+Window::Window(int width, int height, const char* window_title, WindowFlags flags)
 : m_pimpl(std::make_unique<Window::Impl>(width, height, window_title, flags))
 {
     library_has_been_initialized = true;

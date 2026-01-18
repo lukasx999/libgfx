@@ -7,12 +7,12 @@
 
 namespace gfx {
 
-Window::Impl::Impl(int width, int height, const char* window_title, uint8_t flags) {
+Window::Impl::Impl(int width, int height, const char* window_title, WindowFlags flags) {
 
     if (FT_Init_FreeType(&m_ft) != 0)
         throw gfx::Error("failed to initialize ft2");
 
-    if (flags & WindowFlags::Logging) {
+    if (flags.m_enable_logging) {
         glfwSetErrorCallback([]([[maybe_unused]] int error, const char* desc) {
             std::println(stderr, "glfw error: {}", desc);
         });
@@ -21,7 +21,7 @@ Window::Impl::Impl(int width, int height, const char* window_title, uint8_t flag
     if (!glfwInit())
         throw gfx::Error("failed to create window");
 
-    glfwWindowHint(GLFW_RESIZABLE, flags & WindowFlags::Resizable);
+    glfwWindowHint(GLFW_RESIZABLE, flags.m_enable_resizing);
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
     glfwWindowHint(GLFW_SAMPLES, 4);
 
@@ -31,18 +31,18 @@ Window::Impl::Impl(int width, int height, const char* window_title, uint8_t flag
 
     glfwMakeContextCurrent(m_window);
     gladLoadGL(glfwGetProcAddress);
-    glfwSwapInterval(flags & WindowFlags::DisableVsync ? 0 : 1);
+    glfwSwapInterval(flags.m_enable_vsync);
 
-    glfwSetInputMode(m_window, GLFW_CURSOR, flags & WindowFlags::DisableCursor ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
+    glfwSetInputMode(m_window, GLFW_CURSOR, flags.m_show_cursor ? GLFW_CURSOR_NORMAL : GLFW_CURSOR_DISABLED);
 
     glEnable(GL_MULTISAMPLE);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    if (flags & WindowFlags::Wireframe)
+    if (flags.m_enable_wireframe)
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-    if (flags & WindowFlags::Logging)
+    if (flags.m_enable_logging)
         glDebugMessageCallback(debug_message_callback, nullptr);
 
     glfwSetWindowSizeCallback(m_window, []([[maybe_unused]] GLFWwindow* window, int width, int height) {

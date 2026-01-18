@@ -14,7 +14,7 @@ struct Window::Impl {
 
     FT_Library m_ft;
 
-    Impl(int width, int height, const char *window_title, uint8_t flags);
+    Impl(int width, int height, const char *window_title, WindowFlags flags);
 
     ~Impl() {
         FT_Done_FreeType(m_ft);
