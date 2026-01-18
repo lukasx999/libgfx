@@ -47,6 +47,15 @@ int Window::get_height() const {
     return height;
 }
 
+gfx::Rect Window::get_screen_rect() const {
+    return {
+        0.0f,
+        0.0f,
+        static_cast<float>(get_width()),
+        static_cast<float>(get_height()),
+    };
+}
+
 double Window::get_time() const {
     return glfwGetTime();
 }

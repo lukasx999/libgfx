@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Font.h"
+#include "Rect.h"
 #include <memory>
 
 #include <types.h>
@@ -35,6 +36,7 @@ public:
     [[nodiscard]] const char* get_title() const;
     [[nodiscard]] int get_width() const;
     [[nodiscard]] int get_height() const;
+    [[nodiscard]] gfx::Rect get_screen_rect() const;
     void set_title(const char* title);
     void close();
     // returns the current time in seconds
