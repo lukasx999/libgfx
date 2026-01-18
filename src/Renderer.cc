@@ -40,7 +40,7 @@ void Renderer::with_draw_context(std::function<void()> draw_fn) {
 
 gfx::Texture Renderer::to_texture(std::function<void()> draw_fn) {
 
-    gfx::Texture texture(m_window.get_width(), m_window.get_height(), 3, nullptr);
+    gfx::Texture texture(m_window.get_width(), m_window.get_height(), 3);
 
     gl::Framebuffer framebuffer;
     glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);

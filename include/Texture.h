@@ -32,6 +32,9 @@ public:
     // passing nullptr to bytes will reserve memory only
     Texture(int width, int height, int channels, unsigned char* bytes);
 
+    // reserve memory only
+    Texture(int width, int height, int channels);
+
     ~Texture();
     Texture(const Texture& other);
     Texture& operator=(const Texture& other);
