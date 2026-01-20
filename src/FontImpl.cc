@@ -15,10 +15,10 @@ Font::Impl::~Impl() {
 Glyph Font::Impl::load_glyph(char c, unsigned int size) const {
 
     if (FT_Set_Pixel_Sizes(m_face, 0, size))
-        throw gfx::Error("failed to set pixel size");
+        throw gfx::Error("failed to load glyph: failed to set pixel size");
 
     if (FT_Load_Char(m_face, c, FT_LOAD_RENDER) != 0)
-        throw gfx::Error("failed to load char");
+        throw gfx::Error("failed to load glyph: failed to load char");
 
     auto glyph = m_face->glyph;
     int width = glyph->bitmap.width;
