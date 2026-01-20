@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <string_view>
 
 #include <Window.h>
 #include <Font.h>
@@ -40,7 +41,7 @@ class TextRenderer final {
 public:
     TextRenderer(const gfx::Window& window);
 
-    void draw(gfx::Vec pos, int text_size, const char* text, const gfx::Font& font, gfx::Color color, glm::mat4 view);
+    void draw(gfx::Vec pos, int text_size, std::string_view text, const gfx::Font& font, gfx::Color color, glm::mat4 view);
 
 private:
     void draw_char(gfx::Vec pos, const Glyph& glyph, gfx::Color color, int text_size, glm::mat4 view);
