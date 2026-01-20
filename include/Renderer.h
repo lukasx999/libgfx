@@ -11,6 +11,7 @@
 #include <Font.h>
 #include <Color.h>
 
+// TODO: texture enum class for format (rgb, rgba, ...)
 // TODO: support for off-screen rendering without opening a window
 // TODO: key state rising edge detection
 // TODO: check_collision_circle
