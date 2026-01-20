@@ -49,15 +49,16 @@ Window::Impl::Impl(int width, int height, const char* window_title, WindowFlags 
         glViewport(0, 0, width, height);
     });
 
+    // TODO: this issue might have been fixed...
     // when setting the window to not be resizable via glfwWindowHint(), glfw may
     // decide to resize the window, so in order to process the resize event before
     // the library user may access the window width/height, we have to poll the events first.
     // we also have to swap buffers exactly three times, probably because the driver
     // is using triple buffering.
-    glfwSwapBuffers(m_window);
-    glfwSwapBuffers(m_window);
-    glfwSwapBuffers(m_window);
-    glfwPollEvents();
+    // glfwSwapBuffers(m_window);
+    // glfwSwapBuffers(m_window);
+    // glfwSwapBuffers(m_window);
+    // glfwPollEvents();
 }
 
 void Window::Impl::debug_message_callback(
