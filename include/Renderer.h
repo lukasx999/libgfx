@@ -14,8 +14,9 @@
 
 // TODO: camera rotation
 // TODO: seperate drawing functions from organizing ones (draw_offscreen, draw_loop)
-// TODO: introduce something like gfx::Surface for organizing drawing
 // TODO: restructure api to enable embedding into other applications (eg: qt opengl context)
+// NOTE: introduce something like gfx::Surface for organizing drawing
+// NOTE: renderer needs from surface: width, height
 // TODO: draw fn overloads for taking renderer as first argument
 // TODO: texture enum class for format (rgb, rgba, ...)
 // TODO: key state rising edge detection
