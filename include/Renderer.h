@@ -158,7 +158,7 @@ public:
         draw_line({ x0, y0 }, { x1, y1 }, color);
     }
 
-    void draw_text(gfx::Vec vec, int text_size, std::string_view text, const gfx::Font& font, gfx::Color color);
+    void draw_text(gfx::Vec pos, int text_size, std::string_view text, const gfx::Font& font, gfx::Color color);
 
     void draw_text(float x, float y, int text_size, std::string_view text, const gfx::Font& font, gfx::Color color) {
         draw_text({ x, y }, text_size, text, font, color);
