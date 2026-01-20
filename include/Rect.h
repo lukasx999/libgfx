@@ -19,9 +19,25 @@ struct Rect {
         return collision_x && collision_y;
     }
 
-    // TODO:
-    // [[nodiscard]] constexpr bool check_collision_circle(gfx::Vec p, float radius) const {
-    // }
+    Rect& set_x(float new_x) {
+        x = new_x;
+        return *this;
+    }
+
+    Rect& set_y(float new_y) {
+        y = new_y;
+        return *this;
+    }
+
+    Rect& set_width(float new_width) {
+        width = new_width;
+        return *this;
+    }
+
+    Rect& set_height(float new_height) {
+        height = new_height;
+        return *this;
+    }
 
 };
 
