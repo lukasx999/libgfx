@@ -60,17 +60,22 @@ public:
 
     [[nodiscard]] bool should_close() const;
     [[nodiscard]] const char* get_title() const;
-    [[nodiscard]] gfx::Vec get_midpoint() const;
     [[nodiscard]] int get_width() const;
     [[nodiscard]] int get_height() const;
+
+    [[nodiscard]] gfx::Vec get_midpoint() const;
     [[nodiscard]] gfx::Rect get_screen_rect() const;
+
     void set_title(const char* title);
     void close();
+
     // returns the current time in seconds
     [[nodiscard]] double get_time() const;
+
     [[nodiscard]] KeyState get_mouse_button_state(MouseButton mb) const;
     [[nodiscard]] KeyState get_key_state(Key key) const;
     [[nodiscard]] gfx::Vec get_mouse_pos() const;
+
     [[nodiscard]] gfx::Font load_font(const char* path) const;
 
 private:
