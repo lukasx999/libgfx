@@ -14,7 +14,6 @@
 // TODO: draw fn overloads for taking renderer as first argument
 // TODO: restructure api to enable embedding into other applications (eg: qt opengl context)
 // TODO: texture enum class for format (rgb, rgba, ...)
-// TODO: support for off-screen rendering without opening a window
 // TODO: key state rising edge detection
 // TODO: check_collision_circle
 // TODO: add lerp concept to Animation.h
