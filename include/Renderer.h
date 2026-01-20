@@ -11,6 +11,7 @@
 #include <Font.h>
 #include <Color.h>
 
+// TODO: draw fn overloads for taking renderer as first argument
 // TODO: restructure api to enable embedding into other applications (eg: qt opengl context)
 // TODO: texture enum class for format (rgb, rgba, ...)
 // TODO: support for off-screen rendering without opening a window
