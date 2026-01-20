@@ -67,7 +67,7 @@ public:
     }
 
     // calls the given function in a draw context, issuing draw calls outside
-    // of this context, will result in undefined behavior
+    // of this context will result in undefined behavior
     void with_draw_loop_context(DrawFn draw_fn);
 
     [[nodiscard]] gfx::Texture draw_offscreen(DrawFn draw_fn);
@@ -79,11 +79,11 @@ public:
 
     void with_camera(DrawFn draw_fn);
 
-    void set_camera(float center_x, float center_y);
-
     void set_camera(gfx::Vec vec) {
         set_camera(vec.x, vec.y);
     }
+
+    void set_camera(float center_x, float center_y);
 
     void draw_rectangle(gfx::Rect rect, gfx::Rotation rotation, gfx::Color color);
 
@@ -171,9 +171,9 @@ public:
         draw_text(vec.x, vec.y, text_size, text.c_str(), font, color);
     }
 
-    void draw_text_centered(float x, float y, int text_size, const char* text, const gfx::Font& font, gfx::Color color) {
+    void draw_text_centered(gfx::Vec center, int text_size, const char* text, const gfx::Font& font, gfx::Color color) {
         int text_width = font.measure_text(text, text_size);
-        draw_text(x - text_width/2.0, y, text_size, text, font, color);
+        draw_text({ center.x - text_width/2.0f, center.y }, text_size, text, font, color);
     }
 
     void clear_background(gfx::Color color);
