@@ -12,9 +12,11 @@
 #include <Font.h>
 #include <Color.h>
 
+// TODO: camera rotation
 // TODO: seperate drawing functions from organizing ones (draw_offscreen, draw_loop)
-// TODO: draw fn overloads for taking renderer as first argument
+// TODO: introduce something like gfx::Surface for organizing drawing
 // TODO: restructure api to enable embedding into other applications (eg: qt opengl context)
+// TODO: draw fn overloads for taking renderer as first argument
 // TODO: texture enum class for format (rgb, rgba, ...)
 // TODO: key state rising edge detection
 // TODO: check_collision_circle
@@ -22,12 +24,10 @@
 // TODO: cursor always starts out at 0 0
 // TODO: animated clock example
 // TODO: font copy/move ctor
-// TODO: camera rotation
 // TODO: build system for non-cmake
 // TODO: auto-invoke python script for generating shader glue code
 // TODO: stencil buffer
 // TODO: make texture parameters configurable
-// TODO: do copying of textures on the gpu, instead of cpu
 
 namespace gfx {
 
