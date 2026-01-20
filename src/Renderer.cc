@@ -19,10 +19,10 @@ Renderer::~Renderer() = default;
 
 void Renderer::draw_loop(DrawFn draw_fn) {
     while (!m_window.should_close())
-        with_draw_context(draw_fn);
+        with_draw_loop_context(draw_fn);
 }
 
-void Renderer::with_draw_context(DrawFn draw_fn) {
+void Renderer::with_draw_loop_context(DrawFn draw_fn) {
 
     double frame_start = glfwGetTime();
     m_frame_time = frame_start - m_last_frame;
@@ -43,13 +43,7 @@ void Renderer::with_draw_context(DrawFn draw_fn) {
 }
 
 gfx::Texture Renderer::draw_offscreen(DrawFn draw_fn) {
-    gfx::Texture texture;
-
-    with_draw_context([&] {
-        texture = to_texture(draw_fn);
-    });
-
-    return texture;
+    return to_texture(draw_fn);
 }
 
 gfx::Texture Renderer::to_texture(DrawFn draw_fn) {

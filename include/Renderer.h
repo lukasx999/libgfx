@@ -69,7 +69,7 @@ public:
 
     // calls the given function in a draw context, issuing draw calls outside
     // of this context, will result in undefined behavior
-    void with_draw_context(DrawFn draw_fn);
+    void with_draw_loop_context(DrawFn draw_fn);
 
     [[nodiscard]] gfx::Texture draw_offscreen(DrawFn draw_fn);
 
