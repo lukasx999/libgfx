@@ -12,6 +12,7 @@
 #include <Font.h>
 #include <Color.h>
 
+// TODO: seperate drawing functions from organizing ones (draw_offscreen, draw_loop)
 // TODO: draw fn overloads for taking renderer as first argument
 // TODO: restructure api to enable embedding into other applications (eg: qt opengl context)
 // TODO: texture enum class for format (rgb, rgba, ...)
