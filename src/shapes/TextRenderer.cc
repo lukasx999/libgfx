@@ -26,21 +26,25 @@ TextRenderer::TextRenderer(const gfx::Window& window)
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(unsigned int), m_indices.data(), GL_STATIC_DRAW);
 }
 
-void TextRenderer::draw(float x, float y, int text_size, const char* text, const gfx::Font& font, gfx::Color color, glm::mat4 view) {
+void TextRenderer::draw(gfx::Vec pos, int text_size, const char* text, const gfx::Font& font, gfx::Color color, glm::mat4 view) {
+
+    auto [x, y] = pos;
     int offset = 0;
 
     for (const char* c = text; *c; ++c) {
         auto glyph = font.m_pimpl->load_glyph(*c, text_size);
-        draw_char(x+offset, y, glyph, color, text_size, view);
+        draw_char({ x+offset, y }, glyph, color, text_size, view);
         offset += glyph.m_advance_x;
     }
 
 }
 
-void TextRenderer::draw_char(float x, float y, const Glyph& glyph, gfx::Color color, int text_size, glm::mat4 view) {
+void TextRenderer::draw_char(gfx::Vec pos, const Glyph& glyph, gfx::Color color, int text_size, glm::mat4 view) {
 
     glUseProgram(m_program);
     glBindVertexArray(m_vertex_array);
+
+    auto [x, y] = pos;
 
     unsigned int width = glyph.get_width();
     unsigned int height = glyph.get_height();

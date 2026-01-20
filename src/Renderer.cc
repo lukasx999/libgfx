@@ -96,8 +96,8 @@ void Renderer::draw_line(gfx::Vec a, gfx::Vec b, gfx::Color color) {
     m_pimpl->m_line.draw(a, b, color, m_pimpl->m_view_active);
 }
 
-void Renderer::draw_text(float x, float y, int text_size, const char* text, const gfx::Font& font, gfx::Color color) {
-    m_pimpl->m_text.draw(x, y, text_size, text, font, color, m_pimpl->m_view_active);
+void Renderer::draw_text(gfx::Vec pos, int text_size, const char* text, const gfx::Font& font, gfx::Color color) {
+    m_pimpl->m_text.draw(pos, text_size, text, font, color, m_pimpl->m_view_active);
 }
 
 void Renderer::clear_background(Color color) {

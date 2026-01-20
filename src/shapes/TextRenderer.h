@@ -40,10 +40,10 @@ class TextRenderer final {
 public:
     TextRenderer(const gfx::Window& window);
 
-    void draw(float x, float y, int text_size, const char* text, const gfx::Font& font, gfx::Color color, glm::mat4 view);
+    void draw(gfx::Vec pos, int text_size, const char* text, const gfx::Font& font, gfx::Color color, glm::mat4 view);
 
 private:
-    void draw_char(float x, float y, const Glyph& glyph, gfx::Color color, int text_size, glm::mat4 view);
+    void draw_char(gfx::Vec pos, const Glyph& glyph, gfx::Color color, int text_size, glm::mat4 view);
 
 };
 
