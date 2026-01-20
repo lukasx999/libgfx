@@ -19,7 +19,6 @@
 // TODO: animated clock example
 // TODO: font copy/move ctor
 // TODO: camera rotation
-// TODO: finish gfx::WindowBuilder
 // TODO: build system for non-cmake
 // TODO: auto-invoke python script for generating shader glue code
 // TODO: stencil buffer
