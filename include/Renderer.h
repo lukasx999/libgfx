@@ -2,6 +2,7 @@
 
 #include <functional>
 #include <memory>
+#include <string_view>
 
 #include <types.h>
 #include <Vec.h>
@@ -157,18 +158,10 @@ public:
         draw_line({ x0, y0 }, { x1, y1 }, color);
     }
 
-    void draw_text(gfx::Vec vec, int text_size, const char* text, const gfx::Font& font, gfx::Color color);
+    void draw_text(gfx::Vec vec, int text_size, std::string_view text, const gfx::Font& font, gfx::Color color);
 
-    void draw_text(float x, float y, int text_size, const char* text, const gfx::Font& font, gfx::Color color) {
+    void draw_text(float x, float y, int text_size, std::string_view text, const gfx::Font& font, gfx::Color color) {
         draw_text({ x, y }, text_size, text, font, color);
-    }
-
-    void draw_text(float x, float y, int text_size, const std::string& text, const gfx::Font& font, gfx::Color color) {
-        draw_text(x, y, text_size, text.c_str(), font, color);
-    }
-
-    void draw_text(gfx::Vec vec, int text_size, const std::string& text, const gfx::Font& font, gfx::Color color) {
-        draw_text(vec, text_size, text.c_str(), font, color);
     }
 
     void draw_text_centered(gfx::Vec center, int text_size, const char* text, const gfx::Font& font, gfx::Color color) {
