@@ -19,7 +19,6 @@ class Texture {
     struct Impl;
     std::unique_ptr<Impl> m_pimpl;
 
-
 public:
     Texture();
 
