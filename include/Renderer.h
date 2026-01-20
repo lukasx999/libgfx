@@ -158,19 +158,19 @@ public:
         draw_line({ x0, y0 }, { x1, y1 }, color);
     }
 
-    void draw_text(gfx::Vec pos, int text_size, std::string_view text, const gfx::Font& font, gfx::Color color);
+    void draw_text(gfx::Vec pos, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color);
 
-    void draw_text(float x, float y, int text_size, std::string_view text, const gfx::Font& font, gfx::Color color) {
-        draw_text({ x, y }, text_size, text, font, color);
+    void draw_text(float x, float y, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color) {
+        draw_text({ x, y }, fontsize, text, font, color);
     }
 
-    void draw_text_centered(gfx::Vec center, int text_size, std::string_view text, const gfx::Font& font, gfx::Color color) {
-        int text_width = font.measure_text(text, text_size);
-        draw_text({ center.x - text_width/2.0f, center.y }, text_size, text, font, color);
+    void draw_text_centered(gfx::Vec center, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color) {
+        int text_width = font.measure_text(text, fontsize);
+        draw_text({ center.x - text_width/2.0f, center.y }, fontsize, text, font, color);
     }
 
-    void draw_text_centered(float x, float y, int text_size, std::string_view text, const gfx::Font& font, gfx::Color color) {
-        draw_text_centered({ x, y }, text_size, text, font, color);
+    void draw_text_centered(float x, float y, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color) {
+        draw_text_centered({ x, y }, fontsize, text, font, color);
     }
 
     void clear_background(gfx::Color color);
