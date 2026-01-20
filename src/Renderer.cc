@@ -42,10 +42,6 @@ void Renderer::with_draw_loop_context(DrawFn draw_fn) {
     nanosleep(&ts, nullptr);
 }
 
-gfx::Texture Renderer::draw_offscreen(DrawFn draw_fn) {
-    return to_texture(draw_fn);
-}
-
 gfx::Texture Renderer::to_texture(DrawFn draw_fn) {
 
     gfx::Texture texture(m_window.get_width(), m_window.get_height(), 3);
