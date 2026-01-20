@@ -88,6 +88,16 @@ struct Vec {
         };
     }
 
+    constexpr Vec& set_x(float new_x) {
+        x = new_x;
+        return *this;
+    }
+
+    constexpr Vec& set_y(float new_y) {
+        y = new_y;
+        return *this;
+    }
+
 };
 
 } // namespace gfx
