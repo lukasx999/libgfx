@@ -19,6 +19,13 @@ Window::~Window() {
     glfwTerminate();
 }
 
+gfx::Vec Window::get_midpoint() const {
+    return {
+        get_width() / 2.0f,
+        get_height() / 2.0f,
+    };
+}
+
 bool Window::should_close() const {
     return glfwWindowShouldClose(m_pimpl->m_window);
 }

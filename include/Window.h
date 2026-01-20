@@ -60,6 +60,7 @@ public:
 
     [[nodiscard]] bool should_close() const;
     [[nodiscard]] const char* get_title() const;
+    [[nodiscard]] gfx::Vec get_midpoint() const;
     [[nodiscard]] int get_width() const;
     [[nodiscard]] int get_height() const;
     [[nodiscard]] gfx::Rect get_screen_rect() const;
