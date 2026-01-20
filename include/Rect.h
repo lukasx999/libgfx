@@ -19,22 +19,22 @@ struct Rect {
         return collision_x && collision_y;
     }
 
-    Rect& set_x(float new_x) {
+    constexpr Rect& set_x(float new_x) {
         x = new_x;
         return *this;
     }
 
-    Rect& set_y(float new_y) {
+    constexpr Rect& set_y(float new_y) {
         y = new_y;
         return *this;
     }
 
-    Rect& set_width(float new_width) {
+    constexpr Rect& set_width(float new_width) {
         width = new_width;
         return *this;
     }
 
-    Rect& set_height(float new_height) {
+    constexpr Rect& set_height(float new_height) {
         height = new_height;
         return *this;
     }
