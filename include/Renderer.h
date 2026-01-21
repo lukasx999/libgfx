@@ -12,6 +12,7 @@
 #include <Color.h>
 #include <Surface.h>
 
+// TODO: fix flipped texture export
 // TODO: camera rotation
 // TODO: restructure api to enable embedding into other applications (eg: qt opengl context)
 // TODO: texture enum class for format (rgb, rgba, ...)
