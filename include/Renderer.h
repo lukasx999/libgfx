@@ -12,6 +12,7 @@
 #include <Color.h>
 #include <Surface.h>
 
+// TODO: fix examples
 // TODO: fix window dtor
 // TODO: camera rotation
 // TODO: restructure api to enable embedding into other applications (eg: qt opengl context)
