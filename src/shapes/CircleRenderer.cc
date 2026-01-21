@@ -69,8 +69,8 @@ void CircleRenderer::draw(gfx::Vec center, float radius, gfx::Color color, glm::
     GLint u_radius = glGetUniformLocation(m_program, "u_radius");
     glUniform1f(u_radius, radius);
 
-    GLint u_surface_height = glGetUniformLocation(m_program, "u_surface_height");
-    glUniform1i(u_surface_height, m_surface.get_height());
+    GLint u_window_height = glGetUniformLocation(m_program, "u_window_height");
+    glUniform1i(u_window_height, m_surface.get_height());
 
     glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr);
 
