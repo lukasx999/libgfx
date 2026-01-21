@@ -124,6 +124,8 @@ void Texture::write_to_file(FileType filetype, const char* filename) const {
     int channels = get_channels();
     auto buf = copy_to_cpu();
 
+    stbi_flip_vertically_on_write(true);
+
     int ret = [&] {
         switch (filetype) {
             using enum FileType;
