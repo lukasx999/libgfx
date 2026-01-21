@@ -13,8 +13,6 @@
 
 namespace gfx {
 
-// gfx::Texture draw_offscreen(std::function<void(gfx::Renderer&)> draw_fn) { }
-
 struct WindowFlags {
     bool m_enable_resizing  = false;
     bool m_show_cursor      = true;
@@ -49,7 +47,7 @@ struct WindowFlags {
 
 };
 
-class Window final : public Surface {
+class Window final : public gfx::Surface {
     struct Impl;
     std::unique_ptr<Impl> m_pimpl;
 
@@ -57,7 +55,7 @@ class Window final : public Surface {
     double m_last_frame = 0.0;
     double m_desired_fps = 0.0;
 
-    Renderer m_renderer;
+    gfx::Renderer m_renderer;
 
 public:
     using DrawFn = std::function<void(gfx::Renderer&)>;
