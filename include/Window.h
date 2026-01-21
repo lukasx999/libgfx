@@ -91,6 +91,9 @@ public:
     void set_title(const char* title);
     void close();
 
+    // draw into a texture without opening a window
+    [[nodiscard]] gfx::Texture draw_offscreen(DrawFn draw_fn);
+
     // calls the given function in a draw loop
     void draw_loop(DrawFn draw_fn);
 

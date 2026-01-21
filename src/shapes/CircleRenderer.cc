@@ -5,9 +5,8 @@
 #include "CircleRenderer.h"
 #include "../shaders.h"
 
-CircleRenderer::CircleRenderer(const gfx::Surface& surface)
-: m_surface(surface)
-{
+CircleRenderer::CircleRenderer(const gfx::Surface& surface) : m_surface(surface) {
+
     m_program = gl::create_shader_program(shaders::vertex::default_, shaders::fragment::circle);
 
     glBindVertexArray(m_vertex_array);

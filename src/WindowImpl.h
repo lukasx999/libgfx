@@ -7,6 +7,8 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
+#include <GLFW/glfw3.h>
+
 namespace gfx {
 
 struct Window::Impl {

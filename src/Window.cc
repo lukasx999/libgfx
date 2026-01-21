@@ -69,6 +69,12 @@ double Window::get_time() const {
     return glfwGetTime();
 }
 
+gfx::Texture Window::draw_offscreen(DrawFn draw_fn) {
+    return m_renderer.to_texture([&] {
+        draw_fn(m_renderer);
+    });
+}
+
 void Window::draw_loop(DrawFn draw_fn) {
     while (!should_close())
         with_draw_loop_context(draw_fn);
