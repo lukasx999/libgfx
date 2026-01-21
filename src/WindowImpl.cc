@@ -7,7 +7,7 @@
 
 namespace gfx {
 
-Window::Impl::Impl(int width, int height, const char* window_title, WindowFlags flags) {
+Window::Impl::Impl(int width, int height, const char* title, WindowFlags flags) {
 
     if (FT_Init_FreeType(&m_ft) != 0)
         throw gfx::Error("failed to initialize ft2");
@@ -25,7 +25,7 @@ Window::Impl::Impl(int width, int height, const char* window_title, WindowFlags 
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
     glfwWindowHint(GLFW_SAMPLES, 4);
 
-    m_window = glfwCreateWindow(width, height, window_title, nullptr, nullptr);
+    m_window = glfwCreateWindow(width, height, title, nullptr, nullptr);
     if (m_window == nullptr)
         throw gfx::Error("failed to create window");
 

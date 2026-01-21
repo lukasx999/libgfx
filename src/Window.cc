@@ -8,15 +8,17 @@
 
 namespace gfx {
 
-Window::Window(int width, int height, const char* window_title, WindowFlags flags)
-: m_pimpl(std::make_unique<Window::Impl>(width, height, window_title, flags))
+Window::Window(int width, int height, const char* title, WindowFlags flags)
+    : m_pimpl(std::make_unique<Window::Impl>(width, height, title, flags))
+    , m_renderer(*this)
 {
     library_has_been_initialized = true;
 }
 
 Window::~Window() {
-    glfwDestroyWindow(m_pimpl->m_window);
-    glfwTerminate();
+    // FIX: renderer data member is destructed after window dtor, resulting in ub
+    // glfwDestroyWindow(m_pimpl->m_window);
+    // glfwTerminate();
 }
 
 gfx::Vec Window::get_midpoint() const {
@@ -65,6 +67,31 @@ gfx::Rect Window::get_screen_rect() const {
 
 double Window::get_time() const {
     return glfwGetTime();
+}
+
+void Window::draw_loop(DrawFn draw_fn) {
+    while (!should_close())
+        with_draw_loop_context(draw_fn);
+}
+
+void Window::with_draw_loop_context(DrawFn draw_fn) {
+
+    double frame_start = glfwGetTime();
+    m_frame_time = frame_start - m_last_frame;
+    m_last_frame = frame_start;
+
+    draw_fn(m_renderer);
+
+    glfwSwapBuffers(m_pimpl->m_window);
+    glfwPollEvents();
+
+    // sleep for the rest of the frame to keep the desired framerate steady
+    if (m_desired_fps == 0.0) return;
+    double frame_end = glfwGetTime() - frame_start;
+
+    struct timespec ts{};
+    ts.tv_nsec = (1.0 / m_desired_fps - frame_end) * 1e9;
+    nanosleep(&ts, nullptr);
 }
 
 gfx::KeyState Window::get_mouse_button_state(MouseButton mb) const {

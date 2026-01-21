@@ -1,14 +1,19 @@
 #pragma once
 
 #include <memory>
+#include <functional>
 
-#include "Font.h"
-#include "Rect.h"
+#include <Font.h>
+#include <Rect.h>
 #include <types.h>
 #include <Vec.h>
 #include <input.h>
+#include <Renderer.h>
+#include <Surface.h>
 
 namespace gfx {
+
+// gfx::Texture draw_offscreen(std::function<void(gfx::Renderer&)> draw_fn) { }
 
 struct WindowFlags {
     bool m_enable_resizing  = false;
@@ -44,13 +49,20 @@ struct WindowFlags {
 
 };
 
-class Window final {
-    friend class Renderer;
+class Window final : public Surface {
     struct Impl;
     std::unique_ptr<Impl> m_pimpl;
 
+    double m_frame_time = 0.0;
+    double m_last_frame = 0.0;
+    double m_desired_fps = 0.0;
+
+    Renderer m_renderer;
+
 public:
-    Window(int width, int height, const char* window_title, WindowFlags flags = {});
+    using DrawFn = std::function<void(gfx::Renderer&)>;
+
+    Window(int width, int height, const char* title, WindowFlags flags = {});
 
     ~Window();
     Window(const Window&) = delete;
@@ -58,16 +70,31 @@ public:
     Window& operator=(const Window&) = delete;
     Window& operator=(Window&&) = delete;
 
-    [[nodiscard]] bool should_close() const;
+    [[nodiscard]] double get_frame_time() const {
+        return m_frame_time;
+    }
+
+    [[nodiscard]] double get_fps() const {
+        return 1.0 / m_frame_time;
+    }
+
+    // 0.0 means no limit
+    void set_fps(double fps) {
+        m_desired_fps = fps;
+    }
+
     [[nodiscard]] const char* get_title() const;
-    [[nodiscard]] int get_width() const;
-    [[nodiscard]] int get_height() const;
+    [[nodiscard]] int get_width() const override;
+    [[nodiscard]] int get_height() const override;
 
     [[nodiscard]] gfx::Vec get_midpoint() const;
     [[nodiscard]] gfx::Rect get_screen_rect() const;
 
     void set_title(const char* title);
     void close();
+
+    // calls the given function in a draw loop
+    void draw_loop(DrawFn draw_fn);
 
     // returns the current time in seconds
     [[nodiscard]] double get_time() const;
@@ -81,6 +108,12 @@ public:
 private:
     [[nodiscard]] static int gfx_mouse_button_to_glfw_mouse_button(MouseButton mb);
     [[nodiscard]] static int gfx_key_to_glfw_key(Key key);
+
+    // calls the given function in a draw context, issuing draw calls outside
+    // of this context will result in undefined behavior
+    void with_draw_loop_context(DrawFn draw_fn);
+
+    [[nodiscard]] bool should_close() const;
 
 };
 

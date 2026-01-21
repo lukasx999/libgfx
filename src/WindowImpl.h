@@ -14,7 +14,7 @@ struct Window::Impl {
 
     FT_Library m_ft;
 
-    Impl(int width, int height, const char *window_title, WindowFlags flags);
+    Impl(int width, int height, const char* title, WindowFlags flags);
 
     ~Impl() {
         FT_Done_FreeType(m_ft);
@@ -31,6 +31,7 @@ struct Window::Impl {
         const GLchar *message,
         [[maybe_unused]] const void *user_param
     );
+
 };
 
 } // namespace gfx

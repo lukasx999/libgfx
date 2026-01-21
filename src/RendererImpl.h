@@ -13,7 +13,7 @@
 namespace gfx {
 
 struct Renderer::Impl {
-    const gfx::Window& m_window;
+    const gfx::Surface& m_surface;
 
     RectangleRenderer m_rectangle;
     CircleRenderer m_circle;
@@ -23,23 +23,23 @@ struct Renderer::Impl {
     TextRenderer m_text;
 
     glm::mat4 m_view_default = gen_view_matrix(
-        m_window,
-        { m_window.get_width() / 2.0f, m_window.get_height() / 2.0f }
+        m_surface,
+        { m_surface.get_width() / 2.0f, m_surface.get_height() / 2.0f }
     );
     glm::mat4 m_view_camera = m_view_default;
     glm::mat4 m_view_active = m_view_default;
 
-    explicit Impl(const gfx::Window& window)
-        : m_window(window)
-        , m_rectangle(m_window)
-        , m_circle(m_window)
-        , m_triangle(m_window)
-        , m_texture(m_window)
-        , m_line(m_window)
-        , m_text(m_window)
+    explicit Impl(const gfx::Surface& surface)
+        : m_surface(surface)
+        , m_rectangle(m_surface)
+        , m_circle(m_surface)
+        , m_triangle(m_surface)
+        , m_texture(m_surface)
+        , m_line(m_surface)
+        , m_text(m_surface)
     { }
 
-    [[nodiscard]] static glm::mat4 gen_view_matrix(const gfx::Window& window, gfx::Vec center);
+    [[nodiscard]] static glm::mat4 gen_view_matrix(const gfx::Surface& surface, gfx::Vec center);
 
 };
 

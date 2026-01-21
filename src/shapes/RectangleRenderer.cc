@@ -5,7 +5,7 @@
 #include "RectangleRenderer.h"
 #include "../shaders.h"
 
-RectangleRenderer::RectangleRenderer(const gfx::Window& window) : m_window(window) {
+RectangleRenderer::RectangleRenderer(const gfx::Surface& surface) : m_surface(surface) {
 
     m_program = gl::create_shader_program(shaders::vertex::default_, shaders::fragment::default_);
 
@@ -54,8 +54,8 @@ void RectangleRenderer::draw(gfx::Rect dest, gfx::Rotation rotation, gfx::Color 
 
     glm::mat4 projection = glm::ortho(
         0.0f,
-        static_cast<float>(m_window.get_width()),
-        static_cast<float>(m_window.get_height()),
+        static_cast<float>(m_surface.get_width()),
+        static_cast<float>(m_surface.get_height()),
         0.0f
     );
 

@@ -5,8 +5,8 @@
 #include "CircleRenderer.h"
 #include "../shaders.h"
 
-CircleRenderer::CircleRenderer(const gfx::Window& window)
-: m_window(window)
+CircleRenderer::CircleRenderer(const gfx::Surface& surface)
+: m_surface(surface)
 {
     m_program = gl::create_shader_program(shaders::vertex::default_, shaders::fragment::circle);
 
@@ -49,8 +49,8 @@ void CircleRenderer::draw(gfx::Vec center, float radius, gfx::Color color, glm::
 
     glm::mat4 projection = glm::ortho(
         0.0f,
-        static_cast<float>(m_window.get_width()),
-        static_cast<float>(m_window.get_height()),
+        static_cast<float>(m_surface.get_width()),
+        static_cast<float>(m_surface.get_height()),
         0.0f
     );
 
@@ -70,8 +70,8 @@ void CircleRenderer::draw(gfx::Vec center, float radius, gfx::Color color, glm::
     GLint u_radius = glGetUniformLocation(m_program, "u_radius");
     glUniform1f(u_radius, radius);
 
-    GLint u_window_height = glGetUniformLocation(m_program, "u_window_height");
-    glUniform1i(u_window_height, m_window.get_height());
+    GLint u_surface_height = glGetUniformLocation(m_program, "u_surface_height");
+    glUniform1i(u_surface_height, m_surface.get_height());
 
     glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr);
 

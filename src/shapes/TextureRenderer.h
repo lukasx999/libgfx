@@ -6,7 +6,7 @@
 #include "../opengl.h"
 
 class TextureRenderer final {
-    const gfx::Window& m_window;
+    const gfx::Surface& m_surface;
 
     gl::Program m_program;
     gl::VertexArray m_vertex_array;
@@ -28,7 +28,7 @@ class TextureRenderer final {
     };
 
 public:
-    explicit TextureRenderer(const gfx::Window& window);
+    explicit TextureRenderer(const gfx::Surface& surface);
 
     void draw(float x, float y, float width, float height, gfx::Rotation rotation, const gfx::Texture& texture, glm::mat4 view);
     void draw_sub(float dest_x, float dest_y, float dest_width, float dest_height, float src_x, float src_y, float src_width, float src_height, gfx::Rotation rotation, const gfx::Texture& texture, glm::mat4 view);

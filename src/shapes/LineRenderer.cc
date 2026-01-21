@@ -5,9 +5,7 @@
 #include "LineRenderer.h"
 #include "../shaders.h"
 
-LineRenderer::LineRenderer(const gfx::Window& window)
-: m_window(window)
-{
+LineRenderer::LineRenderer(const gfx::Surface& surface) : m_surface(surface) {
 
     m_program = gl::create_shader_program(shaders::vertex::default_, shaders::fragment::default_);
 
@@ -42,8 +40,8 @@ void LineRenderer::draw(gfx::Vec a, gfx::Vec b, gfx::Color color, glm::mat4 view
 
     glm::mat4 projection = glm::ortho(
         0.0f,
-        static_cast<float>(m_window.get_width()),
-        static_cast<float>(m_window.get_height()),
+        static_cast<float>(m_surface.get_width()),
+        static_cast<float>(m_surface.get_height()),
         0.0f
     );
 

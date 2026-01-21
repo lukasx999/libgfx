@@ -7,10 +7,10 @@ namespace gfx {
 
 // TODO: zoom
 // TODO: provide rectangle instead of center
-glm::mat4 Renderer::Impl::gen_view_matrix(const Window& window, gfx::Vec center) {
+glm::mat4 Renderer::Impl::gen_view_matrix(const gfx::Surface& surface, gfx::Vec center) {
     glm::vec3 camera_position(
-        center.x - window.get_width() / 2.0f,
-        center.y - window.get_height() / 2.0f,
+        center.x - surface.get_width() / 2.0f,
+        center.y - surface.get_height() / 2.0f,
         0.0f
     );
 

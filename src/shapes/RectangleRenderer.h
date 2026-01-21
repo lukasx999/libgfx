@@ -9,7 +9,7 @@
 #include "Rect.h"
 
 class RectangleRenderer final {
-    const gfx::Window& m_window;
+    const gfx::Surface& m_surface;
 
     gl::Program m_program;
     gl::VertexArray m_vertex_array;
@@ -26,7 +26,7 @@ class RectangleRenderer final {
     };
 
 public:
-    explicit RectangleRenderer(const gfx::Window& window);
+    explicit RectangleRenderer(const gfx::Surface& surface);
     void draw(gfx::Rect dest, gfx::Rotation rotation, gfx::Color color, glm::mat4 view);
 
 };

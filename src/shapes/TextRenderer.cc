@@ -2,8 +2,8 @@
 #include "TextRenderer.h"
 #include "../FontImpl.h"
 
-TextRenderer::TextRenderer(const gfx::Window& window)
-: m_window(window)
+TextRenderer::TextRenderer(const gfx::Surface& surface)
+: m_surface(surface)
 {
 
     m_program = gl::create_shader_program(shaders::vertex::texture, shaders::fragment::text);
@@ -55,8 +55,8 @@ void TextRenderer::draw_char(gfx::Vec pos, const Glyph& glyph, gfx::Color color,
 
     glm::mat4 projection = glm::ortho(
         0.0f,
-        static_cast<float>(m_window.get_width()),
-        static_cast<float>(m_window.get_height()),
+        static_cast<float>(m_surface.get_width()),
+        static_cast<float>(m_surface.get_height()),
         0.0f
     );
 

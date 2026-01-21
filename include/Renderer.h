@@ -7,10 +7,10 @@
 #include <types.h>
 #include <Vec.h>
 #include <Rect.h>
-#include <Window.h>
 #include <Texture.h>
 #include <Font.h>
 #include <Color.h>
+#include <Surface.h>
 
 // TODO: camera rotation
 // TODO: seperate drawing functions from organizing ones (draw_offscreen, draw_loop)
@@ -33,48 +33,26 @@
 namespace gfx {
 
 class Renderer final {
-    gfx::Window& m_window;
+    const gfx::Surface& m_surface;
 
     struct Impl;
     std::unique_ptr<Impl> m_pimpl;
 
-    double m_frame_time = 0.0;
-    double m_last_frame = 0.0;
-    double m_desired_fps = 0.0;
-
 public:
     using DrawFn = std::function<void()>;
 
-    explicit Renderer(gfx::Window& window);
+    // TODO: hide this ctor
+    explicit Renderer(const gfx::Surface& surface);
+
+    ~Renderer();
     Renderer(const Renderer&) = delete;
     Renderer(Renderer&&) = delete;
     Renderer& operator=(const Renderer&) = delete;
     Renderer& operator=(Renderer&&) = delete;
-    ~Renderer();
 
-    // 0.0 means no limit
-    void set_fps(double fps) {
-        m_desired_fps = fps;
+    [[nodiscard]] const gfx::Surface& get_surface() const {
+        return m_surface;
     }
-
-    [[nodiscard]] gfx::Window& get_window() const {
-        return m_window;
-    }
-
-    [[nodiscard]] double get_frame_time() const {
-        return m_frame_time;
-    }
-
-    [[nodiscard]] double get_fps() const {
-        return 1.0 / m_frame_time;
-    }
-
-    // calls the given function in a draw context, issuing draw calls outside
-    // of this context will result in undefined behavior
-    void with_draw_loop_context(DrawFn draw_fn);
-
-    // calls the given function in a draw loop
-    void draw_loop(DrawFn draw_fn);
 
     [[nodiscard]] gfx::Texture to_texture(DrawFn draw_fn);
 

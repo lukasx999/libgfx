@@ -11,7 +11,7 @@
 #include "../FontImpl.h"
 
 class TextRenderer final {
-    const gfx::Window& m_window;
+    const gfx::Surface& m_surface;
 
     gl::Program m_program;
     gl::VertexArray m_vertex_array;
@@ -39,7 +39,7 @@ class TextRenderer final {
     };
 
 public:
-    TextRenderer(const gfx::Window& window);
+    TextRenderer(const gfx::Surface& surface);
 
     void draw(gfx::Vec pos, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color, glm::mat4 view);
 

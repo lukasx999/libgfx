@@ -9,7 +9,7 @@
 #include "../opengl.h"
 
 class CircleRenderer final {
-    const gfx::Window& m_window;
+    const gfx::Surface& m_surface;
 
     gl::Program m_program;
     gl::VertexArray m_vertex_array;
@@ -26,7 +26,7 @@ class CircleRenderer final {
     };
 
 public:
-    explicit CircleRenderer(const gfx::Window& window);
+    explicit CircleRenderer(const gfx::Surface& surface);
     void draw(gfx::Vec center, float radius, gfx::Color color, glm::mat4 view);
 
 };

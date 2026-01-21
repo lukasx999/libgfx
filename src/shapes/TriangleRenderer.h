@@ -7,14 +7,14 @@
 #include "../opengl.h"
 
 class TriangleRenderer final {
-    const gfx::Window& m_window;
+    const gfx::Surface& m_surface;
 
     gl::Program m_program;
     gl::VertexArray m_vertex_array;
     gl::Buffer m_vertex_buffer;
 
 public:
-    explicit TriangleRenderer(const gfx::Window& window);
+    explicit TriangleRenderer(const gfx::Surface& surface);
     void draw(gfx::Vec a, gfx::Vec b, gfx::Vec c, gfx::Color color, glm::mat4 view);
 
 };

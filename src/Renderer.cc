@@ -1,6 +1,5 @@
 #include <Renderer.h>
 #include <Window.h>
-#include "WindowImpl.h"
 #include "RendererImpl.h"
 #include "TextureImpl.h"
 
@@ -8,43 +7,18 @@ bool library_has_been_initialized = false;
 
 namespace gfx {
 
-Renderer::Renderer(Window& window)
-    : m_window(window)
-    , m_pimpl(std::make_unique<gfx::Renderer::Impl>(m_window))
+Renderer::Renderer(const gfx::Surface& surface)
+    : m_surface(surface)
+    , m_pimpl(std::make_unique<gfx::Renderer::Impl>(m_surface))
 { }
 
 // the pimpl pattern requires the destructor to "see" the complete
 // type of the Impl structure
 Renderer::~Renderer() = default;
 
-void Renderer::draw_loop(DrawFn draw_fn) {
-    while (!m_window.should_close())
-        with_draw_loop_context(draw_fn);
-}
-
-void Renderer::with_draw_loop_context(DrawFn draw_fn) {
-
-    double frame_start = glfwGetTime();
-    m_frame_time = frame_start - m_last_frame;
-    m_last_frame = frame_start;
-
-    draw_fn();
-
-    glfwSwapBuffers(m_window.m_pimpl->m_window);
-    glfwPollEvents();
-
-    // sleep for the rest of the frame to keep the desired framerate steady
-    if (m_desired_fps == 0.0) return;
-    double frame_end = glfwGetTime() - frame_start;
-
-    struct timespec ts{};
-    ts.tv_nsec = (1.0 / m_desired_fps - frame_end) * 1e9;
-    nanosleep(&ts, nullptr);
-}
-
 gfx::Texture Renderer::to_texture(DrawFn draw_fn) {
 
-    gfx::Texture texture(m_window.get_width(), m_window.get_height(), 3);
+    gfx::Texture texture(m_surface.get_width(), m_surface.get_height(), 3);
 
     gl::Framebuffer framebuffer;
     glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
@@ -65,7 +39,7 @@ void Renderer::with_camera(DrawFn draw_fn) {
 }
 
 void Renderer::set_camera(float center_x, float center_y) {
-    m_pimpl->m_view_camera = m_pimpl->gen_view_matrix(m_window, { center_x, center_y });
+    m_pimpl->m_view_camera = m_pimpl->gen_view_matrix(m_surface, { center_x, center_y });
 }
 
 void Renderer::draw_rectangle(gfx::Rect dest, gfx::Rotation rotation, gfx::Color color) {
@@ -89,8 +63,7 @@ void Renderer::draw_triangle(gfx::Vec a, gfx::Vec b, gfx::Vec c, gfx::Color colo
 }
 
 void Renderer::draw_line(gfx::Vec a, gfx::Vec b, gfx::Color color) {
-    m_pimpl->m_line.draw(a, b, color, m_pimpl->m_view_active);
-}
+    m_pimpl->m_line.draw(a, b, color, m_pimpl->m_view_active); }
 
 void Renderer::draw_text(gfx::Vec pos, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color) {
     m_pimpl->m_text.draw(pos, fontsize, text, font, color, m_pimpl->m_view_active);

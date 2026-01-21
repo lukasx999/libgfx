@@ -9,6 +9,7 @@
 #include <Font.h>
 #include <input.h>
 #include <Texture.h>
+#include <Surface.h>
 #include <Rect.h>
 #include <Spritesheet.h>
 #include <AnimatedTexture.h>
