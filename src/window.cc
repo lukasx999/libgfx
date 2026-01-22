@@ -93,10 +93,16 @@ void Window::with_draw_loop_context(DrawFn draw_fn) {
 
     // sleep for the rest of the frame to keep the desired framerate steady
     if (m_desired_fps == 0.0) return;
-    double frame_end = glfwGetTime() - frame_start;
+    double time_so_far = glfwGetTime() - frame_start;
 
+    double time_to_sleep = 1.0 / m_desired_fps - time_so_far;
+    sleep(time_to_sleep);
+}
+
+// TODO: implementation for windows
+void Window::sleep(double seconds) {
     struct timespec ts{};
-    ts.tv_nsec = (1.0 / m_desired_fps - frame_end) * 1e9;
+    ts.tv_nsec = seconds * 1e9;
     nanosleep(&ts, nullptr);
 }
 

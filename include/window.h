@@ -116,6 +116,8 @@ private:
 
     [[nodiscard]] bool should_close() const;
 
+    static void sleep(double seconds);
+
 };
 
 } // namespace gfx
