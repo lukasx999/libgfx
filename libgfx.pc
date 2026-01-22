@@ -1,0 +1,8 @@
+prefix=/usr/local
+includedir=${prefix}/include
+libdir=${prefix}/lib
+
+Name: libgfx
+Description: 2D graphics library
+Cflags: -I${includedir}/gfx
+Libs: -L${libdir} -lgfx -lfreetype -lglfw
