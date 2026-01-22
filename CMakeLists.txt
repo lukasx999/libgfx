@@ -6,10 +6,9 @@ set(CMAKE_COLOR_DIAGNOSTICS ON)
 
 project(Gfx)
 
-list(APPEND include_dirs include/ /usr/include/freetype2/ deps/glad/include)
+list(APPEND include_dirs include/ /usr/include/freetype2/ deps/glad/include/)
 
-# add_custom_command(OUTPUT src/shaders.hh COMMAND python gen.py WORKING_DIRECTORY shaders COMMENT "packing shaders" CODEGEN)
-# add_custom_command(TARGET gfx PRE_BUILD COMMAND python gen.py WORKING_DIRECTORY shaders COMMENT "packing shaders")
+execute_process(COMMAND python3 gen.py WORKING_DIRECTORY shaders/)
 
 add_library(gfx)
 target_compile_options(gfx PRIVATE -Wno-c23-extensions -Wall -Wextra -O3 -ggdb)

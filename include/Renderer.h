@@ -25,7 +25,6 @@
 // TODO: animated clock example
 // TODO: font copy/move ctor
 // TODO: build system for non-cmake
-// TODO: auto-invoke python script for generating shader glue code
 // TODO: stencil buffer
 // TODO: make texture parameters configurable
 
