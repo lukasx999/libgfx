@@ -3,8 +3,6 @@
 #include "RendererImpl.h"
 #include "TextureImpl.h"
 
-bool library_has_been_initialized = false;
-
 namespace gfx {
 
 Renderer::Renderer(const gfx::Surface& surface)

@@ -12,6 +12,7 @@
 #include <Color.h>
 #include <Surface.h>
 
+// TODO: fix library initializer check segfault in gfx::Texture (gl::Texture is constructed before the check)
 // TODO: fix examples
 // TODO: fix window dtor
 // TODO: camera rotation
