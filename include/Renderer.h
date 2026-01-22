@@ -12,6 +12,8 @@
 #include <Color.h>
 #include <Surface.h>
 
+// TODO: add cmake package module
+// TODO: make pkg-config file work
 // TODO: fix library initializer check segfault in gfx::Texture (gl::Texture is constructed before the check)
 // TODO: fix examples
 // TODO: fix window dtor
