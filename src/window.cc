@@ -1,3 +1,5 @@
+#include <thread>
+
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 
@@ -96,14 +98,8 @@ void Window::with_draw_loop_context(DrawFn draw_fn) {
     double time_so_far = glfwGetTime() - frame_start;
 
     double time_to_sleep = 1.0 / m_desired_fps - time_so_far;
-    sleep(time_to_sleep);
-}
-
-// TODO: implementation for windows
-void Window::sleep(double seconds) {
-    struct timespec ts{};
-    ts.tv_nsec = seconds * 1e9;
-    nanosleep(&ts, nullptr);
+    std::chrono::duration<double> duration(time_to_sleep);
+    std::this_thread::sleep_for(duration);
 }
 
 gfx::KeyState Window::get_mouse_button_state(MouseButton mb) const {
