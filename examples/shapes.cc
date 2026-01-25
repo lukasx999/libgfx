@@ -3,9 +3,9 @@
 int main() {
 
     gfx::Window window(500, 500, "shapes");
-    gfx::Renderer rd(window);
 
-    rd.draw_loop([&] {
+    window.draw_loop([&](gfx::Renderer& rd) {
+
         rd.clear_background(gfx::Color::black());
 
         rd.draw_rectangle({ 50, 50, 400, 400 }, gfx::Color::blue());
@@ -14,7 +14,6 @@ int main() {
 
         if (window.get_key_state(gfx::Key::Escape).pressed())
             window.close();
-
     });
 
 }

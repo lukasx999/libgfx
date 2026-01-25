@@ -3,9 +3,8 @@
 int main() {
 
     gfx::Window window(500, 500, "offscreen rendering");
-    gfx::Renderer rd(window);
 
-    auto texture = rd.to_texture([&] {
+    auto texture = window.draw_offscreen([&](gfx::Renderer& rd) {
         rd.clear_background(gfx::Color::black());
         rd.draw_circle(window.get_midpoint(), 100, gfx::Color::white());
     });
