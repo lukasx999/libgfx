@@ -2,6 +2,12 @@
 
 libgfx is an easy-to-use library for game/graphics programming written in modern C++23.
 
+## Features
+
+- Clean & Easy-to-use modern C++23 API
+- Cross-Platform
+- Embeddable into other applications
+
 ## Example
 
 
