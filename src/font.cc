@@ -3,8 +3,8 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-#include <font.h>
-#include <types.h>
+#include <gfx/font.h>
+#include <gfx/types.h>
 #include "glyph.h"
 #include "font_impl.h"
 

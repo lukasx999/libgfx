@@ -2,9 +2,7 @@
 #include "text_renderer.h"
 #include "../font_impl.h"
 
-TextRenderer::TextRenderer(const gfx::Surface& surface)
-: m_surface(surface)
-{
+TextRenderer::TextRenderer(const gfx::Surface& surface) : m_surface(surface) {
 
     m_program = gl::create_shader_program(shaders::vertex::texture, shaders::fragment::text);
 

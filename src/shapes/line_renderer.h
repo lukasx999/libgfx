@@ -1,8 +1,8 @@
 #pragma once
 
-#include <window.h>
-#include <color.h>
-#include <types.h>
+#include <gfx/window.h>
+#include <gfx/color.h>
+#include <gfx/types.h>
 #include "../opengl.h"
 
 class LineRenderer final {

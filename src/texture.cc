@@ -15,7 +15,7 @@
 #include <stb_image_write.h>
 #pragma GCC diagnostic pop
 
-#include <texture.h>
+#include <gfx/texture.h>
 #include "texture_impl.h"
 #include "util.h"
 #include "opengl.h"

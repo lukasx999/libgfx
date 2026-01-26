@@ -3,9 +3,9 @@
 #include <memory>
 #include <string_view>
 
-#include <window.h>
-#include <font.h>
-#include <color.h>
+#include <gfx/window.h>
+#include <gfx/font.h>
+#include <gfx/color.h>
 #include "../opengl.h"
 #include "../glyph.h"
 #include "../font_impl.h"

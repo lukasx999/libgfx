@@ -2,9 +2,9 @@
 
 #include <vector>
 
-#include <window.h>
-#include <texture.h>
-#include <rect.h>
+#include <gfx/window.h>
+#include <gfx/texture.h>
+#include <gfx/rect.h>
 
 namespace gfx {
 

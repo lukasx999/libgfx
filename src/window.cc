@@ -3,8 +3,8 @@
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 
-#include <window.h>
-#include <input.h>
+#include <gfx/window.h>
+#include <gfx/input.h>
 #include "window_impl.h"
 #include "util.h"
 

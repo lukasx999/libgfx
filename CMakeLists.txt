@@ -26,6 +26,6 @@ install(
     ARCHIVE DESTINATION lib
 )
 
-install(DIRECTORY "include/" DESTINATION "include/gfx")
+install(DIRECTORY "include/" DESTINATION "include")
 
 add_executable(test test.cc)

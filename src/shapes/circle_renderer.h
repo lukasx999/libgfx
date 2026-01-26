@@ -2,9 +2,9 @@
 
 #include <array>
 
-#include <types.h>
-#include <color.h>
-#include <window.h>
+#include <gfx/types.h>
+#include <gfx/color.h>
+#include <gfx/window.h>
 
 #include "../opengl.h"
 

@@ -3,7 +3,7 @@
 #include <format>
 #include <string>
 
-#include <vec.h>
+#include <gfx/vec.h>
 
 namespace gfx {
 

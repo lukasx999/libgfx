@@ -1,5 +1,5 @@
-#include <renderer.h>
-#include <window.h>
+#include <gfx/renderer.h>
+#include <gfx/window.h>
 #include "renderer_impl.h"
 #include "texture_impl.h"
 

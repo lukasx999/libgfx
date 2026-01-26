@@ -1,6 +1,6 @@
 #pragma once
 
-#include <renderer.h>
+#include <gfx/renderer.h>
 #include "shapes/rectangle_renderer.h"
 #include "shapes/circle_renderer.h"
 #include "shapes/triangle_renderer.h"

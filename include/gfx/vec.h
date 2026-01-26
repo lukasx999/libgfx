@@ -4,7 +4,7 @@
 #include <format>
 #include <string>
 
-#include <types.h>
+#include <gfx/types.h>
 
 namespace gfx {
 

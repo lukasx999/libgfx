@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include <texture.h>
+#include <gfx/texture.h>
 
 namespace gfx {
 

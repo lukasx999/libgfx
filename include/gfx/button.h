@@ -1,10 +1,10 @@
 #pragma once
 
-#include <rect.h>
-#include <window.h>
-#include <font.h>
-#include <renderer.h>
-#include <color.h>
+#include <gfx/rect.h>
+#include <gfx/window.h>
+#include <gfx/font.h>
+#include <gfx/renderer.h>
+#include <gfx/color.h>
 
 namespace gfx::ui {
 

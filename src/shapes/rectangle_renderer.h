@@ -2,10 +2,10 @@
 
 #include <array>
 
-#include <window.h>
-#include <types.h>
-#include <color.h>
-#include "rect.h"
+#include <gfx/window.h>
+#include <gfx/types.h>
+#include <gfx/color.h>
+#include <gfx/rect.h>
 #include "../opengl.h"
 
 class RectangleRenderer final {

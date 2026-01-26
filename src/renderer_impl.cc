@@ -1,7 +1,6 @@
-#include <gfx.h>
-
+#include <gfx/gfx.h>
+#include <gfx/renderer.h>
 #include "renderer_impl.h"
-#include "renderer.h"
 
 namespace gfx {
 

@@ -4,13 +4,13 @@
 #include <memory>
 #include <string_view>
 
-#include <surface.h>
-#include <texture.h>
-#include <vec.h>
-#include <rect.h>
-#include <types.h>
-#include <color.h>
-#include <font.h>
+#include <gfx/surface.h>
+#include <gfx/texture.h>
+#include <gfx/vec.h>
+#include <gfx/rect.h>
+#include <gfx/types.h>
+#include <gfx/color.h>
+#include <gfx/font.h>
 
 // TODO: add cmake package module
 // TODO: make pkg-config file work

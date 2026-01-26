@@ -1,6 +1,6 @@
 #include <memory>
 
-#include <gfx.h>
+#include <gfx/gfx.h>
 
 #include "window_impl.h"
 #include "font_impl.h"

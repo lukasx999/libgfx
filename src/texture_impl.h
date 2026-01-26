@@ -1,6 +1,6 @@
 #pragma once
 
-#include <texture.h>
+#include <gfx/texture.h>
 #include "opengl.h"
 
 #include <glad/gl.h>

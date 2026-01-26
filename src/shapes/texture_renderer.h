@@ -1,8 +1,8 @@
 #pragma once
 
-#include <window.h>
-#include <texture.h>
-#include <color.h>
+#include <gfx/window.h>
+#include <gfx/texture.h>
+#include <gfx/color.h>
 #include "../opengl.h"
 
 class TextureRenderer final {

@@ -1,7 +1,7 @@
 #pragma once
 
-#include <window.h>
-#include "font.h"
+#include <gfx/window.h>
+#include <gfx/font.h>
 #include "opengl.h"
 
 #include <ft2build.h>

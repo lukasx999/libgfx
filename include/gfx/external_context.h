@@ -2,8 +2,8 @@
 
 #include <functional>
 
-#include "surface.h"
-#include "renderer.h"
+#include <gfx/surface.h>
+#include <gfx/renderer.h>
 
 namespace gfx {
 
