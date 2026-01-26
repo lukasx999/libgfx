@@ -4,7 +4,7 @@ libgfx is an easy-to-use library for game/graphics programming written in modern
 
 ## Features
 
-- Clean & Easy-to-use modern C++23 API
+- Clean & Easy-To-Use Modern C++23 API
 - Cross-Platform
 - Embeddable into other applications
 
@@ -44,3 +44,15 @@ int main() {
 
 }
 ```
+
+## Building Your Application
+
+### Using CMake
+
+This library comes with `find_package()` support for CMake, which means that after installing the library you can just insert this line into your `CMakeLists.txt`:
+
+```cmake
+find_package(gfx)
+```
+
+And then link to the `gfx` target using `target_link_libraries()`.
