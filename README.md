@@ -8,6 +8,25 @@ libgfx is an easy-to-use library for game/graphics programming written in modern
 - Cross-Platform
 - Embeddable into other applications
 
+## Build Instructions
+
+### If you have [Just](https://github.com/casey/just)
+
+```console
+cd libgfx/
+sudo just install
+```
+
+### Using CMake
+
+```console
+cd libgfx/
+cmake -Bbuild
+cmake -Bbuild -GNinja # for faster builds using Ninja
+cmake --build build
+sudo cmake --install build
+```
+
 ## Example
 
 
