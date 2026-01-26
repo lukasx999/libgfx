@@ -6,14 +6,16 @@ set(CMAKE_COLOR_DIAGNOSTICS ON)
 
 project(Gfx)
 
-list(APPEND include_dirs include/ /usr/include/freetype2/ deps/glad/include/)
-
 execute_process(COMMAND python3 gen.py WORKING_DIRECTORY shaders/)
 
-add_library(gfx)
+list(APPEND include_dirs include/ /usr/include/freetype2/ deps/glad/include/)
+
+add_library(gfx STATIC)
 target_compile_options(gfx PRIVATE -Wno-c23-extensions -Wall -Wextra -O3 -ggdb)
+
 include_directories(deps/stb ${include_dirs})
 target_include_directories(gfx PUBLIC ${include_dirs})
+
 add_subdirectory(src)
 target_link_libraries(gfx PRIVATE glfw freetype)
 
