@@ -10,7 +10,7 @@ libgfx is an easy-to-use library for game/graphics programming written in modern
 
 ## Build Instructions
 
-### If you have [Just](https://github.com/casey/just)
+### Using [Just](https://github.com/casey/just)
 
 ```console
 cd libgfx/
