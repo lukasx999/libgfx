@@ -17,16 +17,13 @@ target_include_directories(gfx PUBLIC ${include_dirs})
 add_subdirectory(src)
 target_link_libraries(gfx PRIVATE glfw freetype)
 
-# TODO: install all headers in include/ to correct path
-# set_target_properties(gfx PROPERTIES PUBLIC_HEADER "include/*.h")
-
 install(
     TARGETS gfx
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib
-    INCLUDES DESTINATION include
-    PUBLIC_HEADER DESTINATION include
 )
+
+install(DIRECTORY "include/" DESTINATION "include")
 
 add_executable(test test.cc)
