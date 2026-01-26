@@ -28,7 +28,7 @@ install(
 install(DIRECTORY "include/" DESTINATION "include")
 
 # generate .cmake file for find_package()
-install(FILES gfx-config.cmake DESTINATION lib/cmake/gfx)
+install(FILES cmake/gfx-config.cmake DESTINATION lib/cmake/gfx)
 install(TARGETS gfx EXPORT gfx)
 install(EXPORT gfx DESTINATION lib/cmake/gfx)
 
