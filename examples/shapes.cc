@@ -1,16 +1,30 @@
-#include <gfx.h>
+#include <gfx/gfx.h>
 
 int main() {
 
-    gfx::Window window(500, 500, "shapes");
+    gfx::Window window(1600, 900, "shapes");
 
     window.draw_loop([&](gfx::Renderer& rd) {
 
         rd.clear_background(gfx::Color::black());
 
-        rd.draw_rectangle({ 50, 50, 400, 400 }, gfx::Color::blue());
-        rd.draw_triangle({ 250, 50 }, { 50, 450 }, { 450, 450 }, gfx::Color::orange());
-        rd.draw_circle(window.get_midpoint(), 75, gfx::Color::white());
+        float spacing = 50;
+        rd.draw_rectangle(
+            spacing,
+            spacing,
+            window.get_width()  - spacing * 2,
+            window.get_height() - spacing * 2,
+            gfx::Color::gray()
+        );
+
+        rd.draw_triangle(
+            spacing, window.get_height() - spacing,
+            window.get_width() - spacing, window.get_height() - spacing,
+            window.get_width() / 2.0, spacing,
+            gfx::Color::blue()
+        );
+
+        rd.draw_circle(window.get_midpoint(), 100, gfx::Color::white());
 
         if (window.get_key_state(gfx::Key::Escape).pressed())
             window.close();
