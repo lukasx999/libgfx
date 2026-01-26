@@ -14,7 +14,6 @@ add_library(gfx STATIC)
 target_compile_options(gfx PRIVATE -Wno-c23-extensions -Wall -Wextra -O3 -ggdb)
 
 include_directories(deps/stb ${include_dirs})
-target_include_directories(gfx PUBLIC ${include_dirs})
 
 add_subdirectory(src)
 target_link_libraries(gfx PRIVATE glfw freetype)
