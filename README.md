@@ -31,15 +31,14 @@ sudo cmake --install build
 
 
 ```c++
-#include <gfx.h>
+#include <gfx/gfx.h>
 
 int main() {
 
     gfx::Window window(1600, 900, "my gfx application");
-    gfx::Renderer renderer(window);
 
-    renderer.draw_loop([&] {
-        renderer.clear_background(gfx::Color::black());
+    window.draw_loop([&](gfx::Renderer& rd) {
+        rd.clear_background(gfx::Color::black());
         renderer.draw_rectangle(0, 0, 100, 100, gfx::Color::white());
     });
 
