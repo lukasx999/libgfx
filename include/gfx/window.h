@@ -85,9 +85,6 @@ public:
     [[nodiscard]] int get_width() const override;
     [[nodiscard]] int get_height() const override;
 
-    [[nodiscard]] gfx::Vec get_midpoint() const;
-    [[nodiscard]] gfx::Rect get_screen_rect() const;
-
     void set_title(const char* title);
     void close();
 

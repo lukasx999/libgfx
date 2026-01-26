@@ -23,13 +23,6 @@ Window::~Window() {
     // glfwTerminate();
 }
 
-gfx::Vec Window::get_midpoint() const {
-    return {
-        get_width() / 2.0f,
-        get_height() / 2.0f,
-    };
-}
-
 bool Window::should_close() const {
     return glfwWindowShouldClose(m_pimpl->m_window);
 }
@@ -56,15 +49,6 @@ int Window::get_height() const {
     int height;
     glfwGetFramebufferSize(m_pimpl->m_window, nullptr, &height);
     return height;
-}
-
-gfx::Rect Window::get_screen_rect() const {
-    return {
-        0.0f,
-        0.0f,
-        static_cast<float>(get_width()),
-        static_cast<float>(get_height()),
-    };
 }
 
 double Window::get_time() const {

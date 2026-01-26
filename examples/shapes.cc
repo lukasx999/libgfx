@@ -24,7 +24,7 @@ int main() {
             gfx::Color::blue()
         );
 
-        rd.draw_circle(window.get_midpoint(), 100, gfx::Color::white());
+        rd.draw_circle(window.get_center(), 100, gfx::Color::white());
 
         if (window.get_key_state(gfx::Key::Escape).pressed())
             window.close();
