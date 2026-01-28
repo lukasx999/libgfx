@@ -4,6 +4,7 @@
 #include <gfx/gfx.h>
 
 namespace chrono = std::chrono;
+using namespace std::chrono_literals;
 
 class Clock {
     const std::string_view m_timezone;
@@ -18,6 +19,10 @@ class Clock {
     static constexpr int m_index_fontsize = 30;
     static constexpr int m_index_number_spacing = 15;
 
+    std::optional<gfx::Animation<float>> m_animation_hours;
+    std::optional<gfx::Animation<float>> m_animation_minutes;
+    std::optional<gfx::Animation<float>> m_animation_seconds;
+
     struct Time {
         long hours, minutes, seconds;
     };
@@ -27,7 +32,9 @@ public:
         : m_timezone(timezone)
         , m_font(font)
         , m_radius(radius)
-    { }
+    {
+        init_animations();
+    }
 
     void draw(gfx::Renderer& rd) const {
         rd.draw_circle(rd.get_surface().get_center(), m_radius, gfx::Color(20, 20, 20, 255));
@@ -35,8 +42,22 @@ public:
         draw_indices_minutes(rd);
         draw_indices_hours(rd);
 
-        draw_hands(rd);
+        if (m_animation_hours->is_running())
+            draw_hand(rd, m_hour_hand_length, m_animation_hours->get());
+
+        if (m_animation_minutes->is_running())
+            draw_hand(rd, m_minute_hand_length, m_animation_minutes->get());
+
+        if (m_animation_seconds->is_running())
+            draw_hand(rd, m_second_hand_length, m_animation_seconds->get());
+
+        if (!(m_animation_hours->is_running() ||
+            m_animation_minutes->is_running() ||
+            m_animation_seconds->is_running()))
+            draw_hands(rd);
+
         rd.draw_circle(rd.get_surface().get_center(), m_center_point_radius, gfx::Color::white());
+
     }
 
 private:
@@ -69,7 +90,11 @@ private:
 
     }
 
-    void draw_hands(gfx::Renderer& rd) const {
+    [[nodiscard]] auto get_hands_rotation_factors() const {
+
+        struct RotationFactors {
+            double hours, minutes, seconds;
+        };
 
         auto time = get_current_time();
 
@@ -78,11 +103,50 @@ private:
         double hours = time.hours + time.minutes / 60.0 + time.seconds / 3600.0;
         double minutes = time.minutes + time.seconds / 60.0;
 
-        draw_hand(rd, m_hour_hand_length, hours / 12.0);
-        draw_hand(rd, m_minute_hand_length, minutes / 60.0);
-        draw_hand(rd, m_second_hand_length, time.seconds / 60.0);
+        return RotationFactors {
+            hours / 12.0,
+            minutes / 60.0,
+            time.seconds / 60.0,
+        };
 
     }
+
+    void init_animations() {
+        auto [hours, minutes, seconds] = get_hands_rotation_factors();
+
+        m_animation_hours.emplace(0.0f, hours, 3s, gfx::interpolators::ease_in_cubic);
+        m_animation_minutes.emplace(0.0f, minutes, 3s, gfx::interpolators::ease_in_cubic);
+        m_animation_seconds.emplace(0.0f, seconds, 3s, gfx::interpolators::ease_in_cubic);
+
+        m_animation_hours->start();
+        m_animation_minutes->start();
+        m_animation_seconds->start();
+    }
+
+    void draw_hands(gfx::Renderer& rd) const {
+
+        auto [hours, minutes, seconds] = get_hands_rotation_factors();
+
+        draw_hand(rd, m_hour_hand_length, hours);
+        draw_hand(rd, m_minute_hand_length, minutes);
+        draw_hand(rd, m_second_hand_length, seconds);
+
+    }
+
+    // void draw_hands(gfx::Renderer& rd) const {
+    //
+    //     auto time = get_current_time();
+    //
+    //     // add the remaining floating-point digits to hours and minutes, to
+    //     // create a more precise representation
+    //     double hours = time.hours + time.minutes / 60.0 + time.seconds / 3600.0;
+    //     double minutes = time.minutes + time.seconds / 60.0;
+    //
+    //     draw_hand(rd, m_hour_hand_length, hours / 12.0);
+    //     draw_hand(rd, m_minute_hand_length, minutes / 60.0);
+    //     draw_hand(rd, m_second_hand_length, time.seconds / 60.0);
+    //
+    // }
 
     void draw_hand(gfx::Renderer& rd, int length, float rotation_factor) const {
 
