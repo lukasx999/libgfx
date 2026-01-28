@@ -14,7 +14,7 @@
 
 // TODO: make pkg-config file work
 // TODO: fix library initializer check segfault in gfx::Texture (gl::Texture is constructed before the check)
-// TODO: fix window dtor
+// TODO: hide renderer default ctor
 // TODO: camera rotation
 // TODO: fix rotation types
 // TODO: texture enum class for format (rgb, rgba, ...)
@@ -43,10 +43,6 @@ public:
     explicit Renderer(const gfx::Surface& surface);
 
     ~Renderer();
-    Renderer(const Renderer&) = delete;
-    Renderer(Renderer&&) = delete;
-    Renderer& operator=(const Renderer&) = delete;
-    Renderer& operator=(Renderer&&) = delete;
 
     [[nodiscard]] const gfx::Surface& get_surface() const {
         return m_surface;

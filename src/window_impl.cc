@@ -62,6 +62,13 @@ Window::Impl::Impl(int width, int height, const char* title, WindowFlags flags) 
     // glfwPollEvents();
 }
 
+Window::Impl::~Impl() {
+    glfwDestroyWindow(m_window);
+    glfwTerminate();
+
+    FT_Done_FreeType(m_ft);
+}
+
 void Window::Impl::debug_message_callback(
     [[maybe_unused]] GLenum source,
     [[maybe_unused]] GLenum type,

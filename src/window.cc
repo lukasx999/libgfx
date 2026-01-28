@@ -18,11 +18,9 @@ Window::Window(int width, int height, const char* title, WindowFlags flags)
     library_has_been_initialized = true;
 }
 
-Window::~Window() {
-    // FIX: renderer data member is destructed after window dtor, resulting in ub
-    // glfwDestroyWindow(m_pimpl->m_window);
-    // glfwTerminate();
-}
+// the pimpl pattern requires the destructor to "see" the complete
+// type of the Impl structure
+Window::~Window() = default;
 
 bool Window::should_close() const {
     return glfwWindowShouldClose(m_pimpl->m_window);

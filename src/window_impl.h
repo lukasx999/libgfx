@@ -18,10 +18,10 @@ struct Window::Impl {
     FT_Library m_ft;
 
     Impl(int width, int height, const char* title, WindowFlags flags);
+    ~Impl();
 
-    ~Impl() {
-        FT_Done_FreeType(m_ft);
-    }
+    Impl(const Impl&) = delete;
+    Impl& operator=(const Impl&) = delete;
 
     [[nodiscard]] gfx::Font load_font(const char* path) const;
 

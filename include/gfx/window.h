@@ -61,12 +61,7 @@ public:
     using DrawFn = std::function<void(gfx::Renderer&)>;
 
     Window(int width, int height, const char* title, WindowFlags flags = {});
-
     ~Window();
-    Window(const Window&) = delete;
-    Window(Window&&) = delete;
-    Window& operator=(const Window&) = delete;
-    Window& operator=(Window&&) = delete;
 
     [[nodiscard]] double get_frame_time() const {
         return m_frame_time;
