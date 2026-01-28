@@ -6,10 +6,12 @@ set(CMAKE_COLOR_DIAGNOSTICS ON)
 
 project(Examples)
 
+find_package(gfx)
+
 add_executable(shapes shapes.cc)
 target_compile_options(shapes PRIVATE -Wall -Wextra -O3 -ggdb)
-target_link_libraries(shapes PRIVATE gfx glfw freetype)
+target_link_libraries(shapes PRIVATE gfx)
 
 add_executable(offscreen_rendering offscreen_rendering.cc)
 target_compile_options(offscreen_rendering PRIVATE -Wall -Wextra -O3 -ggdb)
-target_link_libraries(offscreen_rendering PRIVATE gfx glfw freetype)
+target_link_libraries(offscreen_rendering PRIVATE gfx)
