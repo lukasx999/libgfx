@@ -137,9 +137,18 @@ public:
         draw_text({ x, y }, fontsize, text, font, color);
     }
 
-    void draw_text_centered(gfx::Vec center, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color) {
+    void draw_text_centered_x(gfx::Vec center, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color) {
         int text_width = font.measure_text(text, fontsize);
         draw_text({ center.x - text_width/2.0f, center.y }, fontsize, text, font, color);
+    }
+
+    void draw_text_centered_x(float x, float y, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color) {
+        draw_text_centered_x({ x, y }, fontsize, text, font, color);
+    }
+
+    void draw_text_centered(gfx::Vec center, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color) {
+        int text_width = font.measure_text(text, fontsize);
+        draw_text({ center.x - text_width/2.0f, center.y - fontsize/2.0f }, fontsize, text, font, color);
     }
 
     void draw_text_centered(float x, float y, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color) {
