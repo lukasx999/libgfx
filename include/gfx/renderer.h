@@ -16,6 +16,7 @@
 // TODO: fix library initializer check segfault in gfx::Texture (gl::Texture is constructed before the check)
 // TODO: fix window dtor
 // TODO: camera rotation
+// TODO: fix rotation types
 // TODO: texture enum class for format (rgb, rgba, ...)
 // TODO: key state rising edge detection
 // TODO: check_collision_circle
