@@ -14,6 +14,7 @@
 
 // TODO: make pkg-config file work
 // TODO: fix library initializer check segfault in gfx::Texture (gl::Texture is constructed before the check)
+// TODO: overloads for color
 // TODO: hide renderer default ctor
 // TODO: camera rotation
 // TODO: fix rotation types
