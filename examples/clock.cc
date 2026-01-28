@@ -109,7 +109,7 @@ private:
 int main() {
 
 
-    gfx::Window window(700, 700, "animated clock");
+    gfx::Window window(700, 700, "clock");
     auto font = window.load_font("/usr/share/fonts/TTF/Roboto-Light.ttf");
 
     Clock clock("Europe/Vienna", font, 300);
