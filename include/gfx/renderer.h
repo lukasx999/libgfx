@@ -12,6 +12,7 @@
 #include <gfx/color.h>
 #include <gfx/font.h>
 
+// TODO: draw circle/rect outline
 // TODO: make pkg-config file work
 // TODO: fix library initializer check segfault in gfx::Texture (gl::Texture is constructed before the check)
 // TODO: overloads for color

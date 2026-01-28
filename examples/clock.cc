@@ -73,19 +73,24 @@ private:
 
         auto time = get_current_time();
 
-        double hours = time.hours + time.minutes/60.0 + time.seconds/3600.0;
-        double minutes = time.minutes + time.seconds/60.0;
+        // add the remaining floating-point digits to hours and minutes, to
+        // create a more precise representation
+        double hours = time.hours + time.minutes / 60.0 + time.seconds / 3600.0;
+        double minutes = time.minutes + time.seconds / 60.0;
+
+        draw_hand(rd, m_hour_hand_length, hours / 12.0);
+        draw_hand(rd, m_minute_hand_length, minutes / 60.0);
+        draw_hand(rd, m_second_hand_length, time.seconds / 60.0);
+
+    }
+
+    void draw_hand(gfx::Renderer& rd, int length, float rotation_factor) const {
 
         gfx::Vec center = rd.get_surface().get_center();
         gfx::Vec hand(0.0, -1.0);
 
-        gfx::Vec hour_precise_hand = hand.rotated(gfx::Degrees(360.0 / 12.0 * hours)) * m_hour_hand_length;
-        gfx::Vec minute_precise_hand = hand.rotated(gfx::Degrees(360.0 / 60.0 * minutes)) * m_minute_hand_length;
-        gfx::Vec second_hand = hand.rotated(gfx::Degrees(360.0 / 60.0 * time.seconds)) * m_second_hand_length;
-
-        rd.draw_line(center, center + hour_precise_hand, gfx::Color::white());
-        rd.draw_line(center, center + minute_precise_hand, gfx::Color::white());
-        rd.draw_line(center, center + second_hand, gfx::Color::white());
+        gfx::Vec direction = hand.rotated(gfx::Degrees(360.0 * rotation_factor));
+        rd.draw_line(center, center + direction * length, gfx::Color::white());
     }
 
     [[nodiscard]] Time get_current_time() const {
@@ -107,7 +112,6 @@ private:
 };
 
 int main() {
-
 
     gfx::Window window(700, 700, "clock");
     auto font = window.load_font("/usr/share/fonts/TTF/Roboto-Light.ttf");
