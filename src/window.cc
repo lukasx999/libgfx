@@ -1,12 +1,13 @@
 #include <thread>
 
-#include <glad/gl.h>
+#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
 #include <gfx/window.h>
 #include <gfx/input.h>
 #include "window_impl.h"
 #include "util.h"
+#include "opengl.h"
 
 namespace gfx {
 

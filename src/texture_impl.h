@@ -3,8 +3,6 @@
 #include <gfx/texture.h>
 #include "opengl.h"
 
-#include <glad/gl.h>
-
 struct gfx::Texture::Impl {
     gl::Texture m_texture;
 

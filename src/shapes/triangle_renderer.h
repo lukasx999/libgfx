@@ -3,7 +3,6 @@
 #include <gfx/window.h>
 #include <gfx/color.h>
 #include <gfx/types.h>
-
 #include "../opengl.h"
 
 class TriangleRenderer final {

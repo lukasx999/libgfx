@@ -1,7 +1,3 @@
-#include <glad/gl.h>
-#include <glm/glm.hpp>
-#include <glm/ext.hpp>
-
 #include "rectangle_renderer.h"
 #include "../shaders.h"
 

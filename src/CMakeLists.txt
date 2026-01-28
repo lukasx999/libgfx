@@ -1,5 +1,4 @@
 target_sources(gfx PRIVATE
-gfx.cc
 window.cc
 font_impl.cc
 texture_impl.cc
@@ -9,6 +8,7 @@ input.cc
 font.cc
 texture.cc
 window_impl.cc
+opengl.cc
 )
 
 add_subdirectory(shapes)

@@ -1,10 +1,5 @@
 #include <utility>
 
-#include <glad/gl.h>
-#include <glm/glm.hpp>
-#include <glm/ext.hpp>
-#include <GLFW/glfw3.h>
-
 #include "texture_renderer.h"
 #include "../shaders.h"
 #include "../opengl.h"

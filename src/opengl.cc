@@ -1,0 +1,4 @@
+#include "opengl.h"
+
+#define GLAD_GL_IMPLEMENTATION
+#include <glad/gl.h>

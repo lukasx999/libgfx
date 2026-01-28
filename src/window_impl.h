@@ -1,13 +1,14 @@
 #pragma once
 
-#include <gfx/window.h>
-#include <gfx/font.h>
-#include "opengl.h"
-
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
+#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
+
+#include <gfx/window.h>
+#include <gfx/font.h>
+#include "opengl.h"
 
 namespace gfx {
 

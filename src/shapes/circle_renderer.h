@@ -5,7 +5,6 @@
 #include <gfx/types.h>
 #include <gfx/color.h>
 #include <gfx/window.h>
-
 #include "../opengl.h"
 
 class CircleRenderer final {
