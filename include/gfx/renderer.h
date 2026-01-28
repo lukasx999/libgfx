@@ -12,6 +12,7 @@
 #include <gfx/color.h>
 #include <gfx/font.h>
 
+// TODO: default font
 // TODO: add thick line rendering
 // TODO: draw circle/rect outline
 // TODO: make pkg-config file work
