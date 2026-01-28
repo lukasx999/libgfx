@@ -53,9 +53,9 @@ private:
         gfx::Vec center = rd.get_surface().get_center();
         gfx::Vec hand(0.0, -1.0);
 
-        for (int hour = 0; hour < segments; ++hour) {
+        for (int segment = 1; segment <= segments; ++segment) {
 
-            gfx::Vec direction = hand.rotated(gfx::Degrees(360.0 / segments * hour));
+            gfx::Vec direction = hand.rotated(gfx::Degrees(360.0 / segments * segment));
             gfx::Vec start = center + direction * (m_radius - length);
             gfx::Vec end = start + direction * length;
 
@@ -63,7 +63,7 @@ private:
 
             if (draw_numbers) {
                 gfx::Vec text_pos = center + direction * (m_radius + m_index_fontsize/2.0f + m_index_number_spacing);
-                rd.draw_text_centered(text_pos, m_index_fontsize, std::to_string(hour), m_font, gfx::Color::white());
+                rd.draw_text_centered(text_pos, m_index_fontsize, std::to_string(segment), m_font, gfx::Color::white());
             }
         }
 
