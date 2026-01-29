@@ -12,7 +12,6 @@
 #include <gfx/color.h>
 #include <gfx/font.h>
 
-// TODO: fix gcc build
 // TODO: enable the use of different opengl loaders (glad, libepoxy)
 // TODO: port to wasm, via emscripten (-s USE_GLFW=3)
 // TODO: detect default font (via fontconfig)
