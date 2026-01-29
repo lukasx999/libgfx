@@ -1,8 +1,17 @@
 cmake_minimum_required(VERSION 3.16)
+
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 set(CMAKE_COLOR_DIAGNOSTICS ON)
+
+option(PLATFORM_WEB "build for web" FALSE)
+
+if (PLATFORM_WEB)
+    message("building for web via emscripten")
+    set(CMAKE_CXX_COMPILER "em++")
+    set(CMAKE_C_COMPILER "emcc")
+endif()
 
 project(Gfx)
 

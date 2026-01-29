@@ -2,7 +2,6 @@
 
 #include <gfx/animated_texture.h>
 #include <gfx/animation.h>
-#include <gfx/button.h>
 #include <gfx/color.h>
 #include <gfx/external_context.h>
 #include <gfx/font.h>
