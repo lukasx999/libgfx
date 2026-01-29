@@ -20,6 +20,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Install Dependencies
+      run: sudo apt install -y freetype2 glm glfw
+
     - name: Configure
       run: cmake -Bbuild -GNinja
 
