@@ -150,7 +150,7 @@ public:
 private:
     [[nodiscard]] T get_running() const {
         auto diff = get_current_time() - m_start_time;
-        auto t = diff / m_duration;
+        double t = diff / m_duration;
         return lerp(m_start, m_end, m_fn(t));
     }
 
