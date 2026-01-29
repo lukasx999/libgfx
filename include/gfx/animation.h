@@ -122,7 +122,7 @@ public:
     }
 
     [[nodiscard]] bool is_running() const {
-        return !is_done();
+        return m_state == State::Running;
     }
 
     [[nodiscard]] T get_start() const {

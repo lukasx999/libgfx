@@ -19,7 +19,7 @@ class Clock {
     static constexpr int m_index_fontsize = 30;
     static constexpr int m_index_number_spacing = 15;
 
-    gfx::Animation<float> m_animation{0.0f, 1.0f, 3s, gfx::interpolators::ease_in_out_cubic};
+    gfx::Animation<float> m_animation{0.0f, 1.0f, 1s, gfx::interpolators::ease_in_quad};
 
     template <typename T>
     struct Time {
@@ -43,12 +43,11 @@ public:
 
         if (m_animation.is_running()) {
             auto [hours, minutes, seconds] = get_hands_rotation_factors();
-            float value = m_animation.get();
+            float factor = m_animation.get();
 
-            draw_hand(rd, m_hour_hand_length, value * hours);
-            draw_hand(rd, m_minute_hand_length, value * minutes);
-            // TODO: seconds hand end value has to be 5s in the future
-            draw_hand(rd, m_second_hand_length, value * seconds);
+            draw_hand(rd, m_hour_hand_length, factor * hours);
+            draw_hand(rd, m_minute_hand_length, factor * minutes);
+            draw_hand(rd, m_second_hand_length, factor * seconds);
 
         } else {
             draw_hands(rd);
