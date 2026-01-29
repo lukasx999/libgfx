@@ -12,10 +12,12 @@
 #include <gfx/color.h>
 #include <gfx/font.h>
 
-// TODO: default font
+// TODO: port to wasm, via emscripten (-s USE_GLFW=3)
+// TODO: detect default font
 // TODO: add thick line rendering
 // TODO: draw circle/rect outline
 // TODO: make pkg-config file work
+// TODO: stencil buffer
 // TODO: fix library initializer check segfault in gfx::Texture (gl::Texture is constructed before the check)
 // TODO: overloads for color
 // TODO: hide renderer default ctor
@@ -28,8 +30,6 @@
 // TODO: cursor always starts out at 0 0
 // TODO: animated clock example
 // TODO: font copy/move ctor
-// TODO: build system for non-cmake
-// TODO: stencil buffer
 // TODO: make texture parameters configurable
 
 namespace gfx {
