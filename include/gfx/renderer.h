@@ -21,7 +21,6 @@
 // TODO: stencil buffer
 // TODO: fix library initializer check segfault in gfx::Texture (gl::Texture is constructed before the check)
 // TODO: overloads for color
-// TODO: hide renderer default ctor
 // TODO: camera rotation
 // TODO: fix rotation types
 // TODO: texture enum class for format (rgb, rgba, ...)
@@ -35,17 +34,22 @@
 
 namespace gfx {
 
+class Window;
+class ExternalContext;
+
 class Renderer final {
     const gfx::Surface& m_surface;
 
     struct Impl;
     std::unique_ptr<Impl> m_pimpl;
 
+    friend Window;
+    friend ExternalContext;
+
+    explicit Renderer(const gfx::Surface& surface);
+
 public:
     using DrawFn = std::function<void()>;
-
-    // TODO: hide this ctor
-    explicit Renderer(const gfx::Surface& surface);
 
     ~Renderer();
 
