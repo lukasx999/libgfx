@@ -103,15 +103,19 @@ gfx::Vec Window::get_mouse_pos() const {
 }
 
 int gfx::Window::gfx_mouse_button_to_glfw_mouse_button(MouseButton mb) {
+
     switch (mb) {
         using enum gfx::MouseButton;
         case Left: return GLFW_MOUSE_BUTTON_LEFT;
         case Right: return GLFW_MOUSE_BUTTON_RIGHT;
         case Middle: return GLFW_MOUSE_BUTTON_MIDDLE;
     }
+
+    std::unreachable();
 }
 
 int gfx::Window::gfx_key_to_glfw_key(Key key) {
+
     switch (key) {
         using enum Key;
         case Escape: return GLFW_KEY_ESCAPE;
@@ -153,6 +157,8 @@ int gfx::Window::gfx_key_to_glfw_key(Key key) {
         case Y: return GLFW_KEY_Y;
         case Z: return GLFW_KEY_Z;
     }
+
+    std::unreachable();
 }
 
 gfx::Font Window::load_font(const char* path) const {
