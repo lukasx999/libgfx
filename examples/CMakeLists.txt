@@ -19,3 +19,7 @@ target_link_libraries(offscreen_rendering PRIVATE gfx)
 add_executable(clock clock.cc)
 target_compile_options(clock PRIVATE -Wall -Wextra -O3 -ggdb)
 target_link_libraries(clock PRIVATE gfx)
+
+add_executable(animation animation.cc)
+target_compile_options(animation PRIVATE -Wall -Wextra -O3 -ggdb)
+target_link_libraries(animation PRIVATE gfx)

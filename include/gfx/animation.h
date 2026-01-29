@@ -137,6 +137,10 @@ public:
         return m_duration;
     }
 
+    operator T() const {
+        return get();
+    }
+
     [[nodiscard]] T get() const {
         switch (m_state) {
             case State::Idle:

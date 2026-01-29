@@ -43,11 +43,10 @@ public:
 
         if (m_animation.is_running()) {
             auto [hours, minutes, seconds] = get_hands_rotation_factors();
-            float factor = m_animation.get();
 
-            draw_hand(rd, m_hour_hand_length, factor * hours);
-            draw_hand(rd, m_minute_hand_length, factor * minutes);
-            draw_hand(rd, m_second_hand_length, factor * seconds);
+            draw_hand(rd, m_hour_hand_length, m_animation * hours);
+            draw_hand(rd, m_minute_hand_length, m_animation * minutes);
+            draw_hand(rd, m_second_hand_length, m_animation * seconds);
 
         } else {
             draw_hands(rd);
