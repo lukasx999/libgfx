@@ -50,7 +50,6 @@ public:
 private:
     void load_texture_from_file(const char* path);
     [[nodiscard]] std::vector<unsigned char> copy_to_cpu() const;
-    static void check_library_init();
 
 };
 

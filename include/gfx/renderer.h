@@ -19,7 +19,6 @@
 // TODO: draw circle/rect outline
 // TODO: make pkg-config file work
 // TODO: stencil buffer
-// TODO: fix library initializer check segfault in gfx::Texture (gl::Texture is constructed before the check)
 // TODO: overloads for color
 // TODO: camera rotation
 // TODO: fix rotation types

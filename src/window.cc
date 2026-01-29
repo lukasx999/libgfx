@@ -6,7 +6,6 @@
 #include <gfx/window.h>
 #include <gfx/input.h>
 #include "window_impl.h"
-#include "util.h"
 #include "opengl.h"
 
 namespace gfx {
@@ -14,9 +13,7 @@ namespace gfx {
 Window::Window(int width, int height, const char* title, WindowFlags flags)
     : m_pimpl(std::make_unique<Window::Impl>(width, height, title, flags))
     , m_renderer(*this)
-{
-    library_has_been_initialized = true;
-}
+{ }
 
 // the pimpl pattern requires the destructor to "see" the complete
 // type of the Impl structure

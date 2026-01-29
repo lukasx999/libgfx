@@ -17,27 +17,21 @@
 
 #include <gfx/texture.h>
 #include "texture_impl.h"
-#include "util.h"
 #include "opengl.h"
 
 namespace gfx {
 
-Texture::Texture() : Texture(0, 0, 3) {
-    check_library_init();
-}
+Texture::Texture() : Texture(0, 0, 3) { }
 
 Texture::Texture(const char* path) : m_pimpl(std::make_unique<Texture::Impl>()) {
-    check_library_init();
     load_texture_from_file(path);
 }
 
 Texture::Texture(const std::string& path) : m_pimpl(std::make_unique<Texture::Impl>()) {
-    check_library_init();
     load_texture_from_file(path.c_str());
 }
 
 Texture::Texture(int width, int height, int channels, const unsigned char* bytes) : m_pimpl(std::make_unique<Texture::Impl>()) {
-    check_library_init();
     m_pimpl->m_texture = Impl::generate_texture(bytes, width, height, channels);
 }
 
@@ -151,11 +145,6 @@ std::vector<unsigned char> Texture::copy_to_cpu() const {
     glBindTexture(GL_TEXTURE_2D, 0);
 
     return buf;
-}
-
-void Texture::check_library_init() {
-    if (!library_has_been_initialized)
-        throw gfx::Error("cannot construct a gfx::Texture before the gfx library has been initialized. construct a gfx::Window to fix this issue.");
 }
 
 } // namespace gfx
