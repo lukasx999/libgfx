@@ -19,7 +19,6 @@
 // TODO: draw circle/rect outline
 // TODO: make pkg-config file work
 // TODO: stencil buffer
-// TODO: overloads for color
 // TODO: camera rotation
 // TODO: fix rotation types
 // TODO: texture enum class for format (rgb, rgba, ...)

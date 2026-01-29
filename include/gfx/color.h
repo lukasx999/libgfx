@@ -12,16 +12,24 @@ struct Color {
     uint8_t b = 0;
     uint8_t a = 0;
 
-    Color() = default;
+    constexpr Color() = default;
 
-    Color(uint8_t r_, uint8_t g_, uint8_t b_, uint8_t a_)
-        : r(r_)
-        , g(g_)
-        , b(b_)
-        , a(a_)
+    constexpr Color(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha)
+        : r(red)
+        , g(green)
+        , b(blue)
+        , a(alpha)
     { }
 
-    Color(uint32_t color)
+    constexpr Color(uint8_t red, uint8_t green, uint8_t blue)
+    : Color(red, green, blue, 0xff)
+    { }
+
+    constexpr Color(uint8_t value, uint8_t alpha)
+    : Color(value, value, value, alpha)
+    { }
+
+    constexpr Color(uint32_t color)
         : r(color >> 8*3 & 0xff)
         , g(color >> 8*2 & 0xff)
         , b(color >> 8*1 & 0xff)
@@ -30,22 +38,22 @@ struct Color {
 
     // these methods allow you to partially modify colors, within one expression.
 
-    Color& set_red(uint8_t value) {
+    constexpr Color& set_red(uint8_t value) {
         r = value;
         return *this;
     }
 
-    Color& set_green(uint8_t value) {
+    constexpr Color& set_green(uint8_t value) {
         g = value;
         return *this;
     }
 
-    Color& set_blue(uint8_t value) {
+    constexpr Color& set_blue(uint8_t value) {
         b = value;
         return *this;
     }
 
-    Color& set_alpha(uint8_t value) {
+    constexpr Color& set_alpha(uint8_t value) {
         a = value;
         return *this;
     }

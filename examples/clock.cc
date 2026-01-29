@@ -36,7 +36,7 @@ public:
     }
 
     void draw(gfx::Renderer& rd) const {
-        rd.draw_circle(rd.get_surface().get_center(), m_radius, gfx::Color(20, 20, 20, 255));
+        rd.draw_circle(rd.get_surface().get_center(), m_radius, gfx::Color(20, 255));
 
         draw_indices_minutes(rd);
         draw_indices_hours(rd);
