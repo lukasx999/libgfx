@@ -43,8 +43,8 @@ class Renderer final {
     struct Impl;
     std::unique_ptr<Impl> m_pimpl;
 
-    friend Window;
-    friend ExternalContext;
+    friend gfx::Window;
+    friend gfx::ExternalContext;
 
     explicit Renderer(const gfx::Surface& surface);
 

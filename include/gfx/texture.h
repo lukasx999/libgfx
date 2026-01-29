@@ -9,10 +9,8 @@
 class TextureRenderer;
 
 namespace gfx {
-class Renderer;
-} // namespace gfx
 
-namespace gfx {
+class Renderer;
 
 class Texture {
     friend TextureRenderer;
