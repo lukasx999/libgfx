@@ -4,6 +4,9 @@
 #include <functional>
 #include <cmath>
 
+#include <gfx/color.h>
+#include <gfx/vec.h>
+
 namespace gfx {
 
 namespace interpolators {
@@ -79,6 +82,29 @@ namespace interpolators {
 } // namespace interpolators
 
 using namespace std::chrono_literals;
+
+template <typename T>
+T lerp(T start, T end, float x) = delete;
+
+template <typename T> requires std::is_arithmetic_v<T>
+[[nodiscard]] inline constexpr T lerp(T start, T end, float x) {
+    return start + x * (end - start);
+}
+
+// template <>
+// [[nodiscard]] inline constexpr gfx::Color lerp<gfx::Color>(gfx::Color start, gfx::Color end, float x) {
+//     return start + x * (end - start);
+// }
+
+// template <>
+// [[nodiscard]] inline constexpr gfx::Vec lerp<gfx::Vec>(gfx::Vec start, gfx::Vec end, float x) {
+//     return start + x * (end - start);
+// }
+
+template <typename T>
+concept Animatable = requires (T start, T end, float value) {
+gfx::lerp(start, end, value);
+};
 
 template <typename T>
 class Animation {
