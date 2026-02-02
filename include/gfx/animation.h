@@ -6,7 +6,7 @@
 #include <cmath>
 
 #include <gfx/color.h>
-#include <gfx/vec.h>
+#include <gfx/rect.h>
 
 namespace gfx {
 
@@ -117,6 +117,17 @@ gfx::Color lerp<gfx::Color>(gfx::Color start, gfx::Color end, float x) {
         gfx::lerp(start.g, end.g, x),
         gfx::lerp(start.b, end.b, x),
         gfx::lerp(start.a, end.a, x),
+    };
+}
+
+template <>
+[[nodiscard]] inline constexpr
+gfx::Rect lerp<gfx::Rect>(gfx::Rect start, gfx::Rect end, float x) {
+    return {
+        gfx::lerp(start.x, end.x, x),
+        gfx::lerp(start.y, end.y, x),
+        gfx::lerp(start.width, end.width, x),
+        gfx::lerp(start.height, end.height, x),
     };
 }
 

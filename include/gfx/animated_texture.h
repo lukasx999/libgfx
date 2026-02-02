@@ -12,7 +12,6 @@ namespace gfx {
 using namespace std::chrono_literals;
 
 class AnimatedTexture {
-    enum class State { Stopped, Running };
 
     using Duration = std::chrono::duration<double>;
 
@@ -20,7 +19,7 @@ class AnimatedTexture {
     const Duration m_delay;
     Duration m_start_time = 0s;
     bool m_is_looping = true;
-    State m_state = State::Stopped;
+    enum class State { Stopped, Running } m_state = State::Stopped;
 
 public:
     AnimatedTexture(std::vector<gfx::Texture> frames, Duration delay)
