@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cassert>
 #include <chrono>
 #include <functional>
 #include <cmath>
@@ -188,11 +189,8 @@ private:
     [[nodiscard]] T get_running() const {
         auto diff = get_current_time() - m_start_time;
         double t = diff / m_duration;
-        return lerp(m_start, m_end, m_fn(t));
-    }
-
-    [[nodiscard]] static constexpr T lerp(T start, T end, float t) {
-        return start + (end-start) * t;
+        assert(t <= 1.0f);
+        return gfx::lerp(m_start, m_end, m_fn(t));
     }
 
     [[nodiscard]] static Duration get_current_time() {
