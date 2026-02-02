@@ -36,6 +36,17 @@ struct Color {
         , a(color >> 8*0 & 0xff)
     { }
 
+    constexpr bool operator<=>(const Color& other) const = default;
+
+    [[nodiscard]] constexpr Color operator*(float value) const {
+        return {
+            static_cast<uint8_t>(r * value),
+            static_cast<uint8_t>(g * value),
+            static_cast<uint8_t>(b * value),
+            static_cast<uint8_t>(a * value),
+        };
+    }
+
     // these methods allow you to partially modify colors, within one expression.
 
     constexpr Color& set_red(uint8_t value) {
@@ -104,6 +115,10 @@ struct Color {
     }
 
 };
+
+[[nodiscard]] constexpr Color operator*(float value, const Color& color) {
+    return color * value;
+}
 
 } // namespace gfx
 

@@ -94,7 +94,12 @@ template <typename T> requires std::is_arithmetic_v<T>
 template <>
 [[nodiscard]] inline constexpr
 gfx::Color lerp<gfx::Color>(gfx::Color start, gfx::Color end, float x) {
-    return start + x * (end - start);
+    return {
+        gfx::lerp(start.r, end.r, x),
+        gfx::lerp(start.g, end.g, x),
+        gfx::lerp(start.b, end.b, x),
+        gfx::lerp(start.a, end.a, x),
+    };
 }
 
 template <>
