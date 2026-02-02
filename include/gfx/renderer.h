@@ -12,6 +12,7 @@
 #include <gfx/color.h>
 #include <gfx/font.h>
 
+// TODO: stencil buffer
 // TODO: draw from spritesheet directly
 // TODO: clean up vector operations
 // TODO: enable the use of different opengl loaders (glad, libepoxy)
@@ -20,7 +21,6 @@
 // TODO: add thick line rendering
 // TODO: draw circle/rect outline
 // TODO: make pkg-config file work
-// TODO: stencil buffer
 // TODO: camera rotation
 // TODO: fix rotation types
 // TODO: texture enum class for format (rgb, rgba, ...)
