@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <chrono>
 
 #include <gfx/window.h>
 #include <gfx/texture.h>
@@ -8,21 +9,23 @@
 
 namespace gfx {
 
-class AnimatedTexture {
-    enum class State { Idle, Running };
+using namespace std::chrono_literals;
 
-    const gfx::Window& m_window;
+class AnimatedTexture {
+    enum class State { Stopped, Running };
+
+    using Duration = std::chrono::duration<double>;
+
     const std::vector<gfx::Texture> m_frames;
-    const double m_animation_delay_secs;
-    double m_start_time = 0.0;
+    const Duration m_delay;
+    Duration m_start_time = 0s;
     bool m_is_looping = true;
-    State m_state = State::Idle;
+    State m_state = State::Stopped;
 
 public:
-    AnimatedTexture(const gfx::Window& window, std::vector<gfx::Texture> frames, double animation_delay_secs)
-        : m_window(window)
-        , m_frames(std::move(frames))
-        , m_animation_delay_secs(animation_delay_secs)
+    AnimatedTexture(std::vector<gfx::Texture> frames, Duration delay)
+        : m_frames(std::move(frames))
+        , m_delay(delay)
     { }
 
     void set_looping(bool is_looping) {
@@ -30,16 +33,16 @@ public:
     }
 
     [[nodiscard]] bool is_done() const {
-        return m_window.get_time() - m_start_time >= m_frames.size() * m_animation_delay_secs;
+        return get_current_time() - m_start_time >= m_frames.size() * m_delay;
     }
 
     void start() {
         m_state = State::Running;
-        m_start_time = m_window.get_time();
+        m_start_time = get_current_time();
     }
 
     void reset() {
-        m_state = State::Idle;
+        m_state = State::Stopped;
     }
 
     void draw(gfx::Renderer& rd, gfx::Rect dest) const {
@@ -58,11 +61,11 @@ private:
         switch (m_state) {
             using enum State;
 
-            case Idle: return 0;
+            case Stopped: return 0;
 
             case Running: {
-                double time_passed = m_window.get_time() - m_start_time;
-                size_t idx = time_passed / m_animation_delay_secs;
+                auto time_passed = get_current_time() - m_start_time;
+                size_t idx = time_passed / m_delay;
                 size_t frame_count = m_frames.size();
 
                 return m_is_looping
@@ -71,6 +74,10 @@ private:
 
             }
         }
+    }
+
+    [[nodiscard]] static Duration get_current_time() {
+        return std::chrono::steady_clock::now().time_since_epoch();
     }
 
 };

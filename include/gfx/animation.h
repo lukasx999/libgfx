@@ -101,7 +101,7 @@ T lerp(T, T, float) {
 
 template <typename T>
 concept TriviallyLerpable = requires (T start, T end, float x) {
-{ start + (end - start) * x } -> std::same_as<T>;
+start + (end - start) * x;
 };
 
 template <TriviallyLerpable T>
@@ -137,10 +137,7 @@ class Animation {
     const InterpolationFn m_fn;
     Duration m_start_time = 0s;
 
-    enum class State {
-        Idle,
-        Running,
-    } m_state = State::Idle;
+    enum class State { Stopped, Running } m_state = State::Stopped;
 
 public:
     Animation(T start, T end, Duration duration, InterpolationFn fn = interpolators::linear)
@@ -157,17 +154,21 @@ public:
 
     void reset() {
         m_start_time = 0s;
-        m_state = State::Idle;
+        m_state = State::Stopped;
     }
 
     [[nodiscard]] bool is_done() const {
-        if (m_state == State::Idle) return false;
+        if (m_state == State::Stopped) return false;
         auto diff = get_current_time() - m_start_time;
         return diff >= m_duration;
     }
 
     [[nodiscard]] bool is_running() const {
         return m_state == State::Running;
+    }
+
+    [[nodiscard]] bool is_stopped() const {
+        return m_state == State::Stopped;
     }
 
     [[nodiscard]] T get_start() const {
@@ -188,7 +189,7 @@ public:
 
     [[nodiscard]] T get() const {
         switch (m_state) {
-            case State::Idle:
+            case State::Stopped:
                 return m_start;
 
             case State::Running:
