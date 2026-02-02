@@ -3,6 +3,8 @@
 #include <gtkmm.h>
 #include <gfx/gfx.h>
 
+// NOTE: libgfx must be built with libepoxy as its opengl loader
+
 class GfxArea : public Gtk::Frame {
 
     // using std::optional to defer construction of gfx context until
