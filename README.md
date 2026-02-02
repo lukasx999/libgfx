@@ -1,12 +1,22 @@
 # libgfx
 
-libgfx is an easy-to-use library for game/graphics programming written in modern C++23.
+libgfx is a 2D graphics library written in modern C++23.
 
-## Features
+## Goals
 
-- Clean & Easy-To-Use Modern C++23 API
-- Cross-Platform
-- Embeddable into other applications
+- An API that is easy to use right, and hard to use wrong
+- Be cross-platform, portable and embeddable
+
+## Platforms
+
+*Only the currently implemented platforms have a checkmark next to them.*
+
+- [x] Linux via [glfw](https://www.glfw.org/)
+- [x] Linux via [gtkmm](https://gtkmm.gnome.org/en/index.html)
+- [ ] Linux via wayland & EGL
+- [ ] Linux via [qt](https://www.qt.io/development/qt-framework)
+- [ ] Web via [emscripten](https://emscripten.org/)
+- [ ] Windows via WinAPI
 
 ## Build Instructions
 
