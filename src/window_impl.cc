@@ -31,7 +31,11 @@ Window::Impl::Impl(int width, int height, const char* title, WindowFlags flags) 
         throw gfx::Error("failed to create window");
 
     glfwMakeContextCurrent(m_window);
+
+#ifdef USE_GL_GLAD
     gladLoadGL(glfwGetProcAddress);
+#endif // USE_GL_GLAD
+
     glfwSwapInterval(flags.m_enable_vsync);
 
     glfwSetInputMode(m_window, GLFW_CURSOR, flags.m_show_cursor ? GLFW_CURSOR_NORMAL : GLFW_CURSOR_DISABLED);

@@ -2,7 +2,24 @@
 
 #include <utility>
 
+
+
+#define USE_GL_EPOXY
+
+#ifdef USE_GL_GLAD
 #include <glad/gl.h>
+#endif // USE_GL_GLAD
+
+#ifdef USE_GL_EPOXY
+#include <epoxy/gl.h>
+#endif // USE_GL_EPOXY
+
+#ifdef USE_GL_SYSTEM
+#include <GL/gl.h>
+#endif // USE_GL_SYSTEM
+
+
+
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 

@@ -3,8 +3,10 @@
 
 #include "opengl.h"
 
+#ifdef USE_GL_GLAD
 #define GLAD_GL_IMPLEMENTATION
 #include <glad/gl.h>
+#endif // USE_GL_GLAD
 
 namespace gl {
 
