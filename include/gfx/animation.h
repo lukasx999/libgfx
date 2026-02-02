@@ -96,10 +96,11 @@ template <typename T> requires std::is_arithmetic_v<T>
 //     return start + x * (end - start);
 // }
 
-// template <>
-// [[nodiscard]] inline constexpr gfx::Vec lerp<gfx::Vec>(gfx::Vec start, gfx::Vec end, float x) {
-//     return start + x * (end - start);
-// }
+template <>
+[[nodiscard]] inline constexpr
+gfx::Vec lerp<gfx::Vec>(gfx::Vec start, gfx::Vec end, float x) {
+    return start + x * (end - start);
+}
 
 template <typename T>
 concept Animatable = requires (T start, T end, float value) {

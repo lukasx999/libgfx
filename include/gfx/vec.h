@@ -101,6 +101,10 @@ struct Vec {
 
 };
 
+constexpr Vec operator*(float value, const gfx::Vec& v) {
+    return v * value;
+}
+
 } // namespace gfx
 
 template <>
