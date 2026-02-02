@@ -101,7 +101,7 @@ T lerp(T, T, float) {
 
 template <typename T>
 concept TriviallyLerpable = requires (T start, T end, float x) {
-start + (end - start) * x;
+{ start + (end - start) * x } -> std::same_as<T>;
 };
 
 template <TriviallyLerpable T>
