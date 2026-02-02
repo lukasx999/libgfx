@@ -91,10 +91,11 @@ template <typename T> requires std::is_arithmetic_v<T>
     return start + x * (end - start);
 }
 
-// template <>
-// [[nodiscard]] inline constexpr gfx::Color lerp<gfx::Color>(gfx::Color start, gfx::Color end, float x) {
-//     return start + x * (end - start);
-// }
+template <>
+[[nodiscard]] inline constexpr
+gfx::Color lerp<gfx::Color>(gfx::Color start, gfx::Color end, float x) {
+    return start + x * (end - start);
+}
 
 template <>
 [[nodiscard]] inline constexpr
@@ -104,10 +105,10 @@ gfx::Vec lerp<gfx::Vec>(gfx::Vec start, gfx::Vec end, float x) {
 
 template <typename T>
 concept Animatable = requires (T start, T end, float value) {
-gfx::lerp(start, end, value);
+{ gfx::lerp(start, end, value) } -> std::same_as<T>;
 };
 
-template <typename T>
+template <Animatable T>
 class Animation {
 
     using Duration = std::chrono::duration<double>;
@@ -116,7 +117,7 @@ class Animation {
     const T m_start;
     const T m_end;
     const Duration m_duration;
-    const InterpolationFn m_fn = interpolators::linear;
+    const InterpolationFn m_fn;
     Duration m_start_time = 0s;
 
     enum class State {
@@ -125,7 +126,7 @@ class Animation {
     } m_state = State::Idle;
 
 public:
-    Animation(T start, T end, Duration duration, InterpolationFn fn)
+    Animation(T start, T end, Duration duration, InterpolationFn fn = interpolators::linear)
         : m_start(start)
         , m_end(end)
         , m_duration(duration)
