@@ -5,6 +5,8 @@ consteval void test_color() {
     constexpr auto a = gfx::Color::red();
     constexpr auto b = gfx::Color::blue();
 
+    static_assert(gfx::Color(255, 255, 255, 255) == 0xffffffff);
+
     static_assert(gfx::lerp(a, b, 1.0f) == b);
     static_assert(gfx::lerp(a, b, 0.5f) == 0x7f007fff);
     static_assert(gfx::lerp(a, b, 0.0f) == a);
