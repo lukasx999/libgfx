@@ -4,7 +4,7 @@
 
 
 
-#define USE_GL_EPOXY
+#define USE_GL_GLAD
 
 #ifdef USE_GL_GLAD
 #include <glad/gl.h>
