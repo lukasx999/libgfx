@@ -12,6 +12,8 @@
 #include <gfx/color.h>
 #include <gfx/font.h>
 
+// TODO: dynamic surface resizing?
+// TODO: options for opengl function loaders
 // TODO: stencil buffer
 // TODO: draw from spritesheet directly
 // TODO: clean up vector operations
