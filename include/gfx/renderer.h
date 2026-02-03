@@ -12,6 +12,8 @@
 #include <gfx/color.h>
 #include <gfx/font.h>
 
+// TODO: finish wasm port
+// TODO: default params for draw methods
 // TODO: find workaround for missing webgl functions
 // TODO: cmake fetchcontent for glm
 // TODO: dynamic surface resizing?
@@ -20,19 +22,13 @@
 // TODO: draw from spritesheet directly
 // TODO: clean up vector operations
 // TODO: enable the use of different opengl loaders (glad, libepoxy)
-// TODO: port to wasm, via emscripten (-s USE_GLFW=3)
 // TODO: detect default font (via fontconfig)
 // TODO: add thick line rendering
-// TODO: draw circle/rect outline
 // TODO: make pkg-config file work
-// TODO: camera rotation
 // TODO: fix rotation types
 // TODO: texture enum class for format (rgb, rgba, ...)
-// TODO: key state rising edge detection
 // TODO: check_collision_circle
-// TODO: add lerp concept to Animation.h
 // TODO: cursor always starts out at 0 0
-// TODO: animated clock example
 // TODO: font copy/move ctor
 // TODO: make texture parameters configurable
 
