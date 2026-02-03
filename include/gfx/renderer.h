@@ -65,9 +65,9 @@ public:
 
     void with_camera(DrawFn draw_fn);
 
-    void set_camera(gfx::Vec center, gfx::Rotation rotation, float scale);
+    void set_camera(gfx::Vec center, gfx::Rotation rotation=0_deg, float scale=1.0f);
 
-    void set_camera(float center_x, float center_y, gfx::Rotation rotation, float scale) {
+    void set_camera(float center_x, float center_y, gfx::Rotation rotation=0_deg, float scale=1.0f) {
         set_camera({ center_x, center_y }, rotation, scale);
     }
 
