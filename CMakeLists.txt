@@ -5,8 +5,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 set(CMAKE_COLOR_DIAGNOSTICS ON)
 
-option(PLATFORM_WEB "build for web" FALSE)
-
 project(Gfx)
 
 execute_process(COMMAND python3 gen.py WORKING_DIRECTORY shaders/)
@@ -15,7 +13,7 @@ list(APPEND include_dirs include/ /usr/include/freetype2/ deps/glad/include/)
 
 add_library(gfx STATIC)
 
-if (PLATFORM_WEB)
+if (EMSCRIPTEN)
     list(APPEND include_dirs deps/glm)
     target_compile_options(gfx PRIVATE -sUSE_GLFW=3 -sUSE_FREETYPE=1)
 endif()
