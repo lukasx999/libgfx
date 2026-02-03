@@ -14,6 +14,6 @@ class LineRenderer final {
 
 public:
     explicit LineRenderer(const gfx::Surface& surface);
-    void draw(gfx::Vec a, gfx::Vec b, gfx::Color color, glm::mat4 view);
+    void draw(gfx::Vec start, gfx::Vec end, gfx::Color color, glm::mat4 view);
 
 };

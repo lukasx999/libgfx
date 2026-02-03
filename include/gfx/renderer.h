@@ -132,22 +132,13 @@ public:
 
     void draw_triangle(gfx::Vec a, gfx::Vec b, gfx::Vec c, gfx::Color color);
 
-    void draw_line(gfx::Vec a, gfx::Vec b, gfx::Color color);
+    void draw_line(gfx::Vec start, gfx::Vec end, gfx::Color color);
 
     void draw_line(float x0, float y0, float x1, float y1, gfx::Color color) {
         draw_line({ x0, y0 }, { x1, y1 }, color);
     }
 
-    void draw_line_thick(gfx::Vec start, gfx::Vec end, float thickness, gfx::Color color) {
-        float width = end.x - start.x;
-        float height = end.y - start.y;
-        float rotation = -std::atan((width/2.0f) / (height/2.0f));
-
-        float length = (end - start).length();
-        float x = start.x + width/2.0f - thickness/2.0f;
-        float y = start.y + height/2.0f - length/2.0f;
-        draw_rectangle(x, y, thickness, length, gfx::Radians(rotation), color);
-    }
+    void draw_line_thick(gfx::Vec start, gfx::Vec end, float thickness, gfx::Color color);
 
     void draw_text(gfx::Vec pos, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color);
 

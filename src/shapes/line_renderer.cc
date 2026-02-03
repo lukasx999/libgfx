@@ -22,14 +22,14 @@ LineRenderer::LineRenderer(const gfx::Surface& surface) : m_surface(surface) {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void LineRenderer::draw(gfx::Vec a, gfx::Vec b, gfx::Color color, glm::mat4 view) {
+void LineRenderer::draw(gfx::Vec start, gfx::Vec end, gfx::Color color, glm::mat4 view) {
 
     glUseProgram(m_program);
     glBindVertexArray(m_vertex_array);
 
     auto vertices = std::to_array<glm::vec2>({
-        { a.x, a.y },
-        { b.x, b.y },
+        { start.x, start.y },
+        { end.x, end.y },
     });
 
     glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer);
