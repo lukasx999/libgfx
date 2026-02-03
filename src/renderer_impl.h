@@ -26,7 +26,7 @@ struct Renderer::Impl {
         m_surface,
         { m_surface.get_width() / 2.0f, m_surface.get_height() / 2.0f },
         0_deg,
-        0.0f
+        1.0f
     );
     glm::mat4 m_view_camera = m_view_default;
     glm::mat4 m_view_active = m_view_default;
