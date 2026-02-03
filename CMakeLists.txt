@@ -6,24 +6,25 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 set(CMAKE_COLOR_DIAGNOSTICS ON)
 
 project(Gfx)
+add_library(gfx STATIC)
 
 execute_process(COMMAND python3 gen.py WORKING_DIRECTORY shaders/)
 
-list(APPEND include_dirs include/ /usr/include/freetype2/ deps/glad/include/)
-
-add_library(gfx STATIC)
+find_package(Freetype)
+find_package(glfw3)
 
 if (EMSCRIPTEN)
-    list(APPEND include_dirs deps/glm)
     target_compile_options(gfx PRIVATE -sUSE_GLFW=3 -sUSE_FREETYPE=1)
 endif()
 
 target_compile_options(gfx PRIVATE -Wno-c23-extensions -Wall -Wextra -O3 -ggdb)
 
-include_directories(deps/stb ${include_dirs})
+list(APPEND include_dirs include/ deps/glad/include/ deps/stb/ deps/glm)
+include_directories(${include_dirs} ${FREETYPE_INCLUDE_DIRS})
+link_directories(${FREETYPE_LIBRARY_DIRS})
 
 add_subdirectory(src)
-target_link_libraries(gfx PRIVATE glfw freetype)
+target_link_libraries(gfx PRIVATE glfw ${FREETYPE_LIBRARIES})
 
 install(
     TARGETS gfx
