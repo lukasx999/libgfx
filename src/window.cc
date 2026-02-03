@@ -27,10 +27,6 @@ void Window::close() {
     glfwSetWindowShouldClose(m_pimpl->m_window, true);
 }
 
-const char* Window::get_title() const {
-    return glfwGetWindowTitle(m_pimpl->m_window);
-}
-
 void Window::set_title(const char* title) {
     glfwSetWindowTitle(m_pimpl->m_window, title);
 }

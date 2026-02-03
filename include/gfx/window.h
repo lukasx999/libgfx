@@ -76,7 +76,6 @@ public:
         m_desired_fps = fps;
     }
 
-    [[nodiscard]] const char* get_title() const;
     [[nodiscard]] int get_width() const override;
     [[nodiscard]] int get_height() const override;
 
