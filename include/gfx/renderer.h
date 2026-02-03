@@ -13,7 +13,6 @@
 #include <gfx/font.h>
 
 // TODO: find workaround for missing webgl functions
-// TODO: pkg-config for freetype
 // TODO: cmake fetchcontent for glm
 // TODO: dynamic surface resizing?
 // TODO: options for opengl function loaders
