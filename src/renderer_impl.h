@@ -24,7 +24,8 @@ struct Renderer::Impl {
 
     glm::mat4 m_view_default = gen_view_matrix(
         m_surface,
-        { m_surface.get_width() / 2.0f, m_surface.get_height() / 2.0f }
+        { m_surface.get_width() / 2.0f, m_surface.get_height() / 2.0f },
+        0_deg
     );
     glm::mat4 m_view_camera = m_view_default;
     glm::mat4 m_view_active = m_view_default;
@@ -39,7 +40,7 @@ struct Renderer::Impl {
         , m_text(m_surface)
     { }
 
-    [[nodiscard]] static glm::mat4 gen_view_matrix(const gfx::Surface& surface, gfx::Vec center);
+    [[nodiscard]] static glm::mat4 gen_view_matrix(const gfx::Surface& surface, gfx::Vec center, gfx::Rotation rotation);
 
 };
 
