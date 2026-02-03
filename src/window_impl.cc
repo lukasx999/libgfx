@@ -36,7 +36,13 @@ Window::Impl::Impl(int width, int height, const char* title, WindowFlags flags) 
     gladLoadGL(glfwGetProcAddress);
 #endif // USE_GL_GLAD
 
+
+    // on emscripten the swap interval gets set via emscripten_set_main_loop(), so
+    // this results in an error
+#ifndef __EMSCRIPTEN__
     glfwSwapInterval(flags.m_enable_vsync);
+#endif // __EMSCRIPTEN__
+
 
     glfwSetInputMode(m_window, GLFW_CURSOR, flags.m_show_cursor ? GLFW_CURSOR_NORMAL : GLFW_CURSOR_DISABLED);
 
@@ -44,11 +50,13 @@ Window::Impl::Impl(int width, int height, const char* title, WindowFlags flags) 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+#ifndef __EMSCRIPTEN__
     if (flags.m_enable_wireframe)
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     if (flags.m_enable_logging)
         glDebugMessageCallback(debug_message_callback, nullptr);
+#endif // __EMSCRIPTEN__
 
     glfwSetWindowSizeCallback(m_window, []([[maybe_unused]] GLFWwindow* window, int width, int height) {
         glViewport(0, 0, width, height);
