@@ -50,6 +50,8 @@ Window::Impl::Impl(int width, int height, const char* title, WindowFlags flags) 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+
+    // glPolygonMode() and glDebugMessageCallback() are not supported by webgl
 #ifndef __EMSCRIPTEN__
     if (flags.m_enable_wireframe)
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -57,6 +59,7 @@ Window::Impl::Impl(int width, int height, const char* title, WindowFlags flags) 
     if (flags.m_enable_logging)
         glDebugMessageCallback(debug_message_callback, nullptr);
 #endif // __EMSCRIPTEN__
+
 
     glfwSetWindowSizeCallback(m_window, []([[maybe_unused]] GLFWwindow* window, int width, int height) {
         glViewport(0, 0, width, height);
