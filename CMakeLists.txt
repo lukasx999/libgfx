@@ -19,6 +19,10 @@ execute_process(COMMAND python3 gen.py WORKING_DIRECTORY shaders/)
 
 list(APPEND include_dirs include/ /usr/include/freetype2/ deps/glad/include/)
 
+if (PLATFORM_WEB)
+    list(APPEND include_dirs deps/glm)
+endif()
+
 add_library(gfx STATIC)
 target_compile_options(gfx PRIVATE -Wno-c23-extensions -Wall -Wextra -O3 -ggdb)
 
