@@ -4,8 +4,7 @@
 
 namespace gfx {
 
-// TODO: zoom
-glm::mat4 Renderer::Impl::gen_view_matrix(const gfx::Surface& surface, gfx::Vec center, gfx::Rotation rotation) {
+glm::mat4 Renderer::Impl::gen_view_matrix(const gfx::Surface& surface, gfx::Vec center, gfx::Rotation rotation, float scale) {
     gfx::Vec screen_center = surface.get_center();
 
     // the camera position used in the lookAt() function has its origin at (0,0), but
@@ -14,14 +13,17 @@ glm::mat4 Renderer::Impl::gen_view_matrix(const gfx::Surface& surface, gfx::Vec 
     glm::vec3 position(center.x - screen_center.x, center.y - screen_center.y, 0.0f);
     glm::vec3 direction(0.0f, 0.0f, -1.0f);
     glm::vec3 up(0.0f, 1.0f, 0.0f);
-
     glm::mat4 view = glm::lookAt(position, position+direction, up);
 
-    glm::mat4 transform(1.0f);
-    transform = glm::translate(transform, glm::vec3(screen_center.x, screen_center.y, 0.0f));
-    transform = glm::rotate(transform, rotation.get_radians(), glm::vec3(0.0f, 0.0f, 1.0f));
-    transform = glm::translate(transform, glm::vec3(-screen_center.x, -screen_center.y, 0.0f));
-    view = transform * view;
+    // apply rotation
+    view = glm::translate(view, glm::vec3(screen_center.x, screen_center.y, 0.0f));
+    view = glm::rotate(view, rotation.get_radians(), glm::vec3(0.0f, 0.0f, 1.0f));
+    view = glm::translate(view, glm::vec3(-screen_center.x, -screen_center.y, 0.0f));
+
+    // apply scaling
+    view = glm::translate(view, glm::vec3(screen_center.x, screen_center.y, 0.0f));
+    view = glm::scale(view, glm::vec3(scale, scale, 0.0f));
+    view = glm::translate(view, glm::vec3(-screen_center.x, -screen_center.y, 0.0f));
 
     return view;
 }

@@ -65,10 +65,10 @@ public:
 
     void with_camera(DrawFn draw_fn);
 
-    void set_camera(gfx::Vec center, gfx::Rotation rotation);
+    void set_camera(gfx::Vec center, gfx::Rotation rotation, float scale);
 
-    void set_camera(float center_x, float center_y, gfx::Rotation rotation) {
-        set_camera({ center_x, center_y }, rotation);
+    void set_camera(float center_x, float center_y, gfx::Rotation rotation, float scale) {
+        set_camera({ center_x, center_y }, rotation, scale);
     }
 
     void draw_rectangle(gfx::Rect rect, gfx::Rotation rotation, gfx::Color color);

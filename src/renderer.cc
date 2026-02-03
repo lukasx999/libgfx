@@ -36,8 +36,8 @@ void Renderer::with_camera(DrawFn draw_fn) {
     m_pimpl-> m_view_active = m_pimpl->m_view_default;
 }
 
-void Renderer::set_camera(gfx::Vec center, gfx::Rotation rotation) {
-    m_pimpl->m_view_camera = m_pimpl->gen_view_matrix(m_surface, center, rotation);
+void Renderer::set_camera(gfx::Vec center, gfx::Rotation rotation, float scale) {
+    m_pimpl->m_view_camera = m_pimpl->gen_view_matrix(m_surface, center, rotation, scale);
 }
 
 void Renderer::draw_rectangle(gfx::Rect dest, gfx::Rotation rotation, gfx::Color color) {
