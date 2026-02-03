@@ -15,13 +15,13 @@
 // TODO: finish wasm port
 // TODO: default params for draw methods
 // TODO: find workaround for missing webgl functions
+// TODO: systems for coordinating animations
 // TODO: cmake fetchcontent for glm
 // TODO: dynamic surface resizing?
 // TODO: options for opengl function loaders
 // TODO: stencil buffer
 // TODO: draw from spritesheet directly
 // TODO: clean up vector operations
-// TODO: enable the use of different opengl loaders (glad, libepoxy)
 // TODO: detect default font (via fontconfig)
 // TODO: make pkg-config file work
 // TODO: fix rotation types
