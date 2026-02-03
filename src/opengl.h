@@ -6,7 +6,7 @@
 // emscripten will handle opengl initialization for us, so there's no need
 // to use a loader like glad
 #ifdef __EMSCRIPTEN__
-#define USE_GL_SYSTEM
+#define USE_GL_WEB
 #else
 #define USE_GL_GLAD
 #endif // __EMSCRIPTEN__
@@ -20,12 +20,9 @@
 #include <epoxy/gl.h>
 #endif // USE_GL_EPOXY
 
-// TODO:
-#ifdef USE_GL_SYSTEM
-#define GL_GLEXT_PROTOTYPES
-#include <GL/gl.h>
-#include <GL/glext.h>
-#endif // USE_GL_SYSTEM
+#ifdef USE_GL_WEB
+#include <webgl/webgl2.h>
+#endif // USE_GL_WEB
 
 
 
