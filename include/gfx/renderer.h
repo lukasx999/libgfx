@@ -12,6 +12,7 @@
 #include <gfx/color.h>
 #include <gfx/font.h>
 
+// TODO: find workout for missing webgl functions
 // TODO: cmake fetchcontent for glm
 // TODO: dynamic surface resizing?
 // TODO: options for opengl function loaders
