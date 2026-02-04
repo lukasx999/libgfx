@@ -44,7 +44,6 @@ public:
     [[nodiscard]] int get_channels() const;
 
     enum class FileType { Png, Bmp, Tga, Jpg };
-
     void write_to_file(FileType filetype, const char* filename) const;
 
 private:

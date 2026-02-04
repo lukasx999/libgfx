@@ -9,6 +9,6 @@ in VSOut {
 } vs_out;
 
 void main() {
-    if (texture(tex, vs_out.uv).a == 0.0) discard;
+    if (texture(tex, vs_out.uv).r == 0.0) discard;
     FragColor = u_color;
 }
