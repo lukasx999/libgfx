@@ -65,8 +65,8 @@ public:
 
     void set_camera(gfx::Vec center, gfx::Rotation rotation=0_deg, float scale=1.0f);
 
-    void set_camera(float center_x, float center_y, gfx::Rotation rotation=0_deg, float scale=1.0f) {
-        set_camera({ center_x, center_y }, rotation, scale);
+    void set_camera(float center_x, float center_y, auto&&... args) {
+        set_camera({ center_x, center_y }, std::forward<decltype(args)>(args)...);
     }
 
     void draw_rectangle(gfx::Rect rect, gfx::Color color, gfx::Rotation rotation=0_deg);
