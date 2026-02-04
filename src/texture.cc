@@ -21,7 +21,7 @@
 
 namespace gfx {
 
-Texture::Texture() : Texture(0, 0, 3) { }
+Texture::Texture() : Texture(0, 0) { }
 
 Texture::Texture(const char* path) : m_pimpl(std::make_unique<Texture::Impl>()) {
     load_texture_from_file(path);
@@ -31,8 +31,8 @@ Texture::Texture(const std::string& path) : m_pimpl(std::make_unique<Texture::Im
     load_texture_from_file(path.c_str());
 }
 
-Texture::Texture(int width, int height, int channels, const unsigned char* bytes) : m_pimpl(std::make_unique<Texture::Impl>()) {
-    m_pimpl->m_texture = Impl::generate_texture(bytes, width, height, channels);
+Texture::Texture(int width, int height, Format format, const unsigned char* bytes) : m_pimpl(std::make_unique<Texture::Impl>()) {
+    m_pimpl->m_texture = Impl::generate_texture(width, height, bytes, format);
 }
 
 // the pimpl pattern requires the destructor to "see" the complete
@@ -46,12 +46,7 @@ Texture& Texture::operator=(Texture&&) = default;
 
 Texture::Texture(const Texture& other) : m_pimpl(std::make_unique<Texture::Impl>()) {
     auto buf = other.copy_to_cpu();
-    m_pimpl->m_texture = Impl::generate_texture(
-        buf.data(),
-        other.get_width(),
-        other.get_height(),
-        other.get_channels()
-    );
+    m_pimpl->m_texture = Impl::generate_texture(other.get_width(), other.get_height(), buf.data(), other.get_format());
 }
 
 Texture& Texture::operator=(const Texture& other) {
@@ -61,15 +56,16 @@ Texture& Texture::operator=(const Texture& other) {
 }
 
 Texture Texture::slice(gfx::Rect region) const {
-    int channels = get_channels();
-    GLint format = Impl::channels_to_opengl_format(channels);
+    auto format = get_format();
+    GLint gl_format = Impl::gfx_format_to_opengl_format(format);
+    int channels = get_format_channels(format);
 
     auto [x, y, width, height] = region;
 
     std::vector<unsigned char> buf(width * height * channels);
-    glGetTextureSubImage(m_pimpl->m_texture, 0, x, y, 0, width, height, 1, format, GL_UNSIGNED_BYTE, buf.size() * sizeof(unsigned char), buf.data());
+    glGetTextureSubImage(m_pimpl->m_texture, 0, x, y, 0, width, height, 1, gl_format, GL_UNSIGNED_BYTE, buf.size() * sizeof(unsigned char), buf.data());
 
-    return Texture(width, height, channels, buf.data());
+    return Texture(width, height, format, buf.data());
 }
 
 Texture Texture::slice(float x, float y, float width, float height) const {
@@ -83,7 +79,7 @@ void Texture::load_texture_from_file(const char* path) {
     if (data == nullptr)
         throw gfx::Error(std::format("failed to load texture: {}", stbi_failure_reason()));
 
-    m_pimpl->m_texture = Impl::generate_texture(data, width, height, channels);
+    m_pimpl->m_texture = Impl::generate_texture(width, height, data, channels_to_format(channels));
     stbi_image_free(data);
 }
 
@@ -103,20 +99,20 @@ int Texture::get_height() const {
     return height;
 }
 
-int Texture::get_channels() const {
+Texture::Format Texture::get_format() const {
     int internal_format;
     glBindTexture(GL_TEXTURE_2D, m_pimpl->m_texture);
     glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_INTERNAL_FORMAT, &internal_format);
     glBindTexture(GL_TEXTURE_2D, 0);
-    return Impl::opengl_format_to_channels(internal_format);
+    return Impl::opengl_format_to_gfx_format(internal_format);
 }
 
 void Texture::write_to_file(FileType filetype, const char* filename) const {
 
     int width = get_width();
     int height = get_height();
-    int channels = get_channels();
     auto buf = copy_to_cpu();
+    int channels = get_format_channels(get_format());
 
     stbi_flip_vertically_on_write(true);
 
@@ -135,10 +131,33 @@ void Texture::write_to_file(FileType filetype, const char* filename) const {
 
 }
 
-std::vector<unsigned char> Texture::copy_to_cpu() const {
-    GLint format = Impl::channels_to_opengl_format(get_channels());
+int Texture::get_format_channels(Format format) {
+    switch (format) {
+        using enum Format;
+        case R:    return 1;
+        case RG:   return 2;
+        case RGB:  return 3;
+        case RGBA: return 4;
+    }
+    std::unreachable();
+}
 
-    std::vector<unsigned char> buf(get_width() * get_height() * get_channels());
+Texture::Format Texture::channels_to_format(int channels) {
+    switch (channels) {
+        using enum Format;
+        case 1: return R;
+        case 2: return RG;
+        case 3: return RGB;
+        case 4: return RGBA;
+    }
+    std::unreachable();
+}
+
+std::vector<unsigned char> Texture::copy_to_cpu() const {
+    GLint format = Impl::gfx_format_to_opengl_format(get_format());
+
+    int channels = get_format_channels(get_format());
+    std::vector<unsigned char> buf(get_width() * get_height() * channels);
 
     glBindTexture(GL_TEXTURE_2D, m_pimpl->m_texture);
     glGetTexImage(GL_TEXTURE_2D, 0, format, GL_UNSIGNED_BYTE, buf.data());

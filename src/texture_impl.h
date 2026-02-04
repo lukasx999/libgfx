@@ -6,7 +6,7 @@
 struct gfx::Texture::Impl {
     gl::Texture m_texture;
 
-    [[nodiscard]] static GLint channels_to_opengl_format(int channels);
-    [[nodiscard]] static int opengl_format_to_channels(GLint format);
-    [[nodiscard]] static gl::Texture generate_texture(const unsigned char* data, int width, int height, int channels);
+    [[nodiscard]] static GLint gfx_format_to_opengl_format(Format format);
+    [[nodiscard]] static Format opengl_format_to_gfx_format(GLint format);
+    [[nodiscard]] static gl::Texture generate_texture(int width, int height, const unsigned char* data, Format format);
 };

@@ -19,6 +19,9 @@ class Texture {
     std::unique_ptr<Impl> m_pimpl;
 
 public:
+    enum class Format { R, RG, RGB, RGBA };
+    enum class FileType { Png, Bmp, Tga, Jpg };
+
     Texture();
 
     // construct a texture from a file
@@ -27,7 +30,7 @@ public:
 
     // construct a texture from memory
     // passing nullptr to bytes will reserve memory only
-    Texture(int width, int height, int channels, const unsigned char* bytes = nullptr);
+    Texture(int width, int height, Format format=Format::RGBA, const unsigned char* bytes=nullptr);
 
     ~Texture();
     Texture(const Texture& other);
@@ -41,14 +44,16 @@ public:
 
     [[nodiscard]] int get_width() const;
     [[nodiscard]] int get_height() const;
-    [[nodiscard]] int get_channels() const;
+    [[nodiscard]] Format get_format() const;
 
-    enum class FileType { Png, Bmp, Tga, Jpg };
     void write_to_file(FileType filetype, const char* filename) const;
 
 private:
     void load_texture_from_file(const char* path);
     [[nodiscard]] std::vector<unsigned char> copy_to_cpu() const;
+
+    static int get_format_channels(Format format);
+    static Format channels_to_format(int channels);
 
 };
 

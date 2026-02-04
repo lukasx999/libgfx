@@ -2,23 +2,28 @@
 
 namespace gfx {
 
-GLint Texture::Impl::channels_to_opengl_format(int channels) {
-    switch (channels) {
-        case 3: return GL_RGB;
-        case 4: return GL_RGBA;
-    }
-    throw gfx::Error("invalid channel count");
-}
-
-int Texture::Impl::opengl_format_to_channels(GLint format) {
+GLint Texture::Impl::gfx_format_to_opengl_format(Format format) {
     switch (format) {
-        case GL_RGB: return 3;
-        case GL_RGBA: return 4;
+        using enum Format;
+        case R: return GL_RED;
+        case RG: return GL_RG;
+        case RGB: return GL_RGB;
+        case RGBA: return GL_RGBA;
     }
-    throw gfx::Error("invalid texture format");
+    std::unreachable();
 }
 
-gl::Texture Texture::Impl::generate_texture(const unsigned char* data, int width, int height, int channels) {
+Texture::Format Texture::Impl::opengl_format_to_gfx_format(GLint format) {
+    switch (format) {
+        case GL_RED: return Format::R;
+        case GL_RG: return Format::RG;
+        case GL_RGB: return Format::RGB;
+        case GL_RGBA: return Format::RGBA;
+    }
+    throw gfx::Error("unknown texture format");
+}
+
+gl::Texture Texture::Impl::generate_texture(int width, int height, const unsigned char* data, Format format) {
 
     gl::Texture texture;
     glActiveTexture(GL_TEXTURE0);
@@ -29,8 +34,8 @@ gl::Texture Texture::Impl::generate_texture(const unsigned char* data, int width
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-    auto format = Impl::channels_to_opengl_format(channels);
-    glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+    GLint gl_format = Impl::gfx_format_to_opengl_format(format);
+    glTexImage2D(GL_TEXTURE_2D, 0, gl_format, width, height, 0, gl_format, GL_UNSIGNED_BYTE, data);
     glGenerateMipmap(GL_TEXTURE_2D);
 
     glBindTexture(GL_TEXTURE_2D, 0);

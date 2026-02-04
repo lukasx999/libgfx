@@ -16,7 +16,7 @@ Renderer::~Renderer() = default;
 
 gfx::Texture Renderer::to_texture(DrawFn draw_fn) {
 
-    gfx::Texture texture(m_surface.get_width(), m_surface.get_height(), 3);
+    gfx::Texture texture(m_surface.get_width(), m_surface.get_height(), gfx::Texture::Format::RGB);
 
     gl::Framebuffer framebuffer;
     glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
