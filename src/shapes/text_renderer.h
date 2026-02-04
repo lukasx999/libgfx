@@ -8,7 +8,6 @@
 #include <gfx/color.h>
 #include "../opengl.h"
 #include "../glyph.h"
-#include "../font_impl.h"
 
 class TextRenderer final {
     const gfx::Surface& m_surface;
