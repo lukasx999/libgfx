@@ -96,8 +96,9 @@ void Window::Impl::debug_message_callback(
     [[maybe_unused]] const void *user_param
 ) {
 
-    // TODO: conditionally compile on emscripten
-    // if (severity == GL_DEBUG_SEVERITY_NOTIFICATION) return;
+#ifndef __EMSCRIPTEN__
+    if (severity == GL_DEBUG_SEVERITY_NOTIFICATION) return;
+#endif // __EMSCRIPTEN__
     std::println(stderr, "opengl error: {}", message);
 }
 

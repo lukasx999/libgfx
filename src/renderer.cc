@@ -44,12 +44,12 @@ void Renderer::draw_rectangle(gfx::Rect dest, gfx::Rotation rotation, gfx::Color
     m_pimpl->m_rectangle.draw(dest, rotation, color, m_pimpl->m_view_active);
 }
 
-void Renderer::draw_texture(float x, float y, float width, float height, gfx::Rotation rotation, const gfx::Texture& texture) {
-    m_pimpl->m_texture.draw(x, y, width, height, rotation, texture, m_pimpl->m_view_active);
+void Renderer::draw_texture(gfx::Rect rect, gfx::Rotation rotation, const gfx::Texture& texture) {
+    m_pimpl->m_texture.draw(rect, rotation, texture, m_pimpl->m_view_active);
 }
 
-void Renderer::draw_texture_sub(float dest_x, float dest_y, float dest_width, float dest_height, float src_x, float src_y, float src_width, float src_height, gfx::Rotation rotation, const gfx::Texture& texture) {
-    m_pimpl->m_texture.draw_sub(dest_x, dest_y, dest_width, dest_height, src_x, src_y, src_width, src_height, rotation, texture, m_pimpl->m_view_active);
+void Renderer::draw_texture_sub(gfx::Rect dest, gfx::Rect src, gfx::Rotation rotation, const gfx::Texture& texture) {
+    m_pimpl->m_texture.draw_sub(dest, src, rotation, texture, m_pimpl->m_view_active);
 }
 
 void Renderer::draw_circle(gfx::Vec center, float radius, gfx::Color color) {

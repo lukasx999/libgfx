@@ -32,31 +32,11 @@ TextureRenderer::TextureRenderer(const gfx::Surface& surface) : m_surface(surfac
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void TextureRenderer::draw(
-    float x,
-    float y,
-    float width,
-    float height,
-    gfx::Rotation rotation,
-    const gfx::Texture& texture,
-    glm::mat4 view
-) {
-    draw_sub(x, y, width, height, 0, 0, texture.get_width(), texture.get_height(), rotation, texture, view);
+void TextureRenderer::draw(gfx::Rect rect, gfx::Rotation rotation, const gfx::Texture& texture, glm::mat4 view) {
+    draw_sub(rect, { 0.0f, 0.0f, static_cast<float>(texture.get_width()), static_cast<float>(texture.get_height()) }, rotation, texture, view);
 }
 
-void TextureRenderer::draw_sub(
-    float dest_x,
-    float dest_y,
-    float dest_width,
-    float dest_height,
-    float src_x,
-    float src_y,
-    float src_width,
-    float src_height,
-    gfx::Rotation rotation,
-    const gfx::Texture& texture,
-    glm::mat4 view
-) {
+void TextureRenderer::draw_sub(gfx::Rect dest, gfx::Rect src, gfx::Rotation rotation, const gfx::Texture& texture, glm::mat4 view) {
 
     glUseProgram(m_program);
     glBindVertexArray(m_vertex_array);
@@ -65,20 +45,20 @@ void TextureRenderer::draw_sub(
     int tex_height = texture.get_height();
 
     glm::vec2 uv_start {
-        src_x / tex_width,
-        src_y / tex_height,
+        src.x / tex_width,
+        src.y / tex_height,
     };
 
     glm::vec2 uv_end {
-        (src_x + src_width) / tex_width,
-        (src_y + src_height) / tex_height,
+        (src.x + src.width) / tex_width,
+        (src.y + src.height) / tex_height,
     };
 
     auto vertices = std::to_array<Vertex>({
-        { { dest_x,            dest_y             }, { uv_start.x, uv_start.y } }, // top-left
-        { { dest_x+dest_width, dest_y             }, { uv_end.x,   uv_start.y } }, // top-right
-        { { dest_x,            dest_y+dest_height }, { uv_start.x, uv_end.y   } }, // bottom-left
-        { { dest_x+dest_width, dest_y+dest_height }, { uv_end.x,   uv_end.y   } }, // bottom-right
+        { { dest.x,            dest.y             }, { uv_start.x, uv_start.y } }, // top-left
+        { { dest.x+dest.width, dest.y             }, { uv_end.x,   uv_start.y } }, // top-right
+        { { dest.x,            dest.y+dest.height }, { uv_start.x, uv_end.y   } }, // bottom-left
+        { { dest.x+dest.width, dest.y+dest.height }, { uv_end.x,   uv_end.y   } }, // bottom-right
     });
 
     glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer);
@@ -88,9 +68,9 @@ void TextureRenderer::draw_sub(
     // since we want the rectangle to rotate around its top left corner, and
     // to set the center of rotation to the middle of the rectangle
     glm::mat4 model(1.0);
-    model = glm::translate(model, glm::vec3(dest_x+dest_width/2.0, dest_y+dest_height/2.0, 0.0));
+    model = glm::translate(model, glm::vec3(dest.x+dest.width/2.0, dest.y+dest.height/2.0, 0.0));
     model = glm::rotate(model, rotation.get_radians(), glm::vec3(0.0f, 0.0f, 1.0f));
-    model = glm::translate(model, glm::vec3(-dest_x-dest_width/2.0, -dest_y-dest_height/2.0, 0.0));
+    model = glm::translate(model, glm::vec3(-dest.x-dest.width/2.0, -dest.y-dest.height/2.0, 0.0));
 
     glm::mat4 projection = glm::ortho(
         0.0f,
