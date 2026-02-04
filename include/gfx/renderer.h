@@ -14,7 +14,6 @@
 
 // TODO: do copying of textures on the gpu, so there's no need for glGetTexImage anymore
 // TODO: finish wasm port
-// TODO: default params for draw methods
 // TODO: systems for coordinating animations
 // TODO: cmake fetchcontent for glm
 // TODO: dynamic surface resizing?
@@ -86,27 +85,23 @@ public:
         draw_texture({ v.x, v.y, width, height }, std::forward<decltype(args)>(args)...);
     }
 
-    void draw_texture_sub(gfx::Rect dest, gfx::Rect src, gfx::Rotation rotation, const gfx::Texture& texture);
+    void draw_texture_sub(gfx::Rect dest, gfx::Rect src, const gfx::Texture& texture, gfx::Rotation rotation=0_deg);
 
-    void draw_texture_sub(float dest_x, float dest_y, float dest_width, float dest_height, float src_x, float src_y, float src_width, float src_height, gfx::Rotation rotation, const gfx::Texture& texture) {
-        draw_texture_sub({ dest_x, dest_y, dest_width, dest_height }, { src_x, src_y, src_width, src_height }, rotation, texture);
-    }
-
-    void draw_texture_sub(gfx::Rect dest, gfx::Rect src, const gfx::Texture& texture) {
-        draw_texture_sub(dest.x, dest.y, dest.width, dest.height, src.x, src.y, src.width, src.height, 0_deg, texture);
+    void draw_texture_sub(float dest_x, float dest_y, float dest_width, float dest_height, float src_x, float src_y, float src_width, float src_height, auto&&... args) {
+        draw_texture_sub({ dest_x, dest_y, dest_width, dest_height }, { src_x, src_y, src_width, src_height }, std::forward<decltype(args)>(args)...);
     }
 
     void draw_circle(gfx::Vec center, float radius, gfx::Color color);
 
-    void draw_circle(float x, float y, float radius, gfx::Color color) {
-        draw_circle({ x, y }, radius, color);
+    void draw_circle(float x, float y, auto&&... args) {
+        draw_circle({ x, y }, std::forward<decltype(args)>(args)...);
     }
+
+    void draw_triangle(gfx::Vec a, gfx::Vec b, gfx::Vec c, gfx::Color color);
 
     void draw_triangle(float x0, float y0, float x1, float y1, float x2, float y2, gfx::Color color) {
         draw_triangle({ x0, y0 }, { x1, y1 }, { x2, y2 }, color);
     }
-
-    void draw_triangle(gfx::Vec a, gfx::Vec b, gfx::Vec c, gfx::Color color);
 
     void draw_line(gfx::Vec start, gfx::Vec end, gfx::Color color);
 
@@ -118,8 +113,8 @@ public:
 
     void draw_text(gfx::Vec pos, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color);
 
-    void draw_text(float x, float y, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color) {
-        draw_text({ x, y }, fontsize, text, font, color);
+    void draw_text(float x, float y, auto&&... args) {
+        draw_text({ x, y }, std::forward<decltype(args)>(args)...);
     }
 
     void draw_text_centered_x(gfx::Vec center, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color) {
@@ -127,8 +122,8 @@ public:
         draw_text({ center.x - text_width/2.0f, center.y }, fontsize, text, font, color);
     }
 
-    void draw_text_centered_x(float x, float y, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color) {
-        draw_text_centered_x({ x, y }, fontsize, text, font, color);
+    void draw_text_centered_x(float x, float y, auto&&... args) {
+        draw_text_centered_x({ x, y }, std::forward<decltype(args)>(args)...);
     }
 
     void draw_text_centered(gfx::Vec center, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color) {
@@ -136,8 +131,8 @@ public:
         draw_text({ center.x - text_width/2.0f, center.y - fontsize/2.0f }, fontsize, text, font, color);
     }
 
-    void draw_text_centered(float x, float y, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color) {
-        draw_text_centered({ x, y }, fontsize, text, font, color);
+    void draw_text_centered(float x, float y, auto&&... args) {
+        draw_text_centered({ x, y }, std::forward<decltype(args)>(args)...);
     }
 
     void clear_background(gfx::Color color);

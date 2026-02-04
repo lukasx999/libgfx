@@ -48,7 +48,7 @@ void Renderer::draw_texture(gfx::Rect rect, const gfx::Texture& texture, gfx::Ro
     m_pimpl->m_texture.draw(rect, rotation, texture, m_pimpl->m_view_active);
 }
 
-void Renderer::draw_texture_sub(gfx::Rect dest, gfx::Rect src, gfx::Rotation rotation, const gfx::Texture& texture) {
+void Renderer::draw_texture_sub(gfx::Rect dest, gfx::Rect src, const gfx::Texture& texture, gfx::Rotation rotation) {
     m_pimpl->m_texture.draw_sub(dest, src, rotation, texture, m_pimpl->m_view_active);
 }
 
