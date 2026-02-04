@@ -51,9 +51,8 @@ public:
 private:
     void load_texture_from_file(const char* path);
     [[nodiscard]] std::vector<unsigned char> copy_to_cpu() const;
-
-    static int get_format_channels(Format format);
-    static Format channels_to_format(int channels);
+    [[nodiscard]] static int format_to_channels(Format format);
+    [[nodiscard]] static Format channels_to_format(int channels);
 
 };
 

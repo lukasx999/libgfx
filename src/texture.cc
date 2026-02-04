@@ -58,7 +58,7 @@ Texture& Texture::operator=(const Texture& other) {
 Texture Texture::slice(gfx::Rect region) const {
     auto format = get_format();
     GLint gl_format = Impl::gfx_format_to_opengl_format(format);
-    int channels = get_format_channels(format);
+    int channels = format_to_channels(format);
 
     auto [x, y, width, height] = region;
 
@@ -112,7 +112,7 @@ void Texture::write_to_file(FileType filetype, const char* filename) const {
     int width = get_width();
     int height = get_height();
     auto buf = copy_to_cpu();
-    int channels = get_format_channels(get_format());
+    int channels = format_to_channels(get_format());
 
     stbi_flip_vertically_on_write(true);
 
@@ -131,7 +131,20 @@ void Texture::write_to_file(FileType filetype, const char* filename) const {
 
 }
 
-int Texture::get_format_channels(Format format) {
+std::vector<unsigned char> Texture::copy_to_cpu() const {
+    GLint format = Impl::gfx_format_to_opengl_format(get_format());
+
+    int channels = format_to_channels(get_format());
+    std::vector<unsigned char> buf(get_width() * get_height() * channels);
+
+    glBindTexture(GL_TEXTURE_2D, m_pimpl->m_texture);
+    glGetTexImage(GL_TEXTURE_2D, 0, format, GL_UNSIGNED_BYTE, buf.data());
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    return buf;
+}
+
+int Texture::format_to_channels(Format format) {
     switch (format) {
         using enum Format;
         case R:    return 1;
@@ -151,19 +164,6 @@ Texture::Format Texture::channels_to_format(int channels) {
         case 4: return RGBA;
     }
     std::unreachable();
-}
-
-std::vector<unsigned char> Texture::copy_to_cpu() const {
-    GLint format = Impl::gfx_format_to_opengl_format(get_format());
-
-    int channels = get_format_channels(get_format());
-    std::vector<unsigned char> buf(get_width() * get_height() * channels);
-
-    glBindTexture(GL_TEXTURE_2D, m_pimpl->m_texture);
-    glGetTexImage(GL_TEXTURE_2D, 0, format, GL_UNSIGNED_BYTE, buf.data());
-    glBindTexture(GL_TEXTURE_2D, 0);
-
-    return buf;
 }
 
 } // namespace gfx
