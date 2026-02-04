@@ -15,7 +15,6 @@
 // TODO: do copying of textures on the gpu, so there's no need for glGetTexImage anymore
 // TODO: finish wasm port
 // TODO: default params for draw methods
-// TODO: find workaround for missing webgl functions
 // TODO: systems for coordinating animations
 // TODO: cmake fetchcontent for glm
 // TODO: dynamic surface resizing?
@@ -27,7 +26,6 @@
 // TODO: make pkg-config file work
 // TODO: fix rotation types
 // TODO: let glPixelStorei() only affect texture ctor
-// TODO: texture enum class for format (rgb, rgba, ...)
 // TODO: check_collision_circle
 // TODO: cursor always starts out at 0 0
 // TODO: font copy/move ctor
