@@ -63,7 +63,11 @@ Texture Texture::slice(gfx::Rect region) const {
     auto [x, y, width, height] = region;
 
     std::vector<unsigned char> buf(width * height * channels);
+#ifdef __EMSCRIPTEN__
+    throw gfx::Error("copying textures in unimplemented on web platform");
+#else
     glGetTextureSubImage(m_pimpl->m_texture, 0, x, y, 0, width, height, 1, gl_format, GL_UNSIGNED_BYTE, buf.size() * sizeof(unsigned char), buf.data());
+#endif // __EMSCRIPTEN__
 
     return Texture(width, height, format, buf.data());
 }
@@ -86,7 +90,11 @@ void Texture::load_texture_from_file(const char* path) {
 int Texture::get_width() const {
     int width;
     glBindTexture(GL_TEXTURE_2D, m_pimpl->m_texture);
+#ifdef __EMSCRIPTEN__
+    throw gfx::Error("retrieving texture width is unimplemented on web platform");
+#else
     glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width);
+#endif // __EMSCRIPTEN__
     glBindTexture(GL_TEXTURE_2D, 0);
     return width;
 }
@@ -94,7 +102,11 @@ int Texture::get_width() const {
 int Texture::get_height() const {
     int height;
     glBindTexture(GL_TEXTURE_2D, m_pimpl->m_texture);
+#ifdef __EMSCRIPTEN__
+    throw gfx::Error("retrieving texture width is unimplemented on web platform");
+#else
     glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &height);
+#endif // __EMSCRIPTEN__
     glBindTexture(GL_TEXTURE_2D, 0);
     return height;
 }
@@ -102,7 +114,11 @@ int Texture::get_height() const {
 Texture::Format Texture::get_format() const {
     int internal_format;
     glBindTexture(GL_TEXTURE_2D, m_pimpl->m_texture);
+#ifdef __EMSCRIPTEN__
+    throw gfx::Error("retrieving texture format is unimplemented on web platform");
+#else
     glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_INTERNAL_FORMAT, &internal_format);
+#endif // __EMSCRIPTEN__
     glBindTexture(GL_TEXTURE_2D, 0);
     return Impl::opengl_format_to_gfx_format(internal_format);
 }
@@ -138,7 +154,11 @@ std::vector<unsigned char> Texture::copy_to_cpu() const {
     std::vector<unsigned char> buf(get_width() * get_height() * channels);
 
     glBindTexture(GL_TEXTURE_2D, m_pimpl->m_texture);
+#ifdef __EMSCRIPTEN__
+    throw gfx::Error("copying textures in unimplemented on web platform");
+#else
     glGetTexImage(GL_TEXTURE_2D, 0, format, GL_UNSIGNED_BYTE, buf.data());
+#endif // __EMSCRIPTEN__
     glBindTexture(GL_TEXTURE_2D, 0);
 
     return buf;

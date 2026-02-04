@@ -7,7 +7,7 @@ struct Glyph {
     const int m_bearing_x;
     const int m_bearing_y;
     const unsigned int m_advance_x;
-    gfx::Texture m_texture;
+    const gfx::Texture m_texture;
 
     Glyph(int width, int height, int bearing_x, int bearing_y, unsigned int advance_x, const unsigned char* data)
         : m_bearing_x(bearing_x)

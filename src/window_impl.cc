@@ -46,7 +46,9 @@ Window::Impl::Impl(int width, int height, const char* title, WindowFlags flags) 
 
     glfwSetInputMode(m_window, GLFW_CURSOR, flags.m_show_cursor ? GLFW_CURSOR_NORMAL : GLFW_CURSOR_DISABLED);
 
+#ifndef __EMSCRIPTEN__
     glEnable(GL_MULTISAMPLE);
+#endif // __EMSCRIPTEN__
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -94,7 +96,8 @@ void Window::Impl::debug_message_callback(
     [[maybe_unused]] const void *user_param
 ) {
 
-    if (severity == GL_DEBUG_SEVERITY_NOTIFICATION) return;
+    // TODO: conditionally compile on emscripten
+    // if (severity == GL_DEBUG_SEVERITY_NOTIFICATION) return;
     std::println(stderr, "opengl error: {}", message);
 }
 
