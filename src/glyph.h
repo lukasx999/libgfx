@@ -1,48 +1,35 @@
 #pragma once
 
+#include <gfx/texture.h>
 #include "opengl.h"
 
 struct Glyph {
-    gl::Texture m_texture;
-    int m_bearing_x;
-    int m_bearing_y;
-    unsigned int m_advance_x;
+    const int m_bearing_x;
+    const int m_bearing_y;
+    const unsigned int m_advance_x;
+    gfx::Texture m_texture;
 
     Glyph(int width, int height, int bearing_x, int bearing_y, unsigned int advance_x, const unsigned char* data)
         : m_bearing_x(bearing_x)
         , m_bearing_y(bearing_y)
         , m_advance_x(advance_x)
+        , m_texture(width, height, gfx::Texture::Format::R, data)
     {
 
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // disable byte-alignment restriction
 
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, m_texture);
-
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, width, height, 0, GL_RED, GL_UNSIGNED_BYTE, data);
-
-        glBindTexture(GL_TEXTURE_2D, 0);
+        // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     }
 
     [[nodiscard]] int get_width() const {
-        int width;
-        glBindTexture(GL_TEXTURE_2D, m_texture);
-        glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width);
-        glBindTexture(GL_TEXTURE_2D, 0);
-        return width;
+        return m_texture.get_width();
     }
 
     [[nodiscard]] int get_height() const {
-        int height;
-        glBindTexture(GL_TEXTURE_2D, m_texture);
-        glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &height);
-        glBindTexture(GL_TEXTURE_2D, 0);
-        return height;
+        return m_texture.get_height();
     }
 
 };

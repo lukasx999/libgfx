@@ -7,6 +7,7 @@
 #include <gfx/rect.h>
 
 class TextureRenderer;
+class TextRenderer;
 
 namespace gfx {
 
@@ -14,6 +15,7 @@ class Renderer;
 
 class Texture {
     friend TextureRenderer;
+    friend TextRenderer;
     friend gfx::Renderer;
     struct Impl;
     std::unique_ptr<Impl> m_pimpl;

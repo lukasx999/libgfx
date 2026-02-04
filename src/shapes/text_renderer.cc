@@ -1,6 +1,7 @@
-#include "../shaders.h"
 #include "text_renderer.h"
+#include "../shaders.h"
 #include "../font_impl.h"
+#include "../texture_impl.h"
 
 TextRenderer::TextRenderer(const gfx::Surface& surface) : m_surface(surface) {
 
@@ -66,6 +67,6 @@ void TextRenderer::draw_char(gfx::Vec pos, const Glyph& glyph, gfx::Color color,
     auto c = color.normalized();
     glUniform4f(u_color, c.r, c.g, c.b, c.a);
 
-    glBindTexture(GL_TEXTURE_2D, glyph.m_texture);
+    glBindTexture(GL_TEXTURE_2D, glyph.m_texture.m_pimpl->m_texture);
     glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr);
 }
