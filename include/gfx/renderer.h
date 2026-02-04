@@ -68,12 +68,12 @@ public:
 
     void draw_rectangle(gfx::Rect rect, gfx::Color color, gfx::Rotation rotation=0_deg);
 
-    void draw_rectangle(float x, float y, float width, float height, gfx::Color color, gfx::Rotation rotation=0_deg) {
-        draw_rectangle({ x, y, width, height }, color, rotation);
+    void draw_rectangle(float x, float y, float width, float height, auto&&... args) {
+        draw_rectangle({ x, y, width, height }, std::forward<decltype(args)>(args)...);
     }
 
-    void draw_rectangle(gfx::Vec v, float width, float height, gfx::Color color, gfx::Rotation rotation=0_deg) {
-        draw_rectangle({ v.x, v.y, width, height }, color, rotation);
+    void draw_rectangle(gfx::Vec v, float width, float height, auto&&... args) {
+        draw_rectangle({ v.x, v.y, width, height }, std::forward<decltype(args)>(args)...);
     }
 
     void draw_texture(gfx::Rect rect, gfx::Rotation rotation, const gfx::Texture& texture);
