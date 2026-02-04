@@ -25,20 +25,20 @@ TextRenderer::TextRenderer(const gfx::Surface& surface) : m_surface(surface) {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(unsigned int), m_indices.data(), GL_STATIC_DRAW);
 }
 
-void TextRenderer::draw(gfx::Vec pos, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color, glm::mat4 view) {
+void TextRenderer::draw(gfx::Vec pos, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color, gfx::Rotation rotation, glm::mat4 view) {
 
     auto [x, y] = pos;
     int offset = 0;
 
     for (auto c : text) {
         auto glyph = font.m_pimpl->load_glyph(c, fontsize);
-        draw_char({ x+offset, y }, glyph, color, fontsize, view);
+        draw_char({ x+offset, y }, glyph, color, fontsize, rotation, view);
         offset += glyph.m_advance_x;
     }
 
 }
 
-void TextRenderer::draw_char(gfx::Vec pos, const Glyph& glyph, gfx::Color color, int fontsize, glm::mat4 view) {
+void TextRenderer::draw_char(gfx::Vec pos, const Glyph& glyph, gfx::Color color, int fontsize, gfx::Rotation rotation, glm::mat4 view) {
 
     glUseProgram(m_program);
     glBindVertexArray(m_vertex_array);
@@ -49,6 +49,11 @@ void TextRenderer::draw_char(gfx::Vec pos, const Glyph& glyph, gfx::Color color,
     int height = glyph.m_texture.get_height();
 
     glm::mat4 model(1.0f);
+
+    model = glm::translate(model, glm::vec3(x+width/2.0, y+height/2.0, 0.0));
+    model = glm::rotate(model, rotation.get_radians(), glm::vec3(0.0f, 0.0f, 1.0f));
+    model = glm::translate(model, glm::vec3(-x-width/2.0, -y-height/2.0, 0.0));
+
     model = glm::translate(model, glm::vec3(x + glyph.m_bearing_x, y - glyph.m_bearing_y + fontsize, 0.0f));
     model = glm::scale(model, glm::vec3(width, height, 0.0f));
 

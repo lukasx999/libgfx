@@ -12,7 +12,7 @@
 #include <gfx/color.h>
 #include <gfx/font.h>
 
-// TODO: add text rotation
+// TODO: fix broken text rotation: every character gets rotated
 // TODO: do copying of textures on the gpu, so there's no need for glGetTexImage anymore
 // TODO: finish wasm port
 // TODO: systems for coordinating animations
@@ -112,24 +112,24 @@ public:
 
     void draw_line_thick(gfx::Vec start, gfx::Vec end, float thickness, gfx::Color color);
 
-    void draw_text(gfx::Vec pos, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color);
+    void draw_text(gfx::Vec pos, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color, gfx::Rotation rotation=0_deg);
 
     void draw_text(float x, float y, auto&&... args) {
         draw_text({ x, y }, std::forward<decltype(args)>(args)...);
     }
 
-    void draw_text_centered_x(gfx::Vec center, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color) {
+    void draw_text_centered_x(gfx::Vec center, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color, gfx::Rotation rotation=0_deg) {
         int text_width = font.measure_text(text, fontsize);
-        draw_text({ center.x - text_width/2.0f, center.y }, fontsize, text, font, color);
+        draw_text({ center.x - text_width/2.0f, center.y }, fontsize, text, font, color, rotation);
     }
 
     void draw_text_centered_x(float x, float y, auto&&... args) {
         draw_text_centered_x({ x, y }, std::forward<decltype(args)>(args)...);
     }
 
-    void draw_text_centered(gfx::Vec center, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color) {
+    void draw_text_centered(gfx::Vec center, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color, gfx::Rotation rotation=0_deg) {
         int text_width = font.measure_text(text, fontsize);
-        draw_text({ center.x - text_width/2.0f, center.y - fontsize/2.0f }, fontsize, text, font, color);
+        draw_text({ center.x - text_width/2.0f, center.y - fontsize/2.0f }, fontsize, text, font, color, rotation);
     }
 
     void draw_text_centered(float x, float y, auto&&... args) {

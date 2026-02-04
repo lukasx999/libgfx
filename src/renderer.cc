@@ -77,8 +77,8 @@ void Renderer::draw_line_thick(gfx::Vec start, gfx::Vec end, float thickness, gf
     draw_rectangle(x, y, thickness, length, color, gfx::Radians(rotation));
 }
 
-void Renderer::draw_text(gfx::Vec pos, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color) {
-    m_pimpl->m_text.draw(pos, fontsize, text, font, color, m_pimpl->m_view_active);
+void Renderer::draw_text(gfx::Vec pos, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color, gfx::Rotation rotation) {
+    m_pimpl->m_text.draw(pos, fontsize, text, font, color, rotation, m_pimpl->m_view_active);
 }
 
 void Renderer::clear_background(Color color) {
