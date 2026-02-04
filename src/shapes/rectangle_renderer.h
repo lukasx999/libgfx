@@ -27,6 +27,6 @@ class RectangleRenderer final {
 
 public:
     explicit RectangleRenderer(const gfx::Surface& surface);
-    void draw(gfx::Rect rect, gfx::Rotation rotation, gfx::Color color, glm::mat4 view);
+    void draw(gfx::Rect rect, gfx::Color color, gfx::Rotation rotation, glm::mat4 view);
 
 };

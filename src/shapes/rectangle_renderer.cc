@@ -23,7 +23,7 @@ RectangleRenderer::RectangleRenderer(const gfx::Surface& surface) : m_surface(su
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void RectangleRenderer::draw(gfx::Rect rect, gfx::Rotation rotation, gfx::Color color, glm::mat4 view) {
+void RectangleRenderer::draw(gfx::Rect rect, gfx::Color color, gfx::Rotation rotation, glm::mat4 view) {
 
     glUseProgram(m_program);
     glBindVertexArray(m_vertex_array);

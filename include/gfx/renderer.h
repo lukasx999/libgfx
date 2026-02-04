@@ -12,6 +12,7 @@
 #include <gfx/color.h>
 #include <gfx/font.h>
 
+// TODO: add text rotation
 // TODO: do copying of textures on the gpu, so there's no need for glGetTexImage anymore
 // TODO: finish wasm port
 // TODO: systems for coordinating animations

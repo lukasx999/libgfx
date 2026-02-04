@@ -32,11 +32,11 @@ TextureRenderer::TextureRenderer(const gfx::Surface& surface) : m_surface(surfac
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void TextureRenderer::draw(gfx::Rect rect, gfx::Rotation rotation, const gfx::Texture& texture, glm::mat4 view) {
-    draw_sub(rect, { 0.0f, 0.0f, static_cast<float>(texture.get_width()), static_cast<float>(texture.get_height()) }, rotation, texture, view);
+void TextureRenderer::draw(gfx::Rect rect, const gfx::Texture& texture, gfx::Rotation rotation, glm::mat4 view) {
+    draw_sub(rect, { 0.0f, 0.0f, static_cast<float>(texture.get_width()), static_cast<float>(texture.get_height()) }, texture, rotation, view);
 }
 
-void TextureRenderer::draw_sub(gfx::Rect dest, gfx::Rect src, gfx::Rotation rotation, const gfx::Texture& texture, glm::mat4 view) {
+void TextureRenderer::draw_sub(gfx::Rect dest, gfx::Rect src, const gfx::Texture& texture, gfx::Rotation rotation, glm::mat4 view) {
 
     glUseProgram(m_program);
     glBindVertexArray(m_vertex_array);

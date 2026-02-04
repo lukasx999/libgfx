@@ -41,15 +41,15 @@ void Renderer::set_camera(gfx::Vec center, gfx::Rotation rotation, float scale) 
 }
 
 void Renderer::draw_rectangle(gfx::Rect rect, gfx::Color color, gfx::Rotation rotation) {
-    m_pimpl->m_rectangle.draw(rect, rotation, color, m_pimpl->m_view_active);
+    m_pimpl->m_rectangle.draw(rect, color, rotation, m_pimpl->m_view_active);
 }
 
 void Renderer::draw_texture(gfx::Rect rect, const gfx::Texture& texture, gfx::Rotation rotation) {
-    m_pimpl->m_texture.draw(rect, rotation, texture, m_pimpl->m_view_active);
+    m_pimpl->m_texture.draw(rect, texture, rotation, m_pimpl->m_view_active);
 }
 
 void Renderer::draw_texture_sub(gfx::Rect dest, gfx::Rect src, const gfx::Texture& texture, gfx::Rotation rotation) {
-    m_pimpl->m_texture.draw_sub(dest, src, rotation, texture, m_pimpl->m_view_active);
+    m_pimpl->m_texture.draw_sub(dest, src, texture, rotation, m_pimpl->m_view_active);
 }
 
 void Renderer::draw_circle(gfx::Vec center, float radius, gfx::Color color) {

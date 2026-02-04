@@ -30,7 +30,7 @@ class TextureRenderer final {
 public:
     explicit TextureRenderer(const gfx::Surface& surface);
 
-    void draw(gfx::Rect rect, gfx::Rotation rotation, const gfx::Texture& texture, glm::mat4 view);
-    void draw_sub(gfx::Rect dest, gfx::Rect src, gfx::Rotation rotation, const gfx::Texture& texture, glm::mat4 view);
+    void draw(gfx::Rect rect, const gfx::Texture& texture, gfx::Rotation rotation, glm::mat4 view);
+    void draw_sub(gfx::Rect dest, gfx::Rect src, const gfx::Texture& texture, gfx::Rotation rotation, glm::mat4 view);
 
 };
