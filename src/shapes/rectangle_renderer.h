@@ -3,7 +3,7 @@
 #include <array>
 
 #include <gfx/window.h>
-#include <gfx/types.h>
+#include <gfx/rotation.h>
 #include <gfx/color.h>
 #include <gfx/rect.h>
 #include "../opengl.h"

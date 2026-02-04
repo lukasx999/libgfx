@@ -4,7 +4,8 @@
 #include FT_FREETYPE_H
 
 #include <gfx/font.h>
-#include <gfx/types.h>
+#include <gfx/error.h>
+#include <gfx/rotation.h>
 #include "glyph.h"
 #include "font_impl.h"
 

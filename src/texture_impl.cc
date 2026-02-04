@@ -1,3 +1,4 @@
+#include <gfx/error.h>
 #include "texture_impl.h"
 
 namespace gfx {

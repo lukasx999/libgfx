@@ -1,15 +1,8 @@
 #pragma once
 
 #include <cmath>
-#include <string>
-#include <stdexcept>
 
 namespace gfx {
-
-struct Error : std::runtime_error {
-    explicit Error(const char* msg) : std::runtime_error(msg) { }
-    explicit Error(const std::string& msg) : std::runtime_error(msg) { }
-};
 
 [[nodiscard]] inline constexpr float deg_to_rad(float deg) {
     return deg * (M_PI / 180.0);

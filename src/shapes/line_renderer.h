@@ -2,7 +2,7 @@
 
 #include <gfx/window.h>
 #include <gfx/color.h>
-#include <gfx/types.h>
+#include <gfx/rotation.h>
 #include "../opengl.h"
 
 class LineRenderer final {

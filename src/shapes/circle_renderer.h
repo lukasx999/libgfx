@@ -2,7 +2,7 @@
 
 #include <array>
 
-#include <gfx/types.h>
+#include <gfx/rotation.h>
 #include <gfx/color.h>
 #include <gfx/window.h>
 #include "../opengl.h"

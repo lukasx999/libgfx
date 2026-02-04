@@ -1,6 +1,7 @@
 #pragma once
 
 #include <gfx/animated_texture.h>
+#include <gfx/rotation.h>
 #include <gfx/animation.h>
 #include <gfx/color.h>
 #include <gfx/external_context.h>
@@ -12,6 +13,6 @@
 #include <gfx/spritesheet.h>
 #include <gfx/surface.h>
 #include <gfx/texture.h>
-#include <gfx/types.h>
+#include <gfx/error.h>
 #include <gfx/vec.h>
 #include <gfx/window.h>

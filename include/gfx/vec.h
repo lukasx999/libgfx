@@ -4,7 +4,7 @@
 #include <format>
 #include <string>
 
-#include <gfx/types.h>
+#include <gfx/rotation.h>
 
 namespace gfx {
 

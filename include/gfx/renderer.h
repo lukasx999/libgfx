@@ -8,8 +8,9 @@
 #include <gfx/texture.h>
 #include <gfx/vec.h>
 #include <gfx/rect.h>
-#include <gfx/types.h>
+#include <gfx/error.h>
 #include <gfx/color.h>
+#include <gfx/rotation.h>
 #include <gfx/font.h>
 
 // TODO: hot reloading
@@ -18,8 +19,6 @@
 // TODO: finish wasm port
 // TODO: systems for coordinating animations
 // TODO: cmake fetchcontent for glm
-// TODO: dynamic surface resizing?
-// TODO: options for opengl function loaders
 // TODO: stencil buffer
 // TODO: draw from spritesheet directly
 // TODO: clean up vector operations
@@ -30,6 +29,8 @@
 // TODO: check_collision_circle
 // TODO: cursor always starts out at 0 0
 // TODO: font copy/move ctor
+// TODO: dynamic resizing for external context?
+// TODO: options for opengl function loaders
 // TODO: make texture parameters configurable
 
 namespace gfx {

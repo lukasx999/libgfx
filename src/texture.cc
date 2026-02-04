@@ -16,6 +16,7 @@
 #pragma GCC diagnostic pop
 
 #include <gfx/texture.h>
+#include <gfx/error.h>
 #include "texture_impl.h"
 #include "opengl.h"
 
