@@ -3,7 +3,7 @@
 #include "opengl.h"
 
 struct Glyph {
-    GLuint m_texture;
+    gl::Texture m_texture;
     int m_bearing_x;
     int m_bearing_y;
     unsigned int m_advance_x;
@@ -16,7 +16,6 @@ struct Glyph {
 
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // disable byte-alignment restriction
 
-        glGenTextures(1, &m_texture);
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, m_texture);
 
@@ -28,10 +27,6 @@ struct Glyph {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, width, height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
 
         glBindTexture(GL_TEXTURE_2D, 0);
-    }
-
-    ~Glyph() {
-        glDeleteTextures(1, &m_texture);
     }
 
     [[nodiscard]] int get_width() const {

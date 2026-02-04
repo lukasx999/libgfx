@@ -12,6 +12,7 @@
 #include <gfx/color.h>
 #include <gfx/font.h>
 
+// TODO: refactor glyph with gfx::Texture
 // TODO: finish wasm port
 // TODO: default params for draw methods
 // TODO: find workaround for missing webgl functions
