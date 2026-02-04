@@ -13,7 +13,6 @@
 #include <gfx/font.h>
 
 // TODO: try to remove default dtor in renderer
-// TODO: refactor glyph with gfx::Texture
 // TODO: do copying of textures on the gpu, so there's no need for glGetTexImage anymore
 // TODO: finish wasm port
 // TODO: default params for draw methods
@@ -28,6 +27,7 @@
 // TODO: detect default font (via fontconfig)
 // TODO: make pkg-config file work
 // TODO: fix rotation types
+// TODO: let glPixelStorei() only affect texture ctor
 // TODO: texture enum class for format (rgb, rgba, ...)
 // TODO: check_collision_circle
 // TODO: cursor always starts out at 0 0

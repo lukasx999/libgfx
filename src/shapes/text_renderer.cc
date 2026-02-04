@@ -45,8 +45,8 @@ void TextRenderer::draw_char(gfx::Vec pos, const Glyph& glyph, gfx::Color color,
 
     auto [x, y] = pos;
 
-    unsigned int width = glyph.get_width();
-    unsigned int height = glyph.get_height();
+    int width = glyph.m_texture.get_width();
+    int height = glyph.m_texture.get_height();
 
     glm::mat4 model(1.0f);
     model = glm::translate(model, glm::vec3(x + glyph.m_bearing_x, y - glyph.m_bearing_y + fontsize, 0.0f));
