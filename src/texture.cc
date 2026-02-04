@@ -123,7 +123,7 @@ Texture::Format Texture::get_format() const {
     return Impl::opengl_format_to_gfx_format(internal_format);
 }
 
-void Texture::write_to_file(FileType filetype, const char* filename) const {
+void Texture::write_to_file(Filetype filetype, const char* filename) const {
 
     int width = get_width();
     int height = get_height();
@@ -134,7 +134,7 @@ void Texture::write_to_file(FileType filetype, const char* filename) const {
 
     int ret = [&] {
         switch (filetype) {
-            using enum FileType;
+            using enum Filetype;
             case Png: return stbi_write_png(filename, width, height, channels, buf.data(), 0);
             case Bmp: return stbi_write_bmp(filename, width, height, channels, buf.data());
             case Tga: return stbi_write_tga(filename, width, height, channels, buf.data());

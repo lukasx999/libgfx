@@ -10,6 +10,6 @@ int main() {
         rd.draw_circle(window.get_center(), 150, gfx::Color::red());
     });
 
-    texture.write_to_file(gfx::Texture::FileType::Png, "texture.png");
+    texture.write_to_file(gfx::Texture::Filetype::Png, "texture.png");
 
 }

@@ -22,7 +22,7 @@ class Texture {
 
 public:
     enum class Format { R, RG, RGB, RGBA };
-    enum class FileType { Png, Bmp, Tga, Jpg };
+    enum class Filetype { Png, Bmp, Tga, Jpg };
 
     Texture();
 
@@ -48,7 +48,7 @@ public:
     [[nodiscard]] int get_height() const;
     [[nodiscard]] Format get_format() const;
 
-    void write_to_file(FileType filetype, const char* filename) const;
+    void write_to_file(Filetype filetype, const char* filename) const;
 
 private:
     void load_texture_from_file(const char* path);

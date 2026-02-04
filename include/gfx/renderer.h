@@ -12,7 +12,6 @@
 #include <gfx/color.h>
 #include <gfx/font.h>
 
-// TODO: try to remove default dtor in renderer
 // TODO: do copying of textures on the gpu, so there's no need for glGetTexImage anymore
 // TODO: finish wasm port
 // TODO: default params for draw methods
