@@ -13,6 +13,7 @@
 #include <gfx/font.h>
 
 // TODO: refactor glyph with gfx::Texture
+// TODO: do copying of textures on the gpu, so there's no need for glGetTexImage anymore
 // TODO: finish wasm port
 // TODO: default params for draw methods
 // TODO: find workaround for missing webgl functions
