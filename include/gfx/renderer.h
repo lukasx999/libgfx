@@ -7,6 +7,7 @@
 #include <gfx/surface.h>
 #include <gfx/texture.h>
 #include <gfx/vec.h>
+#include <gfx/literals.h>
 #include <gfx/rect.h>
 #include <gfx/error.h>
 #include <gfx/color.h>
