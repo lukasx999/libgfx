@@ -38,7 +38,7 @@ class TextRenderer final {
     };
 
 public:
-    TextRenderer(const gfx::Surface& surface);
+    explicit TextRenderer(const gfx::Surface& surface);
 
     void draw(gfx::Vec pos, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color, glm::mat4 view);
 
