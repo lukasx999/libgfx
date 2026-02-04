@@ -76,26 +76,14 @@ public:
         draw_rectangle({ v.x, v.y, width, height }, std::forward<decltype(args)>(args)...);
     }
 
-    void draw_texture(gfx::Rect rect, gfx::Rotation rotation, const gfx::Texture& texture);
+    void draw_texture(gfx::Rect rect, const gfx::Texture& texture, gfx::Rotation rotation=0_deg);
 
-    void draw_texture(float x, float y, float width, float height, gfx::Rotation rotation, const gfx::Texture& texture) {
-        draw_texture({ x, y, width, height }, rotation, texture);
+    void draw_texture(float x, float y, float width, float height, auto&&... args) {
+        draw_texture({ x, y, width, height }, std::forward<decltype(args)>(args)...);
     }
 
-    void draw_texture(float x, float y, float width, float height, const gfx::Texture& texture) {
-        draw_texture(x, y, width, height, 0_deg, texture);
-    }
-
-    void draw_texture(gfx::Vec vec, float width, float height, gfx::Rotation rotation, const gfx::Texture& texture) {
-        draw_texture(vec.x, vec.y, width, height, rotation, texture);
-    }
-
-    void draw_texture(gfx::Vec vec, float width, float height, const gfx::Texture& texture) {
-        draw_texture(vec.x, vec.y, width, height, 0_deg, texture);
-    }
-
-    void draw_texture(gfx::Rect rect, const gfx::Texture& texture) {
-        draw_texture(rect.x, rect.y, rect.width, rect.height, 0_deg, texture);
+    void draw_texture(gfx::Vec v, float width, float height, auto&&... args) {
+        draw_texture({ v.x, v.y, width, height }, std::forward<decltype(args)>(args)...);
     }
 
     void draw_texture_sub(gfx::Rect dest, gfx::Rect src, gfx::Rotation rotation, const gfx::Texture& texture);

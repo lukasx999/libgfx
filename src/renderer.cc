@@ -44,7 +44,7 @@ void Renderer::draw_rectangle(gfx::Rect rect, gfx::Color color, gfx::Rotation ro
     m_pimpl->m_rectangle.draw(rect, rotation, color, m_pimpl->m_view_active);
 }
 
-void Renderer::draw_texture(gfx::Rect rect, gfx::Rotation rotation, const gfx::Texture& texture) {
+void Renderer::draw_texture(gfx::Rect rect, const gfx::Texture& texture, gfx::Rotation rotation) {
     m_pimpl->m_texture.draw(rect, rotation, texture, m_pimpl->m_view_active);
 }
 
