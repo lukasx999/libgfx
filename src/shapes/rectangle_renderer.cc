@@ -23,12 +23,12 @@ RectangleRenderer::RectangleRenderer(const gfx::Surface& surface) : m_surface(su
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void RectangleRenderer::draw(gfx::Rect dest, gfx::Rotation rotation, gfx::Color color, glm::mat4 view) {
+void RectangleRenderer::draw(gfx::Rect rect, gfx::Rotation rotation, gfx::Color color, glm::mat4 view) {
 
     glUseProgram(m_program);
     glBindVertexArray(m_vertex_array);
 
-    auto [x, y, width, height] = dest;
+    auto [x, y, width, height] = rect;
 
     auto vertices = std::to_array<glm::vec2>({
         { x,       y        }, // top-left

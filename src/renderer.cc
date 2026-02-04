@@ -40,8 +40,8 @@ void Renderer::set_camera(gfx::Vec center, gfx::Rotation rotation, float scale) 
     m_pimpl->m_view_camera = m_pimpl->gen_view_matrix(m_surface, center, rotation, scale);
 }
 
-void Renderer::draw_rectangle(gfx::Rect dest, gfx::Rotation rotation, gfx::Color color) {
-    m_pimpl->m_rectangle.draw(dest, rotation, color, m_pimpl->m_view_active);
+void Renderer::draw_rectangle(gfx::Rect rect, gfx::Color color, gfx::Rotation rotation) {
+    m_pimpl->m_rectangle.draw(rect, rotation, color, m_pimpl->m_view_active);
 }
 
 void Renderer::draw_texture(gfx::Rect rect, gfx::Rotation rotation, const gfx::Texture& texture) {
@@ -74,7 +74,7 @@ void Renderer::draw_line_thick(gfx::Vec start, gfx::Vec end, float thickness, gf
     float length = (end - start).length();
     float x = start.x + width/2.0f - thickness/2.0f;
     float y = start.y + height/2.0f - length/2.0f;
-    draw_rectangle(x, y, thickness, length, gfx::Radians(rotation), color);
+    draw_rectangle(x, y, thickness, length, color, gfx::Radians(rotation));
 }
 
 void Renderer::draw_text(gfx::Vec pos, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color) {

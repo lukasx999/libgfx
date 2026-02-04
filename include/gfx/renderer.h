@@ -66,26 +66,14 @@ public:
         set_camera({ center_x, center_y }, rotation, scale);
     }
 
-    void draw_rectangle(gfx::Rect rect, gfx::Rotation rotation, gfx::Color color);
+    void draw_rectangle(gfx::Rect rect, gfx::Color color, gfx::Rotation rotation=0_deg);
 
-    void draw_rectangle(float x, float y, float width, float height, gfx::Rotation rotation, gfx::Color color) {
-        draw_rectangle({ x, y, width, height }, rotation, color);
+    void draw_rectangle(float x, float y, float width, float height, gfx::Color color, gfx::Rotation rotation=0_deg) {
+        draw_rectangle({ x, y, width, height }, color, rotation);
     }
 
-    void draw_rectangle(float x, float y, float width, float height, gfx::Color color) {
-        draw_rectangle(x, y, width, height, 0_deg, color);
-    }
-
-    void draw_rectangle(gfx::Rect rect, gfx::Color color) {
-        draw_rectangle(rect.x, rect.y, rect.width, rect.height, 0_deg, color);
-    }
-
-    void draw_rectangle(gfx::Vec vec, float width, float height, gfx::Rotation rotation, gfx::Color color) {
-        draw_rectangle(vec.x, vec.y, width, height, rotation, color);
-    }
-
-    void draw_rectangle(gfx::Vec vec, float width, float height, gfx::Color color) {
-        draw_rectangle(vec.x, vec.y, width, height, 0_deg, color);
+    void draw_rectangle(gfx::Vec v, float width, float height, gfx::Color color, gfx::Rotation rotation=0_deg) {
+        draw_rectangle({ v.x, v.y, width, height }, color, rotation);
     }
 
     void draw_texture(gfx::Rect rect, gfx::Rotation rotation, const gfx::Texture& texture);
