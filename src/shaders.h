@@ -7,12 +7,12 @@ namespace shaders {
 namespace vertex {
 
 inline constexpr char default_[] = {
-#embed "../shaders/gles3/default.vert" suffix(,)
+#embed "../shaders/opengl4.5/default.vert" suffix(,)
 '\0'
 };
 
 inline constexpr char texture[] = {
-#embed "../shaders/gles3/texture.vert" suffix(,)
+#embed "../shaders/opengl4.5/texture.vert" suffix(,)
 '\0'
 };
 
@@ -21,22 +21,22 @@ inline constexpr char texture[] = {
 namespace fragment {
 
 inline constexpr char text[] = {
-#embed "../shaders/gles3/text.frag" suffix(,)
+#embed "../shaders/opengl4.5/text.frag" suffix(,)
 '\0'
 };
 
 inline constexpr char default_[] = {
-#embed "../shaders/gles3/default.frag" suffix(,)
+#embed "../shaders/opengl4.5/default.frag" suffix(,)
 '\0'
 };
 
 inline constexpr char texture[] = {
-#embed "../shaders/gles3/texture.frag" suffix(,)
+#embed "../shaders/opengl4.5/texture.frag" suffix(,)
 '\0'
 };
 
 inline constexpr char circle[] = {
-#embed "../shaders/gles3/circle.frag" suffix(,)
+#embed "../shaders/opengl4.5/circle.frag" suffix(,)
 '\0'
 };
 

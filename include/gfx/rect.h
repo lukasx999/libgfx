@@ -22,6 +22,26 @@ struct Rect {
         return collision_x && collision_y;
     }
 
+    constexpr void scale(float value) {
+        Rect r = scaled(value);
+        x = r.x;
+        y = r.y;
+        width = r.width;
+        height = r.height;
+    }
+
+    [[nodiscard]] constexpr Rect scaled(float value) {
+        float new_width = width * value;
+        float new_height = height * value;
+
+        return {
+            x + (width - new_width) / 2.0f,
+            y + (height - new_height) / 2.0f,
+            new_width,
+            new_height,
+        };
+    }
+
     constexpr Rect& set_x(float new_x) {
         x = new_x;
         return *this;
