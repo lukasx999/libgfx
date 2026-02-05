@@ -9,6 +9,7 @@
 
 ## Graphics
 
+- [ ] spritesheet example
 - [ ] render splines/bezier curves
 - [ ] fix broken text rotation: every character gets rotated
 - [ ] do copying of textures on the gpu, so there's no need for glGetTexImage anymore

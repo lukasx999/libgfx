@@ -23,3 +23,11 @@ target_link_libraries(clock PRIVATE gfx)
 add_executable(animation animation.cc)
 target_compile_options(animation PRIVATE -Wall -Wextra -O3 -ggdb)
 target_link_libraries(animation PRIVATE gfx)
+
+add_executable(spritesheet spritesheet.cc)
+target_compile_options(spritesheet PRIVATE -Wall -Wextra -O3 -ggdb)
+target_link_libraries(spritesheet PRIVATE gfx)
+
+add_executable(hello_world hello_world.cc)
+target_compile_options(hello_world PRIVATE -Wall -Wextra -O3 -ggdb)
+target_link_libraries(hello_world PRIVATE gfx)

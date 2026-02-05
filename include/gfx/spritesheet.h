@@ -20,6 +20,10 @@ public:
         , m_sprite_height(cell_height)
     { }
 
+    [[nodiscard]] const gfx::Texture& get_texture() const {
+        return m_texture;
+    }
+
     [[nodiscard]] float get_cell_width() const {
         return m_sprite_width;
     }
