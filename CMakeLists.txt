@@ -13,10 +13,6 @@ execute_process(COMMAND python3 gen.py WORKING_DIRECTORY shaders/)
 find_package(Freetype)
 find_package(glfw3)
 
-if (EMSCRIPTEN)
-    target_compile_options(gfx PRIVATE -sUSE_GLFW=3 -sUSE_FREETYPE=1)
-endif()
-
 target_compile_options(gfx PRIVATE -Wno-c23-extensions -Wall -Wextra -O3 -ggdb)
 
 list(APPEND include_dirs include/ deps/glad/include/ deps/stb/ deps/glm)
