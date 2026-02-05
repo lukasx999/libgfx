@@ -25,6 +25,8 @@ class Renderer final {
     struct Impl;
     std::unique_ptr<Impl> m_pimpl;
 
+    // only let these classes construct a renderer, to prevent users from
+    // trying to construct their own
     friend gfx::Window;
     friend gfx::ExternalContext;
 
@@ -101,18 +103,18 @@ public:
         draw_text({ x, y }, std::forward<decltype(args)>(args)...);
     }
 
-    void draw_text_centered_x(gfx::Vec center, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color, gfx::Rotation rotation=0_deg) {
+    void draw_text_centered_x(gfx::Vec center, int fontsize, std::string_view text, const gfx::Font& font, auto&&... args) {
         int text_width = font.measure_text(text, fontsize);
-        draw_text({ center.x - text_width/2.0f, center.y }, fontsize, text, font, color, rotation);
+        draw_text({ center.x - text_width/2.0f, center.y }, fontsize, text, font, std::forward<decltype(args)>(args)...);
     }
 
     void draw_text_centered_x(float x, float y, auto&&... args) {
         draw_text_centered_x({ x, y }, std::forward<decltype(args)>(args)...);
     }
 
-    void draw_text_centered(gfx::Vec center, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color, gfx::Rotation rotation=0_deg) {
+    void draw_text_centered(gfx::Vec center, int fontsize, std::string_view text, const gfx::Font& font, auto&&... args) {
         int text_width = font.measure_text(text, fontsize);
-        draw_text({ center.x - text_width/2.0f, center.y - fontsize/2.0f }, fontsize, text, font, color, rotation);
+        draw_text({ center.x - text_width/2.0f, center.y - fontsize/2.0f }, fontsize, text, font, std::forward<decltype(args)>(args)...);
     }
 
     void draw_text_centered(float x, float y, auto&&... args) {
