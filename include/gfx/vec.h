@@ -12,13 +12,13 @@ struct Vec {
     float x = 0.0f;
     float y = 0.0f;
 
-    constexpr void normalize() {
+    constexpr void normalize() noexcept {
         auto v = normalized();
         x = v.x;
         y = v.y;
     }
 
-    [[nodiscard]] constexpr Vec normalized() const {
+    [[nodiscard]] constexpr Vec normalized() const noexcept {
         float len = length();
         return {
             x / len,
@@ -26,24 +26,24 @@ struct Vec {
         };
     }
 
-    [[nodiscard]] constexpr float length() const {
+    [[nodiscard]] constexpr float length() const noexcept {
         return std::sqrt(x*x + y*y);
     }
 
-    [[nodiscard]] constexpr float dot(const Vec& other) const {
+    [[nodiscard]] constexpr float dot(const Vec& other) const noexcept {
         return *this * other;
     }
 
-    [[nodiscard]] constexpr float angle(const Vec& other) const {
+    [[nodiscard]] constexpr float angle(const Vec& other) const noexcept {
         return std::acos((*this * other) / (length() * other.length()));
     }
 
-    [[nodiscard]] constexpr float distance(const Vec& other) const {
+    [[nodiscard]] constexpr float distance(const Vec& other) const noexcept {
         auto diff = other - *this;
         return std::sqrt(diff.x*diff.x + diff.y*diff.y);
     }
 
-    [[nodiscard]] constexpr Vec rotated(gfx::Rotation angle) const {
+    [[nodiscard]] constexpr Vec rotated(gfx::Rotation angle) const noexcept {
         Vec result;
 
         float cos_ = std::cosf(angle.get_radians());
@@ -55,52 +55,52 @@ struct Vec {
         return result;
     }
 
-    constexpr void rotate(gfx::Rotation angle) {
+    constexpr void rotate(gfx::Rotation angle) noexcept {
         Vec v = rotated(angle);
         x = v.x;
         y = v.y;
     }
 
-    constexpr bool operator<=>(const Vec& other) const = default;
+    constexpr bool operator<=>(const Vec& other) const noexcept = default;
 
-    constexpr Vec operator+(const Vec& other) const {
+    constexpr Vec operator+(const Vec& other) const noexcept {
         return {
             x + other.x,
             y + other.y,
         };
     }
 
-    constexpr Vec& operator+=(const Vec& other) {
+    constexpr Vec& operator+=(const Vec& other) noexcept {
         x += other.x;
         y += other.y;
 
         return *this;
     }
 
-    constexpr float operator*(const Vec& other) const {
+    constexpr float operator*(const Vec& other) const noexcept {
         return x * other.x + y * other.y;
     }
 
-    constexpr Vec operator*(float value) const {
+    constexpr Vec operator*(float value) const noexcept {
         return {
             x * value,
             y * value,
         };
     }
 
-    constexpr Vec operator-(const Vec& other) const {
+    constexpr Vec operator-(const Vec& other) const noexcept {
         return {
             x - other.x,
             y - other.y,
         };
     }
 
-    constexpr Vec& set_x(float new_x) {
+    constexpr Vec& set_x(float new_x) noexcept {
         x = new_x;
         return *this;
     }
 
-    constexpr Vec& set_y(float new_y) {
+    constexpr Vec& set_y(float new_y) noexcept{
         y = new_y;
         return *this;
     }

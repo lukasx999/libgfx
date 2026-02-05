@@ -8,7 +8,10 @@
 namespace gfx {
 
 struct Rect {
-    float x, y, width, height;
+    float x = 0.0f;
+    float y = 0.0f;
+    float width = 0.0f;
+    float height = 0.0f;
 
     [[nodiscard]] constexpr bool check_collision_rect(Rect other) const noexcept {
         bool collision_x = x+width >= other.x && other.x+other.width >= x;
