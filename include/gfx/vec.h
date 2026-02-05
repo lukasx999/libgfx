@@ -12,6 +12,12 @@ struct Vec {
     float x = 0.0f;
     float y = 0.0f;
 
+    constexpr void normalize() {
+        auto v = normalized();
+        x = v.x;
+        y = v.y;
+    }
+
     [[nodiscard]] constexpr Vec normalized() const {
         float len = length();
         return {

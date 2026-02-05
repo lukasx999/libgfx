@@ -10,19 +10,19 @@ namespace gfx {
 struct Rect {
     float x, y, width, height;
 
-    [[nodiscard]] constexpr bool check_collision_rect(Rect other) const {
+    [[nodiscard]] constexpr bool check_collision_rect(Rect other) const noexcept {
         bool collision_x = x+width >= other.x && other.x+other.width >= x;
         bool collision_y = y+height >= other.y && other.y+other.height >= y;
         return collision_x && collision_y;
     }
 
-    [[nodiscard]] constexpr bool check_collision_point(gfx::Vec p) const {
+    [[nodiscard]] constexpr bool check_collision_point(gfx::Vec p) const noexcept {
         bool collision_x = p.x >= x && p.x <= x+width;
         bool collision_y = p.y >= y && p.y <= y+height;
         return collision_x && collision_y;
     }
 
-    constexpr void scale(float value) {
+    constexpr void scale(float value) noexcept {
         Rect r = scaled(value);
         x = r.x;
         y = r.y;
@@ -30,7 +30,7 @@ struct Rect {
         height = r.height;
     }
 
-    [[nodiscard]] constexpr Rect scaled(float value) {
+    [[nodiscard]] constexpr Rect scaled(float value) const noexcept {
         float new_width = width * value;
         float new_height = height * value;
 
@@ -42,22 +42,22 @@ struct Rect {
         };
     }
 
-    constexpr Rect& set_x(float new_x) {
+    constexpr Rect& set_x(float new_x) noexcept {
         x = new_x;
         return *this;
     }
 
-    constexpr Rect& set_y(float new_y) {
+    constexpr Rect& set_y(float new_y) noexcept {
         y = new_y;
         return *this;
     }
 
-    constexpr Rect& set_width(float new_width) {
+    constexpr Rect& set_width(float new_width) noexcept {
         width = new_width;
         return *this;
     }
 
-    constexpr Rect& set_height(float new_height) {
+    constexpr Rect& set_height(float new_height) noexcept {
         height = new_height;
         return *this;
     }
