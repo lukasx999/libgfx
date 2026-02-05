@@ -14,26 +14,6 @@
 #include <gfx/rotation.h>
 #include <gfx/font.h>
 
-// TODO: hot reloading
-// TODO: fix broken text rotation: every character gets rotated
-// TODO: do copying of textures on the gpu, so there's no need for glGetTexImage anymore
-// TODO: finish wasm port
-// TODO: systems for coordinating animations
-// TODO: cmake fetchcontent for glm
-// TODO: stencil buffer
-// TODO: draw from spritesheet directly
-// TODO: clean up vector operations
-// TODO: detect default font (via fontconfig)
-// TODO: make pkg-config file work
-// TODO: fix rotation types
-// TODO: let glPixelStorei() only affect texture ctor
-// TODO: check_collision_circle
-// TODO: cursor always starts out at 0 0
-// TODO: font copy/move ctor
-// TODO: dynamic resizing for external context?
-// TODO: options for opengl function loaders
-// TODO: make texture parameters configurable
-
 namespace gfx {
 
 class Window;
