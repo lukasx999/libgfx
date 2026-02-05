@@ -18,15 +18,15 @@ inline constexpr char {name}[] = {{
 }};\n\n\
 """);
 
-def gen_namespace(file, name: str, shaders: list[str]):
+def gen_namespace(file, name: str, prefix: str, shaders: list[str]):
 
-    file.write(f"namespace {name} {{\n\n");
+    file.write(f"namespace {name} {{\n\n")
 
     for shader in shaders:
-        filename, _ = shader.split(".");
-        gen_entry(file, filename, shader);
+        name, _ = shader.split(".")
+        gen_entry(file, name, f"{prefix}/{shader}")
 
-    file.write(f"}} // namespace {name}\n\n");
+    file.write(f"}} // namespace {name}\n\n")
 
 
 def split_shader_types(shaders_filenames: list[str]) -> tuple[list[str], list[str]]:
@@ -35,7 +35,7 @@ def split_shader_types(shaders_filenames: list[str]) -> tuple[list[str], list[st
     fragment_shaders = []
 
     for filename in shaders_filenames:
-        _, extension = filename.split(".");
+        _, extension = filename.split(".")
         match extension:
             case "frag":
                 fragment_shaders.append(filename)
@@ -44,21 +44,29 @@ def split_shader_types(shaders_filenames: list[str]) -> tuple[list[str], list[st
 
     return vertex_shaders, fragment_shaders
 
-def main():
+def main() -> int:
+
+    if len(sys.argv) != 2 or sys.argv[1] not in ["gl", "es"]:
+        print("expected shader type as argument (`gl` or `es`)")
+        return 1
+
+    subdir = sys.argv[1]
+
     out_file = "../src/shaders.h"
 
     file = open(out_file, "w")
-    file.write("// THIS FILE IS GENERATED\n\n");
-    file.write("#pragma once\n\n");
-    file.write("namespace shaders {\n\n");
+    file.write("// THIS FILE IS GENERATED\n\n")
+    file.write("#pragma once\n\n")
+    file.write("namespace shaders {\n\n")
 
-    shaders = os.listdir(".")
-    vertex, fragment = split_shader_types(shaders);
+    shaders = os.listdir(subdir)
+    vertex, fragment = split_shader_types(shaders)
 
-    gen_namespace(file, "vertex", vertex)
-    gen_namespace(file, "fragment", fragment)
+    gen_namespace(file, "vertex", subdir, vertex)
+    gen_namespace(file, "fragment", subdir, fragment)
 
-    file.write("} // namespace shaders\n");
+    file.write("} // namespace shaders\n")
+    return 0
 
 
 if __name__ == '__main__':

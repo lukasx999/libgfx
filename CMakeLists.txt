@@ -8,7 +8,13 @@ set(CMAKE_COLOR_DIAGNOSTICS ON)
 project(Gfx)
 add_library(gfx STATIC)
 
-execute_process(COMMAND python3 gen.py WORKING_DIRECTORY shaders/)
+if (EMSCRIPTEN)
+    set(shader_type es)
+else()
+    set(shader_type gl)
+endif()
+
+execute_process(COMMAND python3 gen.py ${shader_type} WORKING_DIRECTORY shaders/)
 
 find_package(Freetype)
 find_package(glfw3)

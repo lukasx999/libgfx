@@ -7,39 +7,39 @@ namespace shaders {
 namespace vertex {
 
 inline constexpr char default_[] = {
-#embed "../shaders/default.vert" suffix(,)
+#embed "../shaders/es/default.vert" suffix(,)
 '\0'
 };
 
 inline constexpr char texture[] = {
-#embed "../shaders/texture.vert" suffix(,)
+#embed "../shaders/es/texture.vert" suffix(,)
 '\0'
 };
 
-} // namespace vertex
+} // namespace texture
 
 namespace fragment {
 
 inline constexpr char text[] = {
-#embed "../shaders/text.frag" suffix(,)
+#embed "../shaders/es/text.frag" suffix(,)
 '\0'
 };
 
 inline constexpr char default_[] = {
-#embed "../shaders/default.frag" suffix(,)
+#embed "../shaders/es/default.frag" suffix(,)
 '\0'
 };
 
 inline constexpr char texture[] = {
-#embed "../shaders/texture.frag" suffix(,)
+#embed "../shaders/es/texture.frag" suffix(,)
 '\0'
 };
 
 inline constexpr char circle[] = {
-#embed "../shaders/circle.frag" suffix(,)
+#embed "../shaders/es/circle.frag" suffix(,)
 '\0'
 };
 
-} // namespace fragment
+} // namespace circle
 
 } // namespace shaders

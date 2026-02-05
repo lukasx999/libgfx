@@ -90,7 +90,7 @@ void Window::Impl::debug_message_callback(
     [[maybe_unused]] GLenum source,
     [[maybe_unused]] GLenum type,
     [[maybe_unused]] GLuint id,
-    GLenum severity,
+    [[maybe_unused]] GLenum severity,
     [[maybe_unused]] GLsizei length,
     const GLchar *message,
     [[maybe_unused]] const void *user_param
