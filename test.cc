@@ -1,5 +1,12 @@
 #include <gfx/gfx.h>
 
+consteval void test_vec() {
+    static_assert(gfx::Vec(3, 7) + gfx::Vec(7, 3) == gfx::Vec(10, 10));
+    static_assert(gfx::Vec(4, 5) - gfx::Vec(5, 4) == gfx::Vec(-1, 1));
+    static_assert(gfx::Vec(2, 9) * gfx::Vec(1, 5) == 2*1 + 9*5);
+    static_assert(gfx::Vec(2, 9) * 0.5 == gfx::Vec(1, 4.5));
+}
+
 consteval void test_color() {
 
     constexpr auto a = gfx::Color::red();

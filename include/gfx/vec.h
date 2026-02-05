@@ -73,7 +73,6 @@ struct Vec {
     constexpr Vec& operator+=(const Vec& other) noexcept {
         x += other.x;
         y += other.y;
-
         return *this;
     }
 
@@ -88,11 +87,23 @@ struct Vec {
         };
     }
 
+    constexpr Vec& operator*=(float value) noexcept {
+        x *= value;
+        y *= value;
+        return *this;
+    }
+
     constexpr Vec operator-(const Vec& other) const noexcept {
         return {
             x - other.x,
             y - other.y,
         };
+    }
+
+    constexpr Vec& operator-=(const Vec& other) noexcept {
+        x -= other.x;
+        y -= other.y;
+        return *this;
     }
 
     constexpr Vec& set_x(float new_x) noexcept {
