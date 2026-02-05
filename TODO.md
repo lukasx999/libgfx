@@ -5,6 +5,7 @@
 - [ ] better build system for emscripten
 - [ ] custom emscripten wrapper shell
 - [ ] fix missing emscripten gl functions
+- [ ] build examples for the web
 
 ## Graphics
 
@@ -13,12 +14,11 @@
 - [ ] do copying of textures on the gpu, so there's no need for glGetTexImage anymore
 - [ ] systems for coordinating animations
 - [ ] stencil buffer
-- [ ] draw from spritesheet directly
+- [x] draw from spritesheet directly
 
 ## Misc
 
-- [ ] check_collision_circle
-- [ ] rect scale method
+- [ ] cmake options for opengl function loaders
 - [ ] asset packer
 - [ ] hot reloading
 - [ ] cmake fetchcontent for glm
@@ -29,5 +29,5 @@
 - [ ] cursor always starts out at 0 0
 - [ ] font copy/move ctor
 - [ ] dynamic resizing for external context?
-- [ ] options for opengl function loaders
 - [ ] make texture parameters configurable
+- [x] rect scale method
