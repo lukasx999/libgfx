@@ -22,6 +22,8 @@ Window::Impl::Impl(int width, int height, const char* title, WindowFlags flags) 
     if (!glfwInit())
         throw gfx::Error("failed to create window");
 
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
     glfwWindowHint(GLFW_RESIZABLE, flags.m_enable_resizing);
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
     glfwWindowHint(GLFW_SAMPLES, 4);

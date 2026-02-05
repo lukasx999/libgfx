@@ -85,6 +85,10 @@ public:
     // draw into a texture without opening a window
     [[nodiscard]] gfx::Texture draw_offscreen(DrawFn draw_fn);
 
+    // calls the given function in a draw context, issuing draw calls outside
+    // of this context will result in undefined behavior
+    void with_draw_loop_context(DrawFn draw_fn);
+
     // calls the given function in a draw loop
     void draw_loop(DrawFn draw_fn);
 
@@ -100,11 +104,6 @@ public:
 private:
     [[nodiscard]] static int gfx_mouse_button_to_glfw_mouse_button(MouseButton mb);
     [[nodiscard]] static int gfx_key_to_glfw_key(Key key);
-
-    // calls the given function in a draw context, issuing draw calls outside
-    // of this context will result in undefined behavior
-    void with_draw_loop_context(DrawFn draw_fn);
-
     [[nodiscard]] bool should_close() const;
 
 };
