@@ -64,8 +64,18 @@ concept Animatable = requires (T start, T end, float value) {
 { gfx::lerp(start, end, value) } -> std::same_as<T>;
 };
 
+struct IAnimation {
+    virtual ~IAnimation() = default;
+
+    virtual void start() = 0;
+    virtual void reset() = 0;
+    virtual bool is_stopped() const = 0;
+    virtual bool is_running() const = 0;
+    virtual bool is_done() const = 0;
+};
+
 template <Animatable T>
-class Animation {
+class Animation : public IAnimation {
 
     using Duration = std::chrono::duration<double>;
     using InterpolationFn = std::function<float(float)>;
@@ -80,33 +90,33 @@ class Animation {
 
 public:
     Animation(T start, T end, Duration duration, InterpolationFn fn = interpolators::linear)
-        : m_start(start)
-        , m_end(end)
+        : m_start(std::move(start))
+        , m_end(std::move(end))
         , m_duration(duration)
         , m_fn(fn)
     { }
 
-    void start() {
+    void start() override {
         m_start_time = get_current_time();
         m_state = State::Running;
     }
 
-    void reset() {
+    void reset() override {
         m_start_time = 0s;
         m_state = State::Stopped;
     }
 
-    [[nodiscard]] bool is_done() const {
+    [[nodiscard]] bool is_done() const override {
         if (m_state == State::Stopped) return false;
         auto diff = get_current_time() - m_start_time;
         return diff >= m_duration;
     }
 
-    [[nodiscard]] bool is_running() const {
+    [[nodiscard]] bool is_running() const override {
         return m_state == State::Running;
     }
 
-    [[nodiscard]] bool is_stopped() const {
+    [[nodiscard]] bool is_stopped() const override {
         return m_state == State::Stopped;
     }
 
