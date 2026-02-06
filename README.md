@@ -34,6 +34,13 @@ libgfx currently supports the following graphics APIs:
 
 ## Build Instructions
 
+### Requirements
+
+- glfw3
+- freetype2
+- any C++23 compiler (clang/gcc)
+- cmake
+
 ### Using [Just](https://github.com/casey/just)
 
 ```console
