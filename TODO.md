@@ -2,8 +2,8 @@
 
 ## Web
 
-- [ ] better build system for emscripten
-- [ ] custom emscripten wrapper shell
+- [ ] build emscripten with cmake
+- [x] custom emscripten wrapper shell
 - [ ] fix missing emscripten gl functions
 - [ ] build examples for the web
 
