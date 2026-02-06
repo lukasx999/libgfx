@@ -6,7 +6,7 @@ set(CMAKE_COLOR_DIAGNOSTICS ON)
 
 project(Examples)
 
-find_package(gfx)
+find_package(gfx REQUIRED)
 
 add_executable(shapes shapes.cc)
 target_compile_options(shapes PRIVATE -Wall -Wextra -O3 -ggdb)

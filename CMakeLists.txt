@@ -16,8 +16,8 @@ endif()
 
 execute_process(COMMAND python3 gen.py ${shader_type} WORKING_DIRECTORY shaders/)
 
-find_package(Freetype)
-find_package(glfw3)
+find_package(Freetype REQUIRED)
+find_package(glfw3 REQUIRED)
 
 target_compile_options(gfx PRIVATE -Wno-c23-extensions -Wall -Wextra -O3 -ggdb)
 
