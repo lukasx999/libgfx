@@ -18,7 +18,7 @@ Shader create_shader(GLenum type, const char* src) {
     int success;
     glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
     if (!success) {
-        std::array<char, 512> info_log;
+        std::string info_log(512, ' ');
         glGetShaderInfoLog(shader, info_log.size(), nullptr, info_log.data());
         throw std::runtime_error(std::format("shader compilation failed: {}", info_log));
     }
@@ -41,7 +41,7 @@ Program create_shader_program(const char* vertex_src, const char* fragment_src) 
     int success;
     glGetProgramiv(program, GL_LINK_STATUS, &success);
     if (!success) {
-        std::array<char, 512> info_log;
+        std::string info_log(512, ' ');
         glGetProgramInfoLog(program, info_log.size(), nullptr, info_log.data());
         throw std::runtime_error(std::format("shader program linkage failed: {}", info_log));
     }

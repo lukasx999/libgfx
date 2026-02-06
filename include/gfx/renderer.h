@@ -121,6 +121,8 @@ public:
         draw_text_centered({ x, y }, std::forward<decltype(args)>(args)...);
     }
 
+    void draw_quadratic_bezier_curve(gfx::Vec a, gfx::Vec b, gfx::Vec control, gfx::Color color);
+
     void clear_background(gfx::Color color);
 
 };

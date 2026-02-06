@@ -11,15 +11,10 @@ TriangleRenderer::TriangleRenderer(const gfx::Surface& surface) : m_surface(surf
     m_program = gl::create_shader_program(shaders::vertex::default_, shaders::fragment::default_);
 
     glBindVertexArray(m_vertex_array);
-
     glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer);
     GLint a_pos = glGetAttribLocation(m_program, "a_pos");
     glVertexAttribPointer(a_pos, 2, GL_FLOAT, false, sizeof(glm::vec2), nullptr);
     glEnableVertexAttribArray(a_pos);
-
-    glBindVertexArray(0);
-    glUseProgram(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void TriangleRenderer::draw(gfx::Vec a, gfx::Vec b, gfx::Vec c, gfx::Color color, glm::mat4 view) {

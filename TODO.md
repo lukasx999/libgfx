@@ -11,7 +11,11 @@
 
 - [ ] systems for coordinating animations (seq, parallel)
 - [ ] spritesheet example
-- [ ] render splines/bezier curves
+- [x] render bezier curves
+- [ ] cubic bezier
+- [ ] MSAA for circle and bezier curve
+- [ ] line thickness setting for bezier curves
+- [ ] splines
 - [ ] fix broken text rotation: every character gets rotated
 - [ ] do copying of textures on the gpu, so there's no need for glGetTexImage anymore
 - [ ] stencil buffer

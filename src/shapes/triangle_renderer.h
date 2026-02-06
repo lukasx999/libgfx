@@ -8,8 +8,8 @@
 class TriangleRenderer final {
     const gfx::Surface& m_surface;
 
-    gl::Program m_program;
     gl::VertexArray m_vertex_array;
+    gl::Program m_program;
     gl::Buffer m_vertex_buffer;
 
 public:

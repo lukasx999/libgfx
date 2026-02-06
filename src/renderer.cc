@@ -81,6 +81,10 @@ void Renderer::draw_text(gfx::Vec pos, int fontsize, std::string_view text, cons
     m_pimpl->m_text.draw(pos, fontsize, text, font, color, rotation, m_pimpl->m_view_active);
 }
 
+void Renderer::draw_quadratic_bezier_curve(gfx::Vec a, gfx::Vec b, gfx::Vec control, gfx::Color color) {
+    m_pimpl->m_bezier.draw(a, b, control, color, m_pimpl->m_view_active);
+}
+
 void Renderer::clear_background(Color color) {
     auto normalized = color.normalized();
     glClearColor(normalized.r, normalized.g, normalized.b, normalized.a);

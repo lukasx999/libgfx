@@ -7,6 +7,7 @@
 #include "shapes/texture_renderer.h"
 #include "shapes/line_renderer.h"
 #include "shapes/text_renderer.h"
+#include "shapes/bezier_renderer.h"
 
 #include <glm/ext/matrix_transform.hpp>
 
@@ -15,6 +16,7 @@ namespace gfx {
 struct Renderer::Impl {
     const gfx::Surface& m_surface;
 
+    BezierRenderer m_bezier;
     RectangleRenderer m_rectangle;
     CircleRenderer m_circle;
     TriangleRenderer m_triangle;
@@ -33,6 +35,7 @@ struct Renderer::Impl {
 
     explicit Impl(const gfx::Surface& surface)
         : m_surface(surface)
+        , m_bezier(m_surface)
         , m_rectangle(m_surface)
         , m_circle(m_surface)
         , m_triangle(m_surface)

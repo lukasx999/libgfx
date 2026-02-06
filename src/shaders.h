@@ -25,6 +25,11 @@ inline constexpr char circle[] = {
 '\0'
 };
 
+inline constexpr char bezier[] = {
+#embed "../shaders/opengl4.5/bezier.frag" suffix(,)
+'\0'
+};
+
 inline constexpr char default_[] = {
 #embed "../shaders/opengl4.5/default.frag" suffix(,)
 '\0'
