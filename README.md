@@ -92,7 +92,7 @@ int main() {
 This library comes with `find_package()` support for CMake, which means that after installing the library you can just insert this line into your `CMakeLists.txt`:
 
 ```cmake
-find_package(gfx)
+find_package(gfx REQUIRED)
 ```
 
 And then link to the `gfx` target using `target_link_libraries()`.
