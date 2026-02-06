@@ -58,8 +58,15 @@ cmake --build build
 sudo cmake --install build
 ```
 
-## Example
+### Building for Web using [Emscripten](https://emscripten.org/)
 
+```console
+cd libgfx/
+emcmake cmake -Bbuild
+emmake make -C build -j$(nproc)
+```
+
+## Example
 
 ```c++
 #include <gfx/gfx.h>
