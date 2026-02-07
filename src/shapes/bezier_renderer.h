@@ -4,7 +4,7 @@
 #include <gfx/surface.h>
 #include "../opengl.h"
 
-class BezierRenderer {
+class BezierRenderer final {
     const gfx::Surface& m_surface;
 
     gl::VertexArray m_vertex_array;

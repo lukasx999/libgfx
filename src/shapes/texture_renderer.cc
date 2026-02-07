@@ -23,13 +23,6 @@ TextureRenderer::TextureRenderer(const gfx::Surface& surface) : m_surface(surfac
     GLint a_uv = glGetAttribLocation(m_program, "a_uv");
     glVertexAttribPointer(a_uv, 2, GL_FLOAT, false, sizeof(Vertex), reinterpret_cast<void*>(offsetof(Vertex, uv)));
     glEnableVertexAttribArray(a_uv);
-
-    // just to make sure everything still works after unbinding, as other classes/functions may
-    // modify opengl state after running the ctor
-    glBindVertexArray(0);
-    glUseProgram(0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void TextureRenderer::draw(gfx::Rect rect, const gfx::Texture& texture, gfx::Rotation rotation, glm::mat4 view) {

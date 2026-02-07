@@ -8,6 +8,7 @@ BezierRenderer::BezierRenderer(const gfx::Surface& surface) : m_surface(surface)
 
     glBindVertexArray(m_vertex_array);
     glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer);
+
     GLint a_pos = glGetAttribLocation(m_program, "a_pos");
     glVertexAttribPointer(a_pos, 2, GL_FLOAT, false, sizeof(glm::vec2), nullptr);
     glEnableVertexAttribArray(a_pos);

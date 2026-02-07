@@ -1,10 +1,10 @@
+#include "../shaders.h"
 #include <array>
 
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 
 #include "triangle_renderer.h"
-#include "../shaders.h"
 
 TriangleRenderer::TriangleRenderer(const gfx::Surface& surface) : m_surface(surface) {
 
@@ -43,5 +43,4 @@ void TriangleRenderer::draw(gfx::Vec a, gfx::Vec b, gfx::Vec c, gfx::Color color
     glUniform4f(u_color, col.r, col.g, col.b, col.a);
 
     glDrawArrays(GL_TRIANGLES, 0, vertices.size());
-
 }

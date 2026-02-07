@@ -14,13 +14,6 @@ CircleRenderer::CircleRenderer(const gfx::Surface& surface) : m_surface(surface)
     GLint a_pos = glGetAttribLocation(m_program, "a_pos");
     glVertexAttribPointer(a_pos, 2, GL_FLOAT, false, sizeof(glm::vec2), nullptr);
     glEnableVertexAttribArray(a_pos);
-
-    // just to make sure everything still works after unbinding, as other classes/functions may
-    // modify opengl state after running the ctor
-    glBindVertexArray(0);
-    glUseProgram(0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void CircleRenderer::draw(gfx::Vec center, float radius, gfx::Color color, glm::mat4 view) {

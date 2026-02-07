@@ -14,13 +14,6 @@ RectangleRenderer::RectangleRenderer(const gfx::Surface& surface) : m_surface(su
     GLint a_pos = glGetAttribLocation(m_program, "a_pos");
     glVertexAttribPointer(a_pos, 2, GL_FLOAT, false, sizeof(glm::vec2), nullptr);
     glEnableVertexAttribArray(a_pos);
-
-    // just to make sure everything still works after unbinding, as other classes/functions may
-    // modify opengl state after running the ctor
-    glBindVertexArray(0);
-    glUseProgram(0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void RectangleRenderer::draw(gfx::Rect rect, gfx::Color color, gfx::Rotation rotation, glm::mat4 view) {
@@ -58,5 +51,4 @@ void RectangleRenderer::draw(gfx::Rect rect, gfx::Color color, gfx::Rotation rot
     glUniform4f(u_color, c.r, c.g, c.b, c.a);
 
     glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr);
-
 }
