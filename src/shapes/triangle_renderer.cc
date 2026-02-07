@@ -41,9 +41,7 @@ void TriangleRenderer::draw(gfx::Vec a, gfx::Vec b, gfx::Vec c, gfx::Color color
     );
 
     glm::mat4 mvp = projection * view * model;
-
-    GLint u_mvp = glGetUniformLocation(m_program, "u_mvp");
-    glUniformMatrix4fv(u_mvp, 1, false, glm::value_ptr(mvp));
+    gl::set_uniform(m_program, "u_mvp", mvp);
 
     auto col = color.normalized();
     GLint u_color = glGetUniformLocation(m_program, "u_color");

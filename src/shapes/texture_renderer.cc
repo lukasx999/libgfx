@@ -80,9 +80,7 @@ void TextureRenderer::draw_sub(gfx::Rect dest, gfx::Rect src, const gfx::Texture
     );
 
     glm::mat4 mvp = projection * view * model;
-
-    GLint u_mvp = glGetUniformLocation(m_program, "u_mvp");
-    glUniformMatrix4fv(u_mvp, 1, false, glm::value_ptr(mvp));
+    gl::set_uniform(m_program, "u_mvp", mvp);
 
     glBindTexture(GL_TEXTURE_2D, texture.m_pimpl->m_texture);
     glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr);

@@ -65,8 +65,7 @@ void TextRenderer::draw_char(gfx::Vec pos, const Glyph& glyph, gfx::Color color,
     );
 
     glm::mat4 mvp = projection * view * model;
-    GLint u_mvp = glGetUniformLocation(m_program, "u_mvp");
-    glUniformMatrix4fv(u_mvp, 1, false, glm::value_ptr(mvp));
+    gl::set_uniform(m_program, "u_mvp", mvp);
 
     GLint u_color = glGetUniformLocation(m_program, "u_color");
     auto c = color.normalized();

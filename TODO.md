@@ -9,11 +9,12 @@
 
 ## Graphics
 
+- [ ] MSAA for circle and bezier curve
+- [ ] reuse functionality in renderers using inheritance
 - [ ] systems for coordinating animations (seq, parallel)
 - [ ] spritesheet example
 - [x] render bezier curves
 - [ ] cubic bezier
-- [ ] MSAA for circle and bezier curve
 - [ ] line thickness setting for bezier curves
 - [ ] splines
 - [ ] fix broken text rotation: every character gets rotated

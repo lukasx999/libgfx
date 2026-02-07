@@ -37,9 +37,7 @@ void BezierRenderer::draw(gfx::Vec a, gfx::Vec b, gfx::Vec control, gfx::Color c
     );
 
     glm::mat4 mvp = projection * view * model;
-
-    GLint u_mvp = glGetUniformLocation(m_program, "u_mvp");
-    glUniformMatrix4fv(u_mvp, 1, false, glm::value_ptr(mvp));
+    gl::set_uniform(m_program, "u_mvp", mvp);
 
     auto col = color.normalized();
     GLint u_color = glGetUniformLocation(m_program, "u_color");
@@ -54,8 +52,7 @@ void BezierRenderer::draw(gfx::Vec a, gfx::Vec b, gfx::Vec control, gfx::Color c
     GLint u_control = glGetUniformLocation(m_program, "u_control");
     glUniform2f(u_control, control.x, control.y);
 
-    GLint u_window_height = glGetUniformLocation(m_program, "u_window_height");
-    glUniform1i(u_window_height, m_surface.get_height());
+    gl::set_uniform(m_program, "u_window_height", m_surface.get_height());
 
     glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 }

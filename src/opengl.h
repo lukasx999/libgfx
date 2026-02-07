@@ -132,6 +132,26 @@ struct Framebuffer : Object {
     Framebuffer& operator=(Framebuffer&&) = default;
 };
 
+inline void set_uniform(GLuint program, const char* name, float value) {
+    GLint location = glGetUniformLocation(program, name);
+    glUniform1f(location, value);
+}
+
+inline void set_uniform(GLuint program, const char* name, int value) {
+    GLint location = glGetUniformLocation(program, name);
+    glUniform1i(location, value);
+}
+
+inline void set_uniform(GLuint program, const char* name, glm::vec2 value) {
+    GLint location = glGetUniformLocation(program, name);
+    glUniform2f(location, value.x, value.y);
+}
+
+inline void set_uniform(GLuint program, const char* name, glm::mat4 value) {
+    GLint location = glGetUniformLocation(program, name);
+    glUniformMatrix4fv(location, 1, false, glm::value_ptr(value));
+}
+
 [[nodiscard]] Shader create_shader(GLenum type, const char* src);
 [[nodiscard]] Program create_shader_program(const char* vertex_src, const char* fragment_src);
 

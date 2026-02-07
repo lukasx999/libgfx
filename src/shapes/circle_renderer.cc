@@ -50,25 +50,17 @@ void CircleRenderer::draw(gfx::Vec center, float radius, gfx::Color color, glm::
     );
 
     glm::mat4 mvp = projection * view * model;
-
-    GLint u_mvp = glGetUniformLocation(m_program, "u_mvp");
-    glUniformMatrix4fv(u_mvp, 1, false, glm::value_ptr(mvp));
+    gl::set_uniform(m_program, "u_mvp", mvp);
 
     auto c = color.normalized();
     GLint u_color = glGetUniformLocation(m_program, "u_color");
     glUniform4f(u_color, c.r, c.g, c.b, c.a);
 
-    GLint u_center = glGetUniformLocation(m_program, "u_center");
     auto view_center = view * glm::vec4(x, y, 0.0, 1.0);
-    glUniform2f(u_center, view_center.x, view_center.y);
+    gl::set_uniform(m_program, "u_center", glm::vec2(view_center));
 
-    GLint u_radius = glGetUniformLocation(m_program, "u_radius");
-    glUniform1f(u_radius, radius);
-
-    GLint u_window_height = glGetUniformLocation(m_program, "u_window_height");
-    glUniform1i(u_window_height, m_surface.get_height());
+    gl::set_uniform(m_program, "u_radius", radius);
+    gl::set_uniform(m_program, "u_window_height", m_surface.get_height());
 
     glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr);
-
 }
-

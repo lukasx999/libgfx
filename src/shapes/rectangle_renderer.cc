@@ -56,9 +56,7 @@ void RectangleRenderer::draw(gfx::Rect rect, gfx::Color color, gfx::Rotation rot
     );
 
     glm::mat4 mvp = projection * view * model;
-
-    GLint u_mvp = glGetUniformLocation(m_program, "u_mvp");
-    glUniformMatrix4fv(u_mvp, 1, false, glm::value_ptr(mvp));
+    gl::set_uniform(m_program, "u_mvp", mvp);
 
     auto c = color.normalized();
     GLint u_color = glGetUniformLocation(m_program, "u_color");
