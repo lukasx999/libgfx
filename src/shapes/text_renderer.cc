@@ -57,12 +57,7 @@ void TextRenderer::draw_char(gfx::Vec pos, const Glyph& glyph, gfx::Color color,
     model = glm::translate(model, glm::vec3(x + glyph.m_bearing_x, y - glyph.m_bearing_y + fontsize, 0.0f));
     model = glm::scale(model, glm::vec3(width, height, 0.0f));
 
-    glm::mat4 projection = glm::ortho(
-        0.0f,
-        static_cast<float>(m_surface.get_width()),
-        static_cast<float>(m_surface.get_height()),
-        0.0f
-    );
+    auto projection = gl::get_surface_projection(m_surface);
 
     glm::mat4 mvp = projection * view * model;
     gl::set_uniform(m_program, "u_mvp", mvp);

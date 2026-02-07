@@ -72,12 +72,7 @@ void TextureRenderer::draw_sub(gfx::Rect dest, gfx::Rect src, const gfx::Texture
     model = glm::rotate(model, rotation.get_radians(), glm::vec3(0.0f, 0.0f, 1.0f));
     model = glm::translate(model, glm::vec3(-dest.x-dest.width/2.0, -dest.y-dest.height/2.0, 0.0));
 
-    glm::mat4 projection = glm::ortho(
-        0.0f,
-        static_cast<float>(m_surface.get_width()),
-        static_cast<float>(m_surface.get_height()),
-        0.0f
-    );
+    auto projection = gl::get_surface_projection(m_surface);
 
     glm::mat4 mvp = projection * view * model;
     gl::set_uniform(m_program, "u_mvp", mvp);

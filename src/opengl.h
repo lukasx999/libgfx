@@ -1,6 +1,8 @@
 #pragma once
 
 #include <utility>
+#include <gfx/surface.h>
+
 
 
 // emscripten will handle opengl initialization for us, so there's no need
@@ -131,6 +133,15 @@ struct Framebuffer : Object {
     Framebuffer(Framebuffer&&) = default;
     Framebuffer& operator=(Framebuffer&&) = default;
 };
+
+[[nodiscard]] inline glm::mat4 get_surface_projection(const gfx::Surface& surface) {
+    return glm::ortho(
+        0.0f,
+        static_cast<float>(surface.get_width()),
+        static_cast<float>(surface.get_height()),
+        0.0f
+    );
+}
 
 inline void set_uniform(GLuint program, const char* name, float value) {
     GLint location = glGetUniformLocation(program, name);

@@ -29,12 +29,7 @@ void BezierRenderer::draw(gfx::Vec a, gfx::Vec b, gfx::Vec control, gfx::Color c
 
     glm::mat4 model(1.0);
 
-    glm::mat4 projection = glm::ortho(
-        0.0f,
-        static_cast<float>(m_surface.get_width()),
-        static_cast<float>(m_surface.get_height()),
-        0.0f
-    );
+    auto projection = gl::get_surface_projection(m_surface);
 
     glm::mat4 mvp = projection * view * model;
     gl::set_uniform(m_program, "u_mvp", mvp);
