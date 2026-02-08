@@ -31,3 +31,7 @@ target_link_libraries(spritesheet PRIVATE gfx)
 add_executable(hello_world hello_world.cc)
 target_compile_options(hello_world PRIVATE -Wall -Wextra -O3 -ggdb)
 target_link_libraries(hello_world PRIVATE gfx)
+
+add_executable(quadratic_bezier quadratic_bezier.cc)
+target_compile_options(quadratic_bezier PRIVATE -Wall -Wextra -O3 -ggdb)
+target_link_libraries(quadratic_bezier PRIVATE gfx)
