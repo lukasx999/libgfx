@@ -9,7 +9,7 @@
 
 ## Graphics
 
-- [ ] MSAA for circle and bezier curve
+- [ ] MSAA for circle and bezier curve (using fwidth())
 - [ ] reuse functionality in renderers using inheritance
 - [ ] systems for coordinating animations (seq, parallel)
 - [ ] spritesheet example
