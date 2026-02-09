@@ -81,6 +81,30 @@ void Renderer::draw_text(gfx::Vec pos, int fontsize, std::string_view text, cons
     m_pimpl->m_text.draw(pos, fontsize, text, font, color, rotation, m_pimpl->m_view_active);
 }
 
+void Renderer::draw_quadratic_bezier_curve(gfx::Vec p1, gfx::Vec p2, gfx::Vec ctl, float thickness, gfx::Color color) {
+    gfx::Vec last = p1;
+
+    for (float t = 0.0f; t <= 1.0f; t += 0.01f) {
+        auto a = gfx::lerp(p1, ctl, t);
+        auto b = gfx::lerp(ctl, p2, t);
+        auto p = gfx::lerp(a, b, t);
+        draw_line_thick(last, p, thickness, color);
+        last = p;
+    }
+}
+
+void Renderer::draw_cubic_bezier_curve(gfx::Vec p1, gfx::Vec p2, gfx::Vec ctl1, gfx::Vec ctl2, float thickness, gfx::Color color) {
+    gfx::Vec last = p1;
+
+    for (float t = 0.0f; t <= 1.0f; t += 0.01f) {
+        auto a = gfx::lerp(gfx::lerp(p1, ctl1, t), gfx::lerp(ctl1, ctl2, t), t);
+        auto b = gfx::lerp(gfx::lerp(ctl1, ctl2, t), gfx::lerp(ctl2, p2, t), t);
+        auto p = gfx::lerp(a, b, t);
+        draw_line_thick(last, p, thickness, color);
+        last = p;
+    }
+}
+
 void Renderer::clear_background(Color color) {
     auto normalized = color.normalized();
     glClearColor(normalized.r, normalized.g, normalized.b, normalized.a);
