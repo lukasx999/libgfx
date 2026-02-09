@@ -2,14 +2,14 @@
 
 ## Web
 
-- [ ] build emscripten with cmake
-- [x] custom emscripten wrapper shell
 - [ ] fix missing emscripten gl functions
 - [ ] build examples for the web
+- [x] build emscripten with cmake
+- [x] custom emscripten wrapper shell
 
 ## Graphics
 
-- [ ] MSAA for circle and bezier curve (using fwidth())
+- [x] AA for circle and bezier curve (using fwidth())
 - [ ] reuse functionality in renderers using inheritance
 - [ ] systems for coordinating animations (seq, parallel)
 - [ ] spritesheet example
