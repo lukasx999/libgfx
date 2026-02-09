@@ -5,6 +5,7 @@
 #include <string_view>
 
 #include <gfx/surface.h>
+#include <gfx/animation.h>
 #include <gfx/texture.h>
 #include <gfx/vec.h>
 #include <gfx/literals.h>
@@ -121,7 +122,14 @@ public:
         draw_text_centered({ x, y }, std::forward<decltype(args)>(args)...);
     }
 
-    void draw_quadratic_bezier_curve(gfx::Vec a, gfx::Vec b, gfx::Vec control, gfx::Color color);
+    void draw_quadratic_bezier_curve(gfx::Vec a, gfx::Vec b, gfx::Vec control, float thickness, gfx::Color color) {
+        gfx::Vec last = a;
+        for (float t = 0.0f; t <= 1.0f; t += 0.01f) {
+            auto p = gfx::lerp(gfx::lerp(a, control, t), gfx::lerp(control, b, t), t);
+            draw_line_thick(last, p, thickness, color);
+            last = p;
+        }
+    }
 
     void clear_background(gfx::Color color);
 
