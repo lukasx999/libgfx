@@ -35,3 +35,7 @@ target_link_libraries(hello_world PRIVATE gfx)
 add_executable(quadratic_bezier quadratic_bezier.cc)
 target_compile_options(quadratic_bezier PRIVATE -Wall -Wextra -O3 -ggdb)
 target_link_libraries(quadratic_bezier PRIVATE gfx)
+
+add_executable(cubic_bezier cubic_bezier.cc)
+target_compile_options(cubic_bezier PRIVATE -Wall -Wextra -O3 -ggdb)
+target_link_libraries(cubic_bezier PRIVATE gfx)
