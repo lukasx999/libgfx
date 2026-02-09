@@ -14,8 +14,8 @@
 - [ ] systems for coordinating animations (seq, parallel)
 - [ ] spritesheet example
 - [x] render bezier curves
-- [ ] cubic bezier
-- [ ] line thickness setting for bezier curves
+- [x] cubic bezier
+- [x] line thickness setting for bezier curves
 - [ ] splines
 - [ ] fix broken text rotation: every character gets rotated
 - [ ] do copying of textures on the gpu, so there's no need for glGetTexImage anymore
