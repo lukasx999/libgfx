@@ -2,25 +2,25 @@
 
 ## Web
 
+- [ ] build examples for the web (gallery on github pages)
 - [ ] fix missing emscripten gl functions
-- [ ] build examples for the web
 - [x] build emscripten with cmake
 - [x] custom emscripten wrapper shell
 
 ## Graphics
 
-- [x] AA for circle and bezier curve (using fwidth())
 - [ ] reuse functionality in renderers using inheritance
 - [ ] systems for coordinating animations (seq, parallel)
 - [ ] spritesheet example
-- [x] render bezier curves
-- [x] cubic bezier
-- [x] line thickness setting for bezier curves
 - [ ] splines
 - [ ] fix broken text rotation: every character gets rotated
 - [ ] do copying of textures on the gpu, so there's no need for glGetTexImage anymore
 - [ ] stencil buffer
 - [x] draw from spritesheet directly
+- [x] AA for circle and bezier curve (using fwidth())
+- [x] render bezier curves
+- [x] cubic bezier
+- [x] line thickness setting for bezier curves
 
 ## Misc
 
