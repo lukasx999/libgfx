@@ -141,7 +141,6 @@ public:
         for (float t = 0.0f; t <= 1.0f; t += 0.01f) {
             auto a = gfx::lerp(gfx::lerp(p1, ctl1, t), gfx::lerp(ctl1, ctl2, t), t);
             auto b = gfx::lerp(gfx::lerp(ctl1, ctl2, t), gfx::lerp(ctl2, p2, t), t);
-
             auto p = gfx::lerp(a, b, t);
             draw_line_thick(last, p, thickness, color);
             last = p;
