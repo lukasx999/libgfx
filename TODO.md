@@ -24,6 +24,7 @@
 
 ## Misc
 
+- [ ] fix glsllangValidator in justfile
 - [ ] generate shaders.h file in build folder
 - [ ] cmake options for opengl function loaders
 - [ ] asset packer
