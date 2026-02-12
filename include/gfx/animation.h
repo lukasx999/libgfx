@@ -23,6 +23,10 @@ T lerp(T, T, float) {
         - or implement `operator+(T)`, `operator-(T)` and `operator*(float)` on your type.)");
 }
 
+// if a type can be trivially interpolated by just using operator+(),
+// operator-() and operator()*, then implement it in such way, else look for another
+// template specialization.
+//
 // we use x as the right hand operand, because when overloading operator*(float) in a class,
 // the float operand is on the right hand side. to have it as the left hand operator, you would
 // need to define the operator outside of the class, which some users might forget about.
