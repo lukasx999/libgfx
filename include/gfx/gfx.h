@@ -15,5 +15,6 @@
 #include <gfx/texture.h>
 #include <gfx/error.h>
 #include <gfx/vec.h>
+#include <gfx/lerp.h>
 #include <gfx/literals.h>
 #include <gfx/window.h>

@@ -4,64 +4,12 @@
 #include <chrono>
 #include <functional>
 
-#include <gfx/color.h>
-#include <gfx/rect.h>
 #include <gfx/interpolators.h>
+#include <gfx/lerp.h>
 
 namespace gfx {
 
 using namespace std::chrono_literals;
-
-// TODO: upgrade to C++26 delete with reason syntax at some point
-
-template <typename T>
-T lerp(T, T, float) {
-    static_assert(false, R"(
-    no matching gfx::lerp<T>() specialization was found.
-        to fix this:
-        - either create a template specialization for your type,
-        - or implement `operator+(T)`, `operator-(T)` and `operator*(float)` on your type.)");
-}
-
-// if a type can be trivially interpolated by just using operator+(),
-// operator-() and operator()*, then implement it in such way, else look for another
-// template specialization.
-//
-// we use x as the right hand operand, because when overloading operator*(float) in a class,
-// the float operand is on the right hand side. to have it as the left hand operator, you would
-// need to define the operator outside of the class, which some users might forget about.
-
-template <typename T>
-concept TriviallyLerpable = requires (T start, T end, float x) {
-start + (end - start) * x;
-};
-
-template <TriviallyLerpable T>
-[[nodiscard]] inline constexpr T lerp(T start, T end, float x) {
-    return start + (end - start) * x;
-}
-
-template <>
-[[nodiscard]] inline constexpr
-gfx::Color lerp<gfx::Color>(gfx::Color start, gfx::Color end, float x) {
-    return {
-        gfx::lerp(start.r, end.r, x),
-        gfx::lerp(start.g, end.g, x),
-        gfx::lerp(start.b, end.b, x),
-        gfx::lerp(start.a, end.a, x),
-    };
-}
-
-template <>
-[[nodiscard]] inline constexpr
-gfx::Rect lerp<gfx::Rect>(gfx::Rect start, gfx::Rect end, float x) {
-    return {
-        gfx::lerp(start.x, end.x, x),
-        gfx::lerp(start.y, end.y, x),
-        gfx::lerp(start.width, end.width, x),
-        gfx::lerp(start.height, end.height, x),
-    };
-}
 
 template <typename T>
 concept Animatable = requires (T start, T end, float value) {
@@ -146,18 +94,19 @@ public:
                 return m_start;
 
             case State::Running:
-                return is_done() ? m_end : get_running();
+                return is_done()
+                ? m_end
+                : get(get_current_time() - m_start_time);
         }
     }
 
-private:
-    [[nodiscard]] T get_running() const {
-        auto diff = get_current_time() - m_start_time;
-        double t = diff / m_duration;
-        assert(t <= 1.0f);
+    [[nodiscard]] T get(Duration time) const {
+        double t = time / m_duration;
+        assert(t <= 1.0f && t >= 0.0f);
         return gfx::lerp(m_start, m_end, m_fn(t));
     }
 
+private:
     [[nodiscard]] static Duration get_current_time() {
         return std::chrono::steady_clock::now().time_since_epoch();
     }
