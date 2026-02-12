@@ -100,6 +100,7 @@ public:
         }
     }
 
+    // get the value of the animation independent of its current state
     [[nodiscard]] T get(Duration time) const {
         double t = time / m_duration;
         assert(t <= 1.0f && t >= 0.0f);
