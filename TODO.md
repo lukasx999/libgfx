@@ -26,6 +26,7 @@
 
 - [ ] finish AnimationSequence
 - [ ] fix glsllangValidator in justfile
+- [ ] utf-8 support for text renderer
 - [ ] generate shaders.h file in build folder
 - [ ] cmake options for opengl function loaders
 - [ ] asset packer
