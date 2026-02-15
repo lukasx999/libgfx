@@ -62,6 +62,12 @@ public:
         draw_rectangle({ v.x, v.y, width, height }, std::forward<decltype(args)>(args)...);
     }
 
+    void draw_rectangle_rounded(gfx::Rect rect, gfx::Color color, float radius);
+
+    void draw_rectangle_rounded(float x, float y, float width, float height, auto&&... args) {
+        draw_rectangle_rounded({ x, y, width, height }, std::forward<decltype(args)>(args)...);
+    }
+
     void draw_texture(gfx::Rect rect, const gfx::Texture& texture, gfx::Rotation rotation=0_deg);
 
     void draw_texture(float x, float y, float width, float height, auto&&... args) {

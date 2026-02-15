@@ -44,6 +44,22 @@ void Renderer::draw_rectangle(gfx::Rect rect, gfx::Color color, gfx::Rotation ro
     m_pimpl->m_rectangle.draw(rect, color, rotation, m_pimpl->m_view_active);
 }
 
+void Renderer::draw_rectangle_rounded(gfx::Rect rect, gfx::Color color, float radius) {
+
+    draw_circle(rect.x+radius, rect.y+radius, radius, color); // top left
+    draw_circle(rect.x+rect.width-radius, rect.y+radius, radius, color); // top right
+    draw_circle(rect.x+radius, rect.y+rect.height-radius, radius, color); // bottom left
+    draw_circle(rect.x+rect.width-radius, rect.y+rect.height-radius, radius, color); // bottom right
+
+    draw_rectangle(gfx::Rect(rect)
+                   .set_y(rect.y+radius)
+                   .set_height(rect.height-radius*2), color);
+
+    draw_rectangle(gfx::Rect(rect)
+                   .set_x(rect.x+radius)
+                   .set_width(rect.width-radius*2), color);
+}
+
 void Renderer::draw_texture(gfx::Rect rect, const gfx::Texture& texture, gfx::Rotation rotation) {
     m_pimpl->m_texture.draw(rect, texture, rotation, m_pimpl->m_view_active);
 }
