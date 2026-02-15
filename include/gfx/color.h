@@ -114,6 +114,10 @@ struct Color {
         return 0x0000ffff;
     }
 
+    [[nodiscard]] static constexpr Color lightblue() {
+        return 0x90d5ffff;
+    }
+
 };
 
 [[nodiscard]] constexpr Color operator*(float value, const Color& color) {

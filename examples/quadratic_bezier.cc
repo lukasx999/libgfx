@@ -7,6 +7,7 @@ int main() {
     gfx::Window window(700, 700, "quadratic bezier curve");
 
     float handle_radius = 10;
+    float handle_radius_moving = 15;
 
     bool moving_a = false;
     bool moving_b = false;
@@ -21,16 +22,25 @@ int main() {
 
         auto mouse = window.get_mouse_pos();
 
+        bool hovering_a = mouse.distance(a) <= handle_radius;
+        bool hovering_b = mouse.distance(b) <= handle_radius;
+        bool hovering_ctl = mouse.distance(ctl) <= handle_radius;
+
         if (window.get_mouse_button_state(gfx::MouseButton::Left).pressed()) {
-            if (mouse.distance(a) <= handle_radius)
+            if (hovering_a)
                 moving_a = true;
 
-            if (mouse.distance(b) <= handle_radius)
+            if (hovering_b)
                 moving_b = true;
 
-            if (mouse.distance(ctl) <= handle_radius)
+            if (hovering_ctl)
                 moving_ctl = true;
+        }
 
+        if (window.get_mouse_button_state(gfx::MouseButton::Left).released()) {
+            moving_a = false;
+            moving_b = false;
+            moving_ctl = false;
         }
 
         if (moving_a)
@@ -42,19 +52,11 @@ int main() {
         if (moving_ctl)
             ctl = mouse;
 
-        if (window.get_mouse_button_state(gfx::MouseButton::Left).released()) {
-            moving_a = false;
-            moving_b = false;
-            moving_ctl = false;
-        }
-
-
-
         rd.draw_quadratic_bezier_curve(a, b, ctl, 5, gfx::Color::white());
 
-        rd.draw_circle(a, handle_radius, gfx::Color::blue());
-        rd.draw_circle(b, handle_radius, gfx::Color::blue());
-        rd.draw_circle(ctl, handle_radius, gfx::Color::red());
+        rd.draw_circle(a, hovering_a ? handle_radius_moving : handle_radius, gfx::Color::blue());
+        rd.draw_circle(b, hovering_b ? handle_radius_moving : handle_radius, gfx::Color::blue());
+        rd.draw_circle(ctl, hovering_ctl ? handle_radius_moving : handle_radius, gfx::Color::red());
 
         if (window.get_key_state(gfx::Key::Escape).pressed())
             window.close();
