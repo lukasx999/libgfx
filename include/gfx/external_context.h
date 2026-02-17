@@ -4,6 +4,7 @@
 
 #include <gfx/surface.h>
 #include <gfx/renderer.h>
+#include <glad/gl.h>
 
 namespace gfx {
 
@@ -16,11 +17,13 @@ class ExternalContext : public gfx::Surface {
     gfx::Renderer m_renderer;
 
 public:
-    ExternalContext(int width, int height)
+    ExternalContext(int width, int height, GLADloadfunc load)
         : m_width(width)
         , m_height(height)
         , m_renderer(*this)
-    { }
+    {
+        gladLoadGL(load);
+    }
 
     [[nodiscard]] int get_width() const override {
         return m_width;
