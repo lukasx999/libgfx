@@ -13,6 +13,10 @@
 #define USE_GL_GLAD
 #endif // __EMSCRIPTEN__
 
+// TODO: find a better way to use system opengl headers
+// #define GL_GLEXT_PROTOTYPES
+// #include <GL/gl.h>
+// #include <GL/glext.h>
 
 #ifdef USE_GL_GLAD
 #include <glad/gl.h>
