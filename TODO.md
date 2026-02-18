@@ -24,6 +24,7 @@
 
 ## Misc
 
+- [ ] configure opengl backends in cmake
 - [ ] gradients
 - [ ] finish AnimationSequence
 - [ ] fix glsllangValidator in justfile
