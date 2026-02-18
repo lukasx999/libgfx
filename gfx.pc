@@ -2,7 +2,7 @@ prefix=/usr/local
 includedir=${prefix}/include
 libdir=${prefix}/lib
 
-Name: libgfx
+Name: gfx
 Description: 2D graphics library
 Cflags: -I${includedir}/gfx
 Libs: -L${libdir} -lgfx -lfreetype -lglfw
