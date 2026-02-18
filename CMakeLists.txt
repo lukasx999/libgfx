@@ -18,6 +18,7 @@ execute_process(COMMAND python3 gen.py ${shader_type} WORKING_DIRECTORY shaders/
 
 find_package(Freetype REQUIRED)
 find_package(glfw3)
+find_package(OpenGL REQUIRED)
 
 if (EMSCRIPTEN)
     target_link_options(gfx INTERFACE -sUSE_FREETYPE=1 -sUSE_GLFW=3 -sMIN_WEBGL_VERSION=2)
@@ -30,7 +31,7 @@ include_directories(${include_dirs} ${FREETYPE_INCLUDE_DIRS})
 link_directories(${FREETYPE_LIBRARY_DIRS})
 
 add_subdirectory(src)
-target_link_libraries(gfx PRIVATE glfw ${FREETYPE_LIBRARIES})
+target_link_libraries(gfx PRIVATE glfw ${FREETYPE_LIBRARIES} OpenGL)
 
 install(
     TARGETS gfx

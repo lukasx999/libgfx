@@ -5,6 +5,7 @@
 
 
 
+#if 0
 // emscripten will handle opengl initialization for us, so there's no need
 // to use a loader like glad
 #ifdef __EMSCRIPTEN__
@@ -12,11 +13,15 @@
 #else
 #define USE_GL_GLAD
 #endif // __EMSCRIPTEN__
+#endif
 
-// TODO: find a better way to use system opengl headers
-// #define GL_GLEXT_PROTOTYPES
-// #include <GL/gl.h>
-// #include <GL/glext.h>
+#define USE_SYSTEM_GL
+
+#ifdef USE_SYSTEM_GL
+#define GL_GLEXT_PROTOTYPES
+#include <GL/gl.h>
+#include <GL/glext.h>
+#endif // USE_SYSTEM_GL
 
 #ifdef USE_GL_GLAD
 #include <glad/gl.h>
