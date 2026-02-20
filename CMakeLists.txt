@@ -51,5 +51,3 @@ install(TARGETS gfx EXPORT gfx)
 install(EXPORT gfx DESTINATION lib/cmake/gfx)
 
 install(FILES gfx.pc DESTINATION lib/pkgconfig)
-
-add_executable(test test.cc)

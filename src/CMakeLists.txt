@@ -9,6 +9,7 @@ font.cc
 texture.cc
 window_impl.cc
 opengl.cc
+test.cc
 )
 
 add_subdirectory(shapes)
