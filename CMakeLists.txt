@@ -31,7 +31,10 @@ include_directories(${include_dirs} ${FREETYPE_INCLUDE_DIRS})
 link_directories(${FREETYPE_LIBRARY_DIRS})
 
 add_subdirectory(src)
-target_link_libraries(gfx PRIVATE glfw ${FREETYPE_LIBRARIES} OpenGL)
+
+if (NOT EMSCRIPTEN)
+    target_link_libraries(gfx PRIVATE glfw ${FREETYPE_LIBRARIES} OpenGL)
+endif()
 
 install(
     TARGETS gfx
