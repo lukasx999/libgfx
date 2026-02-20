@@ -17,24 +17,18 @@
 
 namespace gfx {
 
-class Window;
-class ExternalContext;
-
 class Renderer final {
     const gfx::Surface& m_surface;
 
     struct Impl;
     std::unique_ptr<Impl> m_pimpl;
 
-    // only let these classes construct a renderer, to prevent users from
-    // trying to construct their own
-    friend gfx::Window;
-    friend gfx::ExternalContext;
-
-    explicit Renderer(const gfx::Surface& surface);
-
 public:
     using DrawFn = std::function<void()>;
+
+    // default constructing a renderer without an active GL context will
+    // result in undefined behaviour.
+    explicit Renderer(const gfx::Surface& surface);
 
     ~Renderer();
 
