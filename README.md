@@ -14,9 +14,9 @@ libgfx is a 2D graphics library written in modern C++23.
 Check out `examples/`, for on how to use libgfx with any of these technologies.
 
 - [x] Linux via [glfw](https://www.glfw.org/)
+- [x] Linux via Wayland & EGL
 - [x] Linux via [gtkmm](https://gtkmm.gnome.org/en/index.html)
 - [x] Web via [emscripten](https://emscripten.org/)
-- [ ] Linux via wayland & EGL
 - [ ] Linux via [qt](https://www.qt.io/development/qt-framework)
 - [ ] Windows via WinAPI
 
