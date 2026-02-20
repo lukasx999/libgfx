@@ -38,22 +38,13 @@ Window::Impl::Impl(int width, int height, const char* title, WindowFlags flags) 
     gladLoadGL(glfwGetProcAddress);
 #endif // USE_GL_GLAD
 
-
     // on emscripten the swap interval gets set via emscripten_set_main_loop(), so
     // this results in an error
 #ifndef __EMSCRIPTEN__
     glfwSwapInterval(flags.m_enable_vsync);
 #endif // __EMSCRIPTEN__
 
-
     glfwSetInputMode(m_window, GLFW_CURSOR, flags.m_show_cursor ? GLFW_CURSOR_NORMAL : GLFW_CURSOR_DISABLED);
-
-#ifndef __EMSCRIPTEN__
-    glEnable(GL_MULTISAMPLE);
-#endif // __EMSCRIPTEN__
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 
     // glPolygonMode() and glDebugMessageCallback() are not supported by webgl
 #ifndef __EMSCRIPTEN__

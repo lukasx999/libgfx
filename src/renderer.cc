@@ -8,7 +8,13 @@ namespace gfx {
 Renderer::Renderer(const gfx::Surface& surface)
     : m_surface(surface)
     , m_pimpl(std::make_unique<gfx::Renderer::Impl>(m_surface))
-{ }
+{
+#ifndef __EMSCRIPTEN__
+    glEnable(GL_MULTISAMPLE);
+#endif // __EMSCRIPTEN__
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
 
 // the pimpl pattern requires the destructor to "see" the complete
 // type of the Impl structure
