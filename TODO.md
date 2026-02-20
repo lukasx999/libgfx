@@ -24,6 +24,7 @@
 
 ## Misc
 
+- [ ] fix gtkmm example
 - [ ] switch to pure gles3
 - [ ] move glEnable() calls to common init_gl() function, independent of glfw
 - [ ] configure opengl backends in cmake
