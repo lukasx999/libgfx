@@ -8,6 +8,8 @@ project(Examples)
 
 find_package(gfx REQUIRED)
 
+file(COPY index.html DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
 add_executable(shapes shapes.cc)
 target_compile_options(shapes PRIVATE -Wall -Wextra -O3 -ggdb)
 target_link_libraries(shapes PRIVATE gfx)
