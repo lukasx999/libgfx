@@ -1,4 +1,5 @@
 #include <thread>
+#include <tuple>
 
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
@@ -7,6 +8,10 @@
 #include <gfx/input.h>
 #include "window_impl.h"
 #include "opengl.h"
+
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif // __EMSCRIPTEN__
 
 namespace gfx {
 
@@ -54,8 +59,19 @@ gfx::Texture Window::draw_offscreen(DrawFn draw_fn) {
 }
 
 void Window::draw_loop(DrawFn draw_fn) {
+
+#ifdef __EMSCRIPTEN__
+    std::tuple<gfx::Window&, DrawFn> tuple(*this, draw_fn);
+
+    emscripten_set_main_loop_arg([](void* data) {
+        auto& [window, fn] = *static_cast<decltype(tuple)*>(data);
+        window.with_draw_loop_context(fn);
+    }, &tuple, 0, true);
+#else
     while (!should_close())
         with_draw_loop_context(draw_fn);
+#endif // __EMSCRIPTEN__
+
 }
 
 void Window::with_draw_loop_context(DrawFn draw_fn) {

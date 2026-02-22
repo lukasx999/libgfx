@@ -22,6 +22,8 @@ find_package(OpenGL REQUIRED)
 
 if (EMSCRIPTEN)
     target_link_options(gfx INTERFACE -sUSE_FREETYPE=1 -sUSE_GLFW=3 -sMIN_WEBGL_VERSION=2)
+else()
+    target_link_libraries(gfx PRIVATE glfw ${FREETYPE_LIBRARIES} OpenGL)
 endif()
 
 target_compile_options(gfx PRIVATE -Wno-c23-extensions -Wall -Wextra -O3 -ggdb)
@@ -31,10 +33,6 @@ include_directories(${include_dirs} ${FREETYPE_INCLUDE_DIRS})
 link_directories(${FREETYPE_LIBRARY_DIRS})
 
 add_subdirectory(src)
-
-if (NOT EMSCRIPTEN)
-    target_link_libraries(gfx PRIVATE glfw ${FREETYPE_LIBRARIES} OpenGL)
-endif()
 
 install(
     TARGETS gfx
