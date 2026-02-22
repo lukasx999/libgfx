@@ -42,6 +42,7 @@ libgfx currently supports the following graphics APIs:
 - freetype2
 - any C++23 compiler (clang/gcc)
 - cmake
+- emscripten (if building for web)
 
 ### Using [Just](https://github.com/casey/just)
 
@@ -66,6 +67,7 @@ sudo cmake --install build
 cd libgfx/
 emcmake cmake -Bbuild
 emmake make -C build -j$(nproc)
+sudo cmake --install build
 ```
 
 ## Example
