@@ -10,8 +10,11 @@ add_library(gfx STATIC)
 
 if (EMSCRIPTEN)
     set(shader_type es)
+    target_link_options(gfx INTERFACE -sUSE_FREETYPE=1 -sUSE_GLFW=3 -sMIN_WEBGL_VERSION=2)
+
 else()
     set(shader_type gl)
+    target_link_libraries(gfx PRIVATE glfw ${FREETYPE_LIBRARIES} OpenGL)
 endif()
 
 execute_process(COMMAND python3 gen.py ${shader_type} WORKING_DIRECTORY shaders/)
@@ -19,12 +22,6 @@ execute_process(COMMAND python3 gen.py ${shader_type} WORKING_DIRECTORY shaders/
 find_package(Freetype REQUIRED)
 find_package(glfw3)
 find_package(OpenGL REQUIRED)
-
-if (EMSCRIPTEN)
-    target_link_options(gfx INTERFACE -sUSE_FREETYPE=1 -sUSE_GLFW=3 -sMIN_WEBGL_VERSION=2)
-else()
-    target_link_libraries(gfx PRIVATE glfw ${FREETYPE_LIBRARIES} OpenGL)
-endif()
 
 target_compile_options(gfx PRIVATE -Wno-c23-extensions -Wall -Wextra -O3 -ggdb)
 
