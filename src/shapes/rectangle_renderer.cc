@@ -1,4 +1,4 @@
-#include "../shaders.h"
+#include <shaders.h>
 #include "rectangle_renderer.h"
 
 RectangleRenderer::RectangleRenderer(const gfx::Surface& surface) : m_surface(surface) {

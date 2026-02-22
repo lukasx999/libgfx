@@ -1,5 +1,5 @@
 #include "circle_renderer.h"
-#include "../shaders.h"
+#include <shaders.h>
 
 CircleRenderer::CircleRenderer(const gfx::Surface& surface) : m_surface(surface) {
 

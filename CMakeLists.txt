@@ -17,7 +17,26 @@ else()
     target_link_libraries(gfx PRIVATE glfw ${FREETYPE_LIBRARIES} OpenGL)
 endif()
 
-execute_process(COMMAND python3 gen.py ${shader_type} WORKING_DIRECTORY shaders/)
+
+
+
+# SHADER CODEGEN
+
+file(COPY shaders/gles3 DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY shaders/opengl4.5 DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+add_custom_command(
+  OUTPUT shaders.h
+  COMMAND python ${PROJECT_SOURCE_DIR}/shaders/generate.py ${shader_type}
+  DEPENDS shaders
+)
+
+add_custom_target(shaders DEPENDS shaders.h)
+add_dependencies(gfx shaders)
+
+
+
+
 
 find_package(Freetype REQUIRED)
 find_package(glfw3)
@@ -25,8 +44,9 @@ find_package(OpenGL REQUIRED)
 
 target_compile_options(gfx PRIVATE -Wno-c23-extensions -Wall -Wextra -O3 -ggdb)
 
+# TODO: remove some unneeded includes
 list(APPEND include_dirs include/ deps/glad/include/ deps/stb/ deps/glm)
-include_directories(${include_dirs} ${FREETYPE_INCLUDE_DIRS})
+target_include_directories(gfx PRIVATE ${include_dirs} ${FREETYPE_INCLUDE_DIRS} ${PROJECT_BINARY_DIR})
 link_directories(${FREETYPE_LIBRARY_DIRS})
 
 add_subdirectory(src)

@@ -1,7 +1,7 @@
 #include <utility>
 
 #include "texture_renderer.h"
-#include "../shaders.h"
+#include <shaders.h>
 #include "../opengl.h"
 #include "../texture_impl.h"
 

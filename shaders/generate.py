@@ -59,9 +59,7 @@ def main() -> int:
             print("unknown shader type (must be either `gl` or `es`)")
             return 1
 
-    out_file = "../src/shaders.h"
-
-    file = open(out_file, "w")
+    file = open("shaders.h", "w")
     file.write("// THIS FILE IS GENERATED\n\n")
     file.write("#pragma once\n\n")
     file.write("namespace shaders {\n\n")

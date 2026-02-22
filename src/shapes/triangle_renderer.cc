@@ -1,4 +1,4 @@
-#include "../shaders.h"
+#include <shaders.h>
 #include <array>
 
 #include <glm/glm.hpp>
