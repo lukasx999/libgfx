@@ -156,7 +156,7 @@ std::vector<unsigned char> Texture::copy_to_cpu() const {
 
     glBindTexture(GL_TEXTURE_2D, m_pimpl->m_texture);
 #ifdef __EMSCRIPTEN__
-    throw gfx::Error("copying textures in unimplemented on web platform");
+    throw gfx::Error("copying textures is unimplemented on web platform");
 #else
     glGetTexImage(GL_TEXTURE_2D, 0, format, GL_UNSIGNED_BYTE, buf.data());
 #endif // __EMSCRIPTEN__
