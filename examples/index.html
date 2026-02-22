@@ -5,12 +5,27 @@
     <body>
 
         <h1>libgfx web demo</h1>
-        <canvas id="canvas"></canvas>
 
-        <script src="shapes.js"></script>
+        <script type="module">
 
-        <script>
-        Module["canvas"] = document.getElementById("canvas");
+        const modules = [
+            "animation",
+            "cubic_bezier",
+            "hello_world",
+            "quadratic_bezier",
+            "shapes",
+        ];
+
+        for (let module of modules) {
+
+            const body = document.getElementsByTagName("body")[0];
+            const canvas = document.createElement("canvas");
+            body.appendChild(canvas);
+
+            const Module = await import(`./${module}.js`);
+            await Module.default({ canvas });
+        }
+
         </script>
 
     </body>

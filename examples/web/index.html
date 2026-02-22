@@ -7,10 +7,9 @@
         <h1>libgfx web demo</h1>
         <canvas id="canvas"></canvas>
 
-        <script src="index.js"></script>
-
-        <script>
-        Module["canvas"] = document.getElementById("canvas");
+        <script type="module">
+        import Example from "./index.js";
+        await Example({ canvas: document.getElementById("canvas") });
         </script>
 
     </body>
