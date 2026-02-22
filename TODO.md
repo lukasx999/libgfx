@@ -26,15 +26,11 @@
 
 - [ ] fix gtkmm example
 - [ ] switch to pure gles3
-- [ ] move glEnable() calls to common init_gl() function, independent of glfw
-- [ ] configure opengl backends in cmake
 - [ ] gradients
-- [ ] finish AnimationSequence
 - [ ] fix glsllangValidator in justfile
 - [ ] utf-8 support for text renderer
 - [ ] generate shaders.h file in build folder
 - [ ] cmake options for opengl function loaders
-- [ ] asset packer
 - [ ] hot reloading
 - [ ] cmake fetchcontent for glm
 - [ ] make pkg-config file work
@@ -43,6 +39,5 @@
 - [ ] let glPixelStorei() only affect texture ctor
 - [ ] cursor always starts out at 0 0
 - [ ] font copy/move ctor
-- [ ] dynamic resizing for external context?
 - [ ] make texture parameters configurable
 - [x] rect scale method
