@@ -8,6 +8,11 @@ set(CMAKE_COLOR_DIAGNOSTICS ON)
 project(Gfx)
 add_library(gfx STATIC)
 
+find_package(Freetype REQUIRED)
+find_package(glfw3)
+find_package(OpenGL REQUIRED)
+
+
 if (EMSCRIPTEN)
     set(shader_type es)
     target_link_options(gfx INTERFACE -sUSE_FREETYPE=1 -sUSE_GLFW=3 -sMIN_WEBGL_VERSION=2)
@@ -33,20 +38,16 @@ add_custom_command(
 
 add_custom_target(shaders DEPENDS shaders.h)
 add_dependencies(gfx shaders)
+target_include_directories(gfx PRIVATE ${PROJECT_BINARY_DIR})
 
 
 
-
-
-find_package(Freetype REQUIRED)
-find_package(glfw3)
-find_package(OpenGL REQUIRED)
 
 target_compile_options(gfx PRIVATE -Wno-c23-extensions -Wall -Wextra -O3 -ggdb)
 
 # TODO: remove some unneeded includes
 list(APPEND include_dirs include/ deps/glad/include/ deps/stb/ deps/glm)
-target_include_directories(gfx PRIVATE ${include_dirs} ${FREETYPE_INCLUDE_DIRS} ${PROJECT_BINARY_DIR})
+target_include_directories(gfx PRIVATE ${include_dirs} ${FREETYPE_INCLUDE_DIRS})
 link_directories(${FREETYPE_LIBRARY_DIRS})
 
 add_subdirectory(src)
