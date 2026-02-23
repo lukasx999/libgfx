@@ -126,7 +126,7 @@ class AnimationSequence : public gfx::IAnimation {
 
     using Duration = std::chrono::duration<double>;
 
-    std::vector<Ref<gfx::IAnimation>> m_animations;
+    const std::vector<Ref<gfx::IAnimation>> m_animations;
     Duration m_start_time = 0s;
 
 public:
@@ -137,26 +137,21 @@ public:
     void dispatch() {
         auto diff = get_current_time() - m_start_time;
 
-        gfx::IAnimation* current = nullptr;
-
-        // TODO: std::ranges::find()
-        for (auto& anim : m_animations) {
+        auto current = std::ranges::find_if(m_animations, [&](Ref<gfx::IAnimation> anim) {
             auto duration = anim.get().get_duration();
-
-            if (diff >= duration) {
+            if (diff > duration) {
                 diff -= duration;
-
-            } else {
-                current = &anim.get();
-                break;
+                return false;
             }
 
-        }
+            return true;
+        });
 
-        if (current == nullptr) return;
+        if (current == m_animations.end())
+            return;
 
-        if (current->is_stopped())
-            current->start();
+        if (current->get().is_stopped())
+            current->get().start();
 
     }
 
@@ -166,8 +161,9 @@ public:
 
     void reset() override {
 
-        for (auto& anim : m_animations)
-        anim.get().reset();
+        for (auto& anim : m_animations) {
+            anim.get().reset();
+        }
 
         m_start_time = 0s;
     }
