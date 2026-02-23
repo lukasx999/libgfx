@@ -41,9 +41,9 @@ class Animation : public IAnimation {
     const T m_end;
     const Duration m_duration;
     const InterpolationFn m_fn;
-    Duration m_start_time = 0s;
 
-    enum class State { Stopped, Running } m_state = State::Stopped;
+    // 0s means stopped
+    Duration m_start_time = 0s;
 
 public:
     Animation(T start, T end, Duration duration, InterpolationFn fn = interpolators::linear)
@@ -55,26 +55,24 @@ public:
 
     void start() override {
         m_start_time = get_current_time();
-        m_state = State::Running;
     }
 
     void reset() override {
         m_start_time = 0s;
-        m_state = State::Stopped;
     }
 
     [[nodiscard]] bool is_done() const override {
-        if (m_state == State::Stopped) return false;
+        if (m_start_time == 0s) return false;
         auto diff = get_current_time() - m_start_time;
         return diff >= m_duration;
     }
 
     [[nodiscard]] bool is_running() const override {
-        return m_state == State::Running;
+        return m_start_time > 0s;
     }
 
     [[nodiscard]] bool is_stopped() const override {
-        return m_state == State::Stopped;
+        return m_start_time == 0s;
     }
 
     [[nodiscard]] T get_start() const {
@@ -94,15 +92,11 @@ public:
     }
 
     [[nodiscard]] T get() const {
-        switch (m_state) {
-            case State::Stopped:
-                return m_start;
+        if (is_stopped()) return m_start;
 
-            case State::Running:
-                return is_done()
-                ? m_end
-                : get(get_current_time() - m_start_time);
-        }
+        return is_done()
+        ? m_end
+        : get(get_current_time() - m_start_time);
     }
 
     // get the value of the animation independent of its current state
@@ -126,7 +120,9 @@ class AnimationSequence : public gfx::IAnimation {
 
     using Duration = std::chrono::duration<double>;
 
-    std::vector<Ref<gfx::IAnimation>> m_animations;
+    const std::vector<Ref<gfx::IAnimation>> m_animations;
+
+    // 0s means stopped
     Duration m_start_time = 0s;
 
 public:
@@ -137,26 +133,21 @@ public:
     void dispatch() {
         auto diff = get_current_time() - m_start_time;
 
-        gfx::IAnimation* current = nullptr;
-
-        // TODO: std::ranges::find()
-        for (auto& anim : m_animations) {
+        auto current = std::ranges::find_if(m_animations, [&](Ref<gfx::IAnimation> anim) {
             auto duration = anim.get().get_duration();
-
-            if (diff >= duration) {
+            if (diff > duration) {
                 diff -= duration;
-
-            } else {
-                current = &anim.get();
-                break;
+                return false;
             }
 
-        }
+            return true;
+        });
 
-        if (current == nullptr) return;
+        if (current == m_animations.end())
+            return;
 
-        if (current->is_stopped())
-            current->start();
+        if (current->get().is_stopped())
+            current->get().start();
 
     }
 
@@ -165,29 +156,95 @@ public:
     }
 
     void reset() override {
-
-        for (auto& anim : m_animations)
-        anim.get().reset();
+        for (auto& anim : m_animations) {
+            anim.get().reset();
+        }
 
         m_start_time = 0s;
     }
 
-    [[nodiscard]] bool is_stopped() const override {
-        return false;
+    [[nodiscard]] bool is_done() const override {
+        if (m_start_time == 0s) return false;
+        auto diff = get_current_time() - m_start_time;
+        return diff >= get_duration();
     }
 
     [[nodiscard]] bool is_running() const override {
-        return false;
+        return m_start_time > 0s;
     }
 
-    [[nodiscard]] bool is_done() const override {
-        return false;
+    [[nodiscard]] bool is_stopped() const override {
+        return m_start_time == 0s;
     }
 
     [[nodiscard]] std::chrono::duration<double> get_duration() const override {
         return std::ranges::fold_left(m_animations, 0s, [](Duration acc, Ref<gfx::IAnimation> anim) {
             return acc + anim.get().get_duration();
         });
+    }
+
+
+private:
+    [[nodiscard]] static Duration get_current_time() {
+        return std::chrono::steady_clock::now().time_since_epoch();
+    }
+
+};
+
+class AnimationBatch : public gfx::IAnimation {
+
+    template <typename T>
+    using Ref = std::reference_wrapper<T>;
+
+    using Duration = std::chrono::duration<double>;
+
+    const std::vector<Ref<gfx::IAnimation>> m_animations;
+
+    // 0s means stopped
+    Duration m_start_time = 0s;
+
+public:
+    explicit AnimationBatch(std::initializer_list<Ref<gfx::IAnimation>> animations)
+    : m_animations(animations)
+    { }
+
+    void start() override {
+        for (auto& anim : m_animations) {
+            anim.get().start();
+        }
+
+        m_start_time = get_current_time();
+    }
+
+    void reset() override {
+        for (auto& anim : m_animations) {
+            anim.get().reset();
+        }
+
+        m_start_time = 0s;
+    }
+
+    [[nodiscard]] bool is_done() const override {
+        if (m_start_time == 0s) return false;
+        auto diff = get_current_time() - m_start_time;
+        return diff >= get_duration();
+    }
+
+    [[nodiscard]] bool is_running() const override {
+        return m_start_time > 0s;
+    }
+
+    [[nodiscard]] bool is_stopped() const override {
+        return m_start_time == 0s;
+    }
+
+    [[nodiscard]] std::chrono::duration<double> get_duration() const override {
+        auto max = std::ranges::max_element(m_animations, [](Ref<gfx::IAnimation> a, decltype(a) b) {
+            return a.get().get_duration() < b.get().get_duration();
+        });
+        assert(max != m_animations.end());
+
+        return max->get().get_duration();
     }
 
 

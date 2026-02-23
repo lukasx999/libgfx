@@ -9,8 +9,7 @@
 
 ## Graphics
 
-- [ ] reuse functionality in renderers using inheritance
-- [ ] systems for coordinating animations (seq, parallel)
+- [ ] refactor animation code (put common functions into base class, find an alternative to dispatch() function)
 - [ ] spritesheet example
 - [ ] splines
 - [ ] fix broken text rotation: every character gets rotated
@@ -28,17 +27,15 @@
 - [ ] fix gtkmm example
 - [ ] switch to pure gles3
 - [ ] gradients
-- [ ] fix glsllangValidator in justfile
 - [ ] utf-8 support for text renderer
-- [ ] generate shaders.h file in build folder
 - [ ] cmake options for opengl function loaders
 - [ ] hot reloading
 - [ ] cmake fetchcontent for glm
 - [ ] make pkg-config file work
 - [ ] clean up vector operations
 - [ ] detect default font (via fontconfig)
-- [ ] let glPixelStorei() only affect texture ctor
 - [ ] cursor always starts out at 0 0
-- [ ] font copy/move ctor
 - [ ] make texture parameters configurable
 - [x] rect scale method
+- [x] generate shaders.h file in build folder
+- [x] let glPixelStorei() only affect texture ctor
