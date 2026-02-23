@@ -61,6 +61,7 @@ Texture::Texture(const Texture& other) : Texture(other.m_width, other.m_height, 
 
     gfx::ExternalContext ctx(m_width, m_height);
     gfx::Renderer rd(ctx);
+    rd.clear_background(gfx::Color::red());
     rd.draw_texture(ctx.get_as_rect(), other);
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -76,20 +77,27 @@ Texture& Texture::operator=(const Texture& other) {
 }
 
 Texture Texture::slice(gfx::Rect region) const {
-    auto format = get_format();
-    GLint gl_format = Impl::gfx_format_to_opengl_format(format);
-    int channels = format_to_channels(format);
+    // not using glGetTextureSubImage() as its not supported by GLES3
+    // also doing it this way is much faster, because glGetTextureSubImage() copies the texture to the cpu
 
     auto [x, y, width, height] = region;
 
-    std::vector<unsigned char> buf(width * height * channels);
-#ifdef __EMSCRIPTEN__
-    throw gfx::Error("copying textures in unimplemented on web platform");
-#else
-    glGetTextureSubImage(m_pimpl->m_texture, 0, x, y, 0, width, height, 1, gl_format, GL_UNSIGNED_BYTE, buf.size() * sizeof(unsigned char), buf.data());
-#endif // __EMSCRIPTEN__
+    gfx::Texture texture(width, height, m_format);
 
-    return Texture(width, height, format, buf.data());
+    gl::Framebuffer framebuffer;
+    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.m_pimpl->m_texture, 0);
+    assert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
+
+    gfx::ExternalContext ctx(width, height);
+    gfx::Renderer rd(ctx);
+    rd.clear_background(gfx::Color::red());
+    rd.draw_texture_sub(ctx.get_as_rect(), region, *this);
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+    return texture;
 }
 
 Texture Texture::slice(float x, float y, float width, float height) const {
