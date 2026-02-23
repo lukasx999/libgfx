@@ -42,9 +42,6 @@ Texture::~Texture() = default;
 Texture::Texture(Texture&&) = default;
 Texture& Texture::operator=(Texture&&) = default;
 
-// there's no need for checking if the library has been initialized in the copy/move ctor,
-// because there's no (reasonable) way to call these ctors without already having another gfx::Texture
-
 Texture::Texture(const Texture& other) : m_pimpl(std::make_unique<Texture::Impl>()) {
     auto buf = other.copy_to_cpu();
     m_pimpl->m_texture = Impl::generate_texture(other.get_width(), other.get_height(), buf.data(), other.get_format());
