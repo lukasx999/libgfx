@@ -9,8 +9,7 @@
 
 ## Graphics
 
-- [ ] reuse functionality in renderers using inheritance
-- [ ] systems for coordinating animations (seq, parallel)
+- [ ] refactor animation code (put common functions into base class, find an alternative to dispatch() function)
 - [ ] spritesheet example
 - [ ] splines
 - [ ] fix broken text rotation: every character gets rotated
