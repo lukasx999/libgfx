@@ -1,7 +1,6 @@
 #pragma once
 
 #include <gfx/texture.h>
-#include "opengl.h"
 
 struct Glyph {
     const int m_bearing_x;
@@ -14,8 +13,6 @@ struct Glyph {
         , m_bearing_y(bearing_y)
         , m_advance_x(advance_x)
         , m_texture(width, height, gfx::Texture::Format::R, data)
-    {
-        glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // disable byte-alignment restriction
-    }
+    { }
 
 };

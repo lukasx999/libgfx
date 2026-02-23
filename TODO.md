@@ -26,9 +26,7 @@
 - [ ] fix gtkmm example
 - [ ] switch to pure gles3
 - [ ] gradients
-- [ ] fix glsllangValidator in justfile
 - [ ] utf-8 support for text renderer
-- [ ] let glPixelStorei() only affect texture ctor
 - [ ] cmake options for opengl function loaders
 - [ ] hot reloading
 - [ ] cmake fetchcontent for glm
@@ -36,7 +34,7 @@
 - [ ] clean up vector operations
 - [ ] detect default font (via fontconfig)
 - [ ] cursor always starts out at 0 0
-- [ ] font copy/move ctor
 - [ ] make texture parameters configurable
 - [x] rect scale method
 - [x] generate shaders.h file in build folder
+- [x] let glPixelStorei() only affect texture ctor
