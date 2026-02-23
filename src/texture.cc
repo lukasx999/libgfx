@@ -56,15 +56,23 @@ Texture::Texture(const Texture& other) : Texture(other.m_width, other.m_height, 
     gl::Framebuffer framebuffer;
     glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
 
+    // we have to save the old viewport size, because when we draw into the newly created
+    // framebuffer, the vertices will get transformed from NDC to the old(!) viewport coordinates.
+    // the window is probably bigger than the framebuffer, which will result in the scaled coordinates
+    // getting clipped.
+    std::array<GLint, 4> saved_viewport;
+    glGetIntegerv(GL_VIEWPORT, saved_viewport.data());
+    glViewport(0, 0, m_width, m_height);
+
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pimpl->m_texture, 0);
     assert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
 
     gfx::ExternalContext ctx(m_width, m_height);
     gfx::Renderer rd(ctx);
-    rd.clear_background(gfx::Color::red());
     rd.draw_texture(ctx.get_as_rect(), other);
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glViewport(saved_viewport[0], saved_viewport[1], saved_viewport[2], saved_viewport[3]);
 }
 
 Texture& Texture::operator=(const Texture& other) {
@@ -87,15 +95,19 @@ Texture Texture::slice(gfx::Rect region) const {
     gl::Framebuffer framebuffer;
     glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
 
+    std::array<GLint, 4> saved_viewport;
+    glGetIntegerv(GL_VIEWPORT, saved_viewport.data());
+    glViewport(0, 0, width, height);
+
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.m_pimpl->m_texture, 0);
     assert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
 
     gfx::ExternalContext ctx(width, height);
     gfx::Renderer rd(ctx);
-    rd.clear_background(gfx::Color::red());
     rd.draw_texture_sub(ctx.get_as_rect(), region, *this);
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glViewport(saved_viewport[0], saved_viewport[1], saved_viewport[2], saved_viewport[3]);
 
     return texture;
 }
