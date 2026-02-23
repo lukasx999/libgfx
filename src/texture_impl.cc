@@ -24,7 +24,7 @@ Texture::Format Texture::Impl::opengl_format_to_gfx_format(GLint format) {
     throw gfx::Error("unknown texture format");
 }
 
-gl::Texture Texture::Impl::generate_texture(int width, int height, const unsigned char* data, Format format) {
+gl::Texture Texture::Impl::generate_texture(int width, int height, Format format, const unsigned char* data) {
 
     gl::Texture texture;
     glActiveTexture(GL_TEXTURE0);

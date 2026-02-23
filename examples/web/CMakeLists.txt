@@ -10,6 +10,6 @@ find_package(gfx REQUIRED)
 
 add_executable(index main.cc)
 file(COPY index.html DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-target_compile_options(index PRIVATE -sNO_DISABLE_EXCEPTION_CATCHING -Wall -Wextra -ggdb)
+target_compile_options(index PRIVATE -Wall -Wextra -ggdb)
 target_link_libraries(index PRIVATE gfx)
-target_link_options(index PRIVATE -sEXPORT_ES6 -sEXPORT_NAME=Example)
+target_link_options(index PRIVATE -sEXPORT_ES6 -sEXPORT_NAME=Example -sNO_DISABLE_EXCEPTION_CATCHING)

@@ -22,6 +22,10 @@ public:
         , m_renderer(*this)
     { }
 
+    ExternalContext(int fixed_width, int fixed_height)
+    : ExternalContext([=] { return fixed_width; }, [=] { return fixed_height; })
+    { }
+
     [[nodiscard]] int get_width() const override {
         return m_get_width();
     }

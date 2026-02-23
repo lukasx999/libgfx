@@ -8,5 +8,5 @@ struct gfx::Texture::Impl {
 
     [[nodiscard]] static GLint gfx_format_to_opengl_format(Format format);
     [[nodiscard]] static Format opengl_format_to_gfx_format(GLint format);
-    [[nodiscard]] static gl::Texture generate_texture(int width, int height, const unsigned char* data, Format format);
+    [[nodiscard]] static gl::Texture generate_texture(int width, int height, Format format, const unsigned char* data);
 };

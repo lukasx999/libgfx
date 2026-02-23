@@ -24,6 +24,7 @@
 
 ## Misc
 
+- [ ] texture api for loading pixels to cpu
 - [ ] fix gtkmm example
 - [ ] switch to pure gles3
 - [ ] gradients

@@ -19,6 +19,8 @@
 #include <gfx/error.h>
 #include "texture_impl.h"
 #include "opengl.h"
+#include <gfx/renderer.h>
+#include <gfx/external_context.h>
 
 namespace gfx {
 
@@ -32,8 +34,13 @@ Texture::Texture(const std::string& path) : m_pimpl(std::make_unique<Texture::Im
     load_texture_from_file(path.c_str());
 }
 
-Texture::Texture(int width, int height, Format format, const unsigned char* bytes) : m_pimpl(std::make_unique<Texture::Impl>()) {
-    m_pimpl->m_texture = Impl::generate_texture(width, height, bytes, format);
+Texture::Texture(int width, int height, Format format, const unsigned char* bytes)
+    : m_pimpl(std::make_unique<Texture::Impl>())
+    , m_width(width)
+    , m_height(height)
+    , m_format(format)
+{
+    m_pimpl->m_texture = Impl::generate_texture(width, height, format, bytes);
 }
 
 // the pimpl pattern requires the destructor to "see" the complete
@@ -42,17 +49,29 @@ Texture::~Texture() = default;
 Texture::Texture(Texture&&) = default;
 Texture& Texture::operator=(Texture&&) = default;
 
-// there's no need for checking if the library has been initialized in the copy/move ctor,
-// because there's no (reasonable) way to call these ctors without already having another gfx::Texture
+Texture::Texture(const Texture& other) : Texture(other.m_width, other.m_height, other.m_format) {
+    // not using glGetTexImage() as its not supported by GLES3
+    // also doing it this way is much faster, because glGetTexImage() copies the texture to the cpu
 
-Texture::Texture(const Texture& other) : m_pimpl(std::make_unique<Texture::Impl>()) {
-    auto buf = other.copy_to_cpu();
-    m_pimpl->m_texture = Impl::generate_texture(other.get_width(), other.get_height(), buf.data(), other.get_format());
+    gl::Framebuffer framebuffer;
+    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pimpl->m_texture, 0);
+    assert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
+
+    gfx::ExternalContext ctx(m_width, m_height);
+    gfx::Renderer rd(ctx);
+    rd.draw_texture(ctx.get_as_rect(), other);
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 Texture& Texture::operator=(const Texture& other) {
     Texture temp(other);
     std::swap(m_pimpl->m_texture, temp.m_pimpl->m_texture);
+    m_width = other.m_width;
+    m_height = other.m_height;
+    m_format = other.m_format;
     return *this;
 }
 
@@ -84,85 +103,52 @@ void Texture::load_texture_from_file(const char* path) {
     if (data == nullptr)
         throw gfx::Error(std::format("failed to load texture: {}", stbi_failure_reason()));
 
-    m_pimpl->m_texture = Impl::generate_texture(width, height, data, channels_to_format(channels));
+    Format format = channels_to_format(channels);
+    m_width = width;
+    m_height = height;
+    m_format = format;
+    m_pimpl->m_texture = Impl::generate_texture(width, height, format, data);
     stbi_image_free(data);
 }
 
 int Texture::get_width() const {
-    int width;
-    glBindTexture(GL_TEXTURE_2D, m_pimpl->m_texture);
-#ifdef __EMSCRIPTEN__
-    throw gfx::Error("retrieving texture width is unimplemented on web platform");
-#else
-    glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width);
-#endif // __EMSCRIPTEN__
-    glBindTexture(GL_TEXTURE_2D, 0);
-    return width;
+    // not using glGetTexLevelParameteriv() as its not supported by GLES3
+    return m_width;
 }
 
 int Texture::get_height() const {
-    int height;
-    glBindTexture(GL_TEXTURE_2D, m_pimpl->m_texture);
-#ifdef __EMSCRIPTEN__
-    throw gfx::Error("retrieving texture width is unimplemented on web platform");
-#else
-    glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &height);
-#endif // __EMSCRIPTEN__
-    glBindTexture(GL_TEXTURE_2D, 0);
-    return height;
+    // not using glGetTexLevelParameteriv() as its not supported by GLES3
+    return m_height;
 }
 
 Texture::Format Texture::get_format() const {
-    int internal_format;
-    glBindTexture(GL_TEXTURE_2D, m_pimpl->m_texture);
-#ifdef __EMSCRIPTEN__
-    throw gfx::Error("retrieving texture format is unimplemented on web platform");
-#else
-    glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_INTERNAL_FORMAT, &internal_format);
-#endif // __EMSCRIPTEN__
-    glBindTexture(GL_TEXTURE_2D, 0);
-    return Impl::opengl_format_to_gfx_format(internal_format);
+    // not using glGetTexLevelParameteriv() as its not supported by GLES3
+    return m_format;
 }
 
 void Texture::write_to_file(Filetype filetype, const char* filename) const {
 
-    int width = get_width();
-    int height = get_height();
-    auto buf = copy_to_cpu();
-    int channels = format_to_channels(get_format());
+    // TODO: glReadPixels()
+    // int width = get_width();
+    // int height = get_height();
+    // auto buf = copy_to_cpu();
+    // int channels = format_to_channels(get_format());
+    //
+    // stbi_flip_vertically_on_write(true);
+    //
+    // int ret = [&] {
+    //     switch (filetype) {
+    //         using enum Filetype;
+    //         case Png: return stbi_write_png(filename, width, height, channels, buf.data(), 0);
+    //         case Bmp: return stbi_write_bmp(filename, width, height, channels, buf.data());
+    //         case Tga: return stbi_write_tga(filename, width, height, channels, buf.data());
+    //         case Jpg: return stbi_write_jpg(filename, width, height, channels, buf.data(), 100);
+    //     }
+    // }();
+    //
+    // if (ret == 0)
+    //     throw gfx::Error("failed to write texture to file");
 
-    stbi_flip_vertically_on_write(true);
-
-    int ret = [&] {
-        switch (filetype) {
-            using enum Filetype;
-            case Png: return stbi_write_png(filename, width, height, channels, buf.data(), 0);
-            case Bmp: return stbi_write_bmp(filename, width, height, channels, buf.data());
-            case Tga: return stbi_write_tga(filename, width, height, channels, buf.data());
-            case Jpg: return stbi_write_jpg(filename, width, height, channels, buf.data(), 100);
-        }
-    }();
-
-    if (ret == 0)
-        throw gfx::Error("failed to write texture to file");
-
-}
-
-std::vector<unsigned char> Texture::copy_to_cpu() const {
-    GLint format = Impl::gfx_format_to_opengl_format(get_format());
-
-    int channels = format_to_channels(get_format());
-    std::vector<unsigned char> buf(get_width() * get_height() * channels);
-
-    glBindTexture(GL_TEXTURE_2D, m_pimpl->m_texture);
-#ifdef __EMSCRIPTEN__
-    throw gfx::Error("copying textures is unimplemented on web platform");
-#else
-    glGetTexImage(GL_TEXTURE_2D, 0, format, GL_UNSIGNED_BYTE, buf.data());
-#endif // __EMSCRIPTEN__
-    glBindTexture(GL_TEXTURE_2D, 0);
-
-    return buf;
 }
 
 int Texture::format_to_channels(Format format) {

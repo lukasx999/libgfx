@@ -24,6 +24,12 @@ public:
     enum class Format { R, RG, RGB, RGBA };
     enum class Filetype { Png, Bmp, Tga, Jpg };
 
+private:
+    int m_width;
+    int m_height;
+    Format m_format;
+
+public:
     Texture();
 
     // construct a texture from a file
@@ -52,7 +58,6 @@ public:
 
 private:
     void load_texture_from_file(const char* path);
-    [[nodiscard]] std::vector<unsigned char> copy_to_cpu() const;
     [[nodiscard]] static int format_to_channels(Format format);
     [[nodiscard]] static Format channels_to_format(int channels);
 
