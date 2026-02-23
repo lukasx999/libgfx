@@ -129,6 +129,8 @@ class AnimationSequence : public gfx::IAnimation {
     const std::vector<Ref<gfx::IAnimation>> m_animations;
     Duration m_start_time = 0s;
 
+    enum class State { Stopped, Running } m_state = State::Stopped;
+
 public:
     explicit AnimationSequence(std::initializer_list<Ref<gfx::IAnimation>> animations)
     : m_animations(animations)
@@ -157,9 +159,11 @@ public:
 
     void start() override {
         m_start_time = get_current_time();
+        m_state = State::Running;
     }
 
     void reset() override {
+        m_state = State::Stopped;
 
         for (auto& anim : m_animations) {
             anim.get().reset();
@@ -168,16 +172,18 @@ public:
         m_start_time = 0s;
     }
 
-    [[nodiscard]] bool is_stopped() const override {
-        return false;
+    [[nodiscard]] bool is_running() const override {
+        return m_state == State::Running;
     }
 
-    [[nodiscard]] bool is_running() const override {
-        return false;
+    [[nodiscard]] bool is_stopped() const override {
+        return m_state == State::Stopped;
     }
 
     [[nodiscard]] bool is_done() const override {
-        return false;
+        if (m_state == State::Stopped) return false;
+        auto diff = get_current_time() - m_start_time;
+        return diff >= get_duration();
     }
 
     [[nodiscard]] std::chrono::duration<double> get_duration() const override {
