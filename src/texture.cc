@@ -148,7 +148,9 @@ Texture::Format Texture::get_format() const {
 
 void Texture::write_to_file(Filetype filetype, const char* filename) const {
 
-    // TODO: glReadPixels()
+    // TODO: glReadPixels() on gles3
+    throw gfx::Error("unimplemented");
+
     // int width = get_width();
     // int height = get_height();
     // auto buf = copy_to_cpu();
