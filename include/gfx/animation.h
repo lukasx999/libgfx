@@ -41,9 +41,9 @@ class Animation : public IAnimation {
     const T m_end;
     const Duration m_duration;
     const InterpolationFn m_fn;
-    Duration m_start_time = 0s;
 
-    enum class State { Stopped, Running } m_state = State::Stopped;
+    // 0s means stopped
+    Duration m_start_time = 0s;
 
 public:
     Animation(T start, T end, Duration duration, InterpolationFn fn = interpolators::linear)
@@ -55,26 +55,24 @@ public:
 
     void start() override {
         m_start_time = get_current_time();
-        m_state = State::Running;
     }
 
     void reset() override {
         m_start_time = 0s;
-        m_state = State::Stopped;
     }
 
     [[nodiscard]] bool is_done() const override {
-        if (m_state == State::Stopped) return false;
+        if (m_start_time == 0s) return false;
         auto diff = get_current_time() - m_start_time;
         return diff >= m_duration;
     }
 
     [[nodiscard]] bool is_running() const override {
-        return m_state == State::Running;
+        return m_start_time > 0s;
     }
 
     [[nodiscard]] bool is_stopped() const override {
-        return m_state == State::Stopped;
+        return m_start_time == 0s;
     }
 
     [[nodiscard]] T get_start() const {
@@ -94,15 +92,11 @@ public:
     }
 
     [[nodiscard]] T get() const {
-        switch (m_state) {
-            case State::Stopped:
-                return m_start;
+        if (is_stopped()) return m_start;
 
-            case State::Running:
-                return is_done()
-                ? m_end
-                : get(get_current_time() - m_start_time);
-        }
+        return is_done()
+        ? m_end
+        : get(get_current_time() - m_start_time);
     }
 
     // get the value of the animation independent of its current state
@@ -127,9 +121,9 @@ class AnimationSequence : public gfx::IAnimation {
     using Duration = std::chrono::duration<double>;
 
     const std::vector<Ref<gfx::IAnimation>> m_animations;
-    Duration m_start_time = 0s;
 
-    enum class State { Stopped, Running } m_state = State::Stopped;
+    // 0s means stopped
+    Duration m_start_time = 0s;
 
 public:
     explicit AnimationSequence(std::initializer_list<Ref<gfx::IAnimation>> animations)
@@ -159,12 +153,9 @@ public:
 
     void start() override {
         m_start_time = get_current_time();
-        m_state = State::Running;
     }
 
     void reset() override {
-        m_state = State::Stopped;
-
         for (auto& anim : m_animations) {
             anim.get().reset();
         }
@@ -172,18 +163,18 @@ public:
         m_start_time = 0s;
     }
 
+    [[nodiscard]] bool is_done() const override {
+        if (m_start_time == 0s) return false;
+        auto diff = get_current_time() - m_start_time;
+        return diff >= get_duration();
+    }
+
     [[nodiscard]] bool is_running() const override {
-        return m_state == State::Running;
+        return m_start_time > 0s;
     }
 
     [[nodiscard]] bool is_stopped() const override {
-        return m_state == State::Stopped;
-    }
-
-    [[nodiscard]] bool is_done() const override {
-        if (m_state == State::Stopped) return false;
-        auto diff = get_current_time() - m_start_time;
-        return diff >= get_duration();
+        return m_start_time == 0s;
     }
 
     [[nodiscard]] std::chrono::duration<double> get_duration() const override {
