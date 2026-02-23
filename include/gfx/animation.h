@@ -191,4 +191,68 @@ private:
 
 };
 
+class AnimationBatch : public gfx::IAnimation {
+
+    template <typename T>
+    using Ref = std::reference_wrapper<T>;
+
+    using Duration = std::chrono::duration<double>;
+
+    const std::vector<Ref<gfx::IAnimation>> m_animations;
+
+    // 0s means stopped
+    Duration m_start_time = 0s;
+
+public:
+    explicit AnimationBatch(std::initializer_list<Ref<gfx::IAnimation>> animations)
+    : m_animations(animations)
+    { }
+
+    void start() override {
+        for (auto& anim : m_animations) {
+            anim.get().start();
+        }
+
+        m_start_time = get_current_time();
+    }
+
+    void reset() override {
+        for (auto& anim : m_animations) {
+            anim.get().reset();
+        }
+
+        m_start_time = 0s;
+    }
+
+    [[nodiscard]] bool is_done() const override {
+        if (m_start_time == 0s) return false;
+        auto diff = get_current_time() - m_start_time;
+        return diff >= get_duration();
+    }
+
+    [[nodiscard]] bool is_running() const override {
+        return m_start_time > 0s;
+    }
+
+    [[nodiscard]] bool is_stopped() const override {
+        return m_start_time == 0s;
+    }
+
+    [[nodiscard]] std::chrono::duration<double> get_duration() const override {
+        auto max = std::ranges::max_element(m_animations, [](Ref<gfx::IAnimation> a, decltype(a) b) {
+            return a.get().get_duration() < b.get().get_duration();
+        });
+        assert(max != m_animations.end());
+
+        return max->get().get_duration();
+    }
+
+
+private:
+    [[nodiscard]] static Duration get_current_time() {
+        return std::chrono::steady_clock::now().time_since_epoch();
+    }
+
+};
+
 } // namespace gfx
