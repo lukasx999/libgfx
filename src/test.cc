@@ -41,6 +41,7 @@ namespace {
 
     static_assert(gfx::Rect(123, 777, 12, 43).xy_to_vec() == gfx::Vec(123, 777));
     static_assert(gfx::Rect(123, 777, 12, 43).wh_to_vec() == gfx::Vec(12, 43));
+    static_assert(gfx::Vec::zero() == gfx::Vec(0, 0));
 
 }
 

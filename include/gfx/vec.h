@@ -12,6 +12,10 @@ struct Vec {
     float x = 0.0f;
     float y = 0.0f;
 
+    [[nodiscard]] static constexpr Vec zero() noexcept {
+        return { 0.0f, 0.0f };
+    }
+
     constexpr void normalize() noexcept {
         auto v = normalized();
         x = v.x;
