@@ -45,6 +45,14 @@ struct Rect {
         };
     }
 
+    [[nodiscard]] constexpr gfx::Vec xy_to_vec() const noexcept{
+        return { x, y };
+    }
+
+    [[nodiscard]] constexpr gfx::Vec wh_to_vec() const noexcept{
+        return { width, height };
+    }
+
     constexpr Rect& set_x(float new_x) noexcept {
         x = new_x;
         return *this;

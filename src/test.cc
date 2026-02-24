@@ -39,6 +39,9 @@ namespace {
         static_assert(a.check_collision_rect(b));
     }
 
+    static_assert(gfx::Rect(123, 777, 12, 43).xy_to_vec() == gfx::Vec(123, 777));
+    static_assert(gfx::Rect(123, 777, 12, 43).wh_to_vec() == gfx::Vec(12, 43));
+
 }
 
 } // namespace
