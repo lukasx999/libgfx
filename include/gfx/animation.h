@@ -21,30 +21,44 @@ concept Animatable = requires (T start, T end, float value) {
 // TODO: add duration and state types
 // TODO: add get_current_time() helper
 // TODO: add duration and start()/stop()... implementations here as they are all the same for all child classes
-struct IAnimation {
+class IAnimation {
+protected:
+    using Duration = std::chrono::duration<double>;
+
+    // 0s means stopped
+    Duration m_start_time = 0s;
+
+public:
     virtual ~IAnimation() = default;
 
     virtual void start() = 0;
     virtual void reset() = 0;
     [[nodiscard]] virtual bool is_stopped() const = 0;
     [[nodiscard]] virtual bool is_running() const = 0;
-    [[nodiscard]] virtual bool is_done() const = 0;
+
+    [[nodiscard]] virtual bool is_done() const {
+        if (m_start_time == 0s) return false;
+        auto diff = get_current_time() - m_start_time;
+        return diff >= get_duration();
+    }
+
     [[nodiscard]] virtual std::chrono::duration<double> get_duration() const = 0;
+
+protected:
+    [[nodiscard]] static Duration get_current_time() {
+        return std::chrono::steady_clock::now().time_since_epoch();
+    }
 };
 
 template <Animatable T>
 class Animation : public IAnimation {
 
-    using Duration = std::chrono::duration<double>;
     using InterpolationFn = std::function<float(float)>;
 
     const T m_start;
     const T m_end;
     const Duration m_duration;
     const InterpolationFn m_fn;
-
-    // 0s means stopped
-    Duration m_start_time = 0s;
 
 public:
     Animation(T start, T end, Duration duration, InterpolationFn fn = interpolators::linear)
@@ -60,12 +74,6 @@ public:
 
     void reset() override {
         m_start_time = 0s;
-    }
-
-    [[nodiscard]] bool is_done() const override {
-        if (m_start_time == 0s) return false;
-        auto diff = get_current_time() - m_start_time;
-        return diff >= get_duration();
     }
 
     [[nodiscard]] bool is_running() const override {
@@ -107,11 +115,6 @@ public:
         return gfx::lerp(m_start, m_end, m_fn(t));
     }
 
-private:
-    [[nodiscard]] static Duration get_current_time() {
-        return std::chrono::steady_clock::now().time_since_epoch();
-    }
-
 };
 
 class AnimationSequence : public gfx::IAnimation {
@@ -119,12 +122,7 @@ class AnimationSequence : public gfx::IAnimation {
     template <typename T>
     using Ref = std::reference_wrapper<T>;
 
-    using Duration = std::chrono::duration<double>;
-
     const std::vector<Ref<gfx::IAnimation>> m_animations;
-
-    // 0s means stopped
-    Duration m_start_time = 0s;
 
 public:
     explicit AnimationSequence(std::initializer_list<Ref<gfx::IAnimation>> animations)
@@ -191,12 +189,6 @@ public:
         });
     }
 
-
-private:
-    [[nodiscard]] static Duration get_current_time() {
-        return std::chrono::steady_clock::now().time_since_epoch();
-    }
-
 };
 
 class AnimationBatch : public gfx::IAnimation {
@@ -204,12 +196,7 @@ class AnimationBatch : public gfx::IAnimation {
     template <typename T>
     using Ref = std::reference_wrapper<T>;
 
-    using Duration = std::chrono::duration<double>;
-
     const std::vector<Ref<gfx::IAnimation>> m_animations;
-
-    // 0s means stopped
-    Duration m_start_time = 0s;
 
 public:
     explicit AnimationBatch(std::initializer_list<Ref<gfx::IAnimation>> animations)
@@ -253,12 +240,6 @@ public:
         assert(max != m_animations.end());
 
         return max->get().get_duration();
-    }
-
-
-private:
-    [[nodiscard]] static Duration get_current_time() {
-        return std::chrono::steady_clock::now().time_since_epoch();
     }
 
 };
