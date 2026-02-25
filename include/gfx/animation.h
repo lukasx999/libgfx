@@ -20,6 +20,7 @@ concept Animatable = requires (T start, T end, float value) {
 
 // TODO: add duration and state types
 // TODO: add get_current_time() helper
+// TODO: add duration and start()/stop()... implementations here as they are all the same for all child classes
 struct IAnimation {
     virtual ~IAnimation() = default;
 
@@ -64,7 +65,7 @@ public:
     [[nodiscard]] bool is_done() const override {
         if (m_start_time == 0s) return false;
         auto diff = get_current_time() - m_start_time;
-        return diff >= m_duration;
+        return diff >= get_duration();
     }
 
     [[nodiscard]] bool is_running() const override {
