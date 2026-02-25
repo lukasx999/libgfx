@@ -124,6 +124,9 @@ public:
 
     void draw_quadratic_bezier_curve(gfx::Vec p1, gfx::Vec p2, gfx::Vec ctl, float thickness, gfx::Color color);
     void draw_cubic_bezier_curve(gfx::Vec p1, gfx::Vec p2, gfx::Vec ctl1, gfx::Vec ctl2, float thickness, gfx::Color color);
+
+    void draw_polygon(std::span<const gfx::Vec> points, gfx::Color color);
+
     void clear_background(gfx::Color color);
 
 };

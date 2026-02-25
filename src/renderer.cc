@@ -127,6 +127,10 @@ void Renderer::draw_cubic_bezier_curve(gfx::Vec p1, gfx::Vec p2, gfx::Vec ctl1, 
     }
 }
 
+void Renderer::draw_polygon(std::span<const gfx::Vec> points, gfx::Color color) {
+    throw gfx::Error("unimplemented");
+}
+
 void Renderer::clear_background(Color color) {
     auto normalized = color.normalized();
     glClearColor(normalized.r, normalized.g, normalized.b, normalized.a);

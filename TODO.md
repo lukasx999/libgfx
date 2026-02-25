@@ -9,6 +9,7 @@
 
 ## Graphics
 
+- [ ] segmented circles
 - [ ] shape morphing using GL_POLYGON and lerp()
 - [ ] refactor animation code (put common functions into base class, find an alternative to dispatch() function)
 - [ ] spritesheet example
