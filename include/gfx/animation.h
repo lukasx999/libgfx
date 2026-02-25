@@ -131,6 +131,13 @@ public:
     { }
 
     void dispatch() {
+
+        for (auto& anim : m_animations) {
+            auto ptr = dynamic_cast<AnimationSequence*>(&anim.get());
+            if (ptr != nullptr)
+                ptr->dispatch();
+        }
+
         auto diff = get_current_time() - m_start_time;
 
         auto current = std::ranges::find_if(m_animations, [&](Ref<gfx::IAnimation> anim) {
