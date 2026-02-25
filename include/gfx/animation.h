@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <print>
 #include <chrono>
 #include <ranges>
 #include <functional>
@@ -22,6 +23,9 @@ class AnimationBase {
 protected:
     using Duration = std::chrono::duration<double>;
 
+    // time the animation waits until it starts playing. used for running sequential animations
+    Duration m_dead_time = 0s;
+
     // 0s means stopped
     Duration m_start_time = 0s;
 
@@ -29,6 +33,14 @@ public:
     virtual ~AnimationBase() = default;
 
     [[nodiscard]] virtual std::chrono::duration<double> get_duration() const = 0;
+
+    void set_dead_time(Duration duration) {
+        m_dead_time = duration;
+    }
+
+    [[nodiscard]] Duration get_dead_time() const {
+        return m_dead_time;
+    }
 
     virtual void start() {
         m_start_time = get_current_time();
@@ -85,7 +97,7 @@ public:
     }
 
     [[nodiscard]] std::chrono::duration<double> get_duration() const override {
-        return m_duration;
+        return m_duration + m_dead_time;
     }
 
     operator T() const {
@@ -94,15 +106,19 @@ public:
 
     [[nodiscard]] T get() const {
         if (is_stopped()) return m_start;
+        if (is_done()) return m_end;
 
-        return is_done()
-        ? m_end
-        : get(get_current_time() - m_start_time);
+        auto diff = get_current_time() - (m_start_time + m_dead_time);
+
+        // inside of deadtime
+        if (diff < 0s) return m_start;
+
+        assert(is_running());
+        return get(diff);
     }
 
-    // get the value of the animation independent of its current state
-    [[nodiscard]] T get(Duration time) const {
-        double t = time / m_duration;
+    [[nodiscard]] T get(Duration diff) const {
+        double t = diff / m_duration;
         assert(t <= 1.0f && t >= 0.0f);
         return gfx::lerp(m_start, m_end, m_fn(t));
     }
@@ -121,32 +137,16 @@ public:
     : m_animations(animations)
     { }
 
-    void dispatch() {
+    void start() override {
+        AnimationBase::start();
 
-        for (auto& anim : m_animations) {
-            auto ptr = dynamic_cast<AnimationSequence*>(&anim.get());
-            if (ptr != nullptr)
-                ptr->dispatch();
+        Duration dead_time = m_dead_time;
+        for (auto& animation : m_animations) {
+            auto& anim = animation.get();
+            anim.set_dead_time(dead_time);
+            anim.start();
+            dead_time += anim.get_duration();
         }
-
-        auto diff = get_current_time() - m_start_time;
-
-        auto current = std::ranges::find_if(m_animations, [&](Ref<gfx::AnimationBase> anim) {
-            auto duration = anim.get().get_duration();
-            if (diff > duration) {
-                diff -= duration;
-                return false;
-            }
-
-            return true;
-        });
-
-        if (current == m_animations.end())
-            return;
-
-        if (current->get().is_stopped())
-            current->get().start();
-
     }
 
     void reset() override {
@@ -157,9 +157,11 @@ public:
     }
 
     [[nodiscard]] std::chrono::duration<double> get_duration() const override {
-        return std::ranges::fold_left(m_animations, 0s, [](Duration acc, Ref<gfx::AnimationBase> anim) {
-            return acc + anim.get().get_duration();
-        });
+        return m_animations.back().get().get_duration();
+        // TODO: assert that duration of last animation + deadtime is equal to this:
+        // return std::ranges::fold_left(m_animations, 0s, [](Duration acc, Ref<gfx::AnimationBase> anim) {
+        //     return acc + anim.get().get_duration();
+        // });
     }
 
 };
@@ -179,6 +181,7 @@ public:
     void start() override {
         AnimationBase::start();
         for (auto& anim : m_animations) {
+            anim.get().set_dead_time(m_dead_time);
             anim.get().start();
         }
     }
