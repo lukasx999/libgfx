@@ -9,14 +9,15 @@
 
 ## Graphics
 
+- [ ] implement draw_polygon()
 - [ ] segmented circles
 - [ ] shape morphing using GL_POLYGON and lerp()
-- [ ] refactor animation code (put common functions into base class, find an alternative to dispatch() function)
 - [ ] spritesheet example
 - [ ] splines
 - [ ] fix broken text rotation: every character gets rotated
 - [ ] do copying of textures on the gpu, so there's no need for glGetTexImage anymore
 - [ ] stencil buffer
+- [x] refactor animation code (put common functions into base class, find an alternative to dispatch() function)
 - [x] draw from spritesheet directly
 - [x] AA for circle and bezier curve (using fwidth())
 - [x] render bezier curves
@@ -25,6 +26,7 @@
 
 ## Misc
 
+- [ ] fix class member order
 - [ ] implement texture write to file
 - [ ] texture api for loading pixels to cpu
 - [ ] fix gtkmm example
