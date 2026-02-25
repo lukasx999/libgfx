@@ -2,7 +2,6 @@
 
 #include <algorithm>
 #include <cassert>
-#include <print>
 #include <chrono>
 #include <ranges>
 #include <functional>
@@ -20,26 +19,25 @@ concept Animatable = requires (T start, T end, float value) {
 };
 
 class AnimationBase {
-protected:
+public:
     using Duration = std::chrono::duration<double>;
 
-    // time the animation waits until it starts playing. used for running sequential animations
-    Duration m_dead_time = 0s;
-
-    // 0s means stopped
-    Duration m_start_time = 0s;
-
-public:
     virtual ~AnimationBase() = default;
 
-    [[nodiscard]] virtual std::chrono::duration<double> get_duration() const = 0;
+    [[nodiscard]] virtual Duration get_duration() const = 0;
 
+    // TODO: hide deadtime from the user api?
     void set_dead_time(Duration duration) {
         m_dead_time = duration;
     }
 
     [[nodiscard]] Duration get_dead_time() const {
         return m_dead_time;
+    }
+
+    void restart() {
+        reset();
+        start();
     }
 
     virtual void start() {
@@ -65,22 +63,23 @@ public:
     }
 
 protected:
+    // time the animation waits until it starts playing. used for running sequential animations
+    Duration m_dead_time = 0s;
+
+    // 0s means stopped
+    Duration m_start_time = 0s;
+
     [[nodiscard]] static Duration get_current_time() {
         return std::chrono::steady_clock::now().time_since_epoch();
     }
+
 };
 
 template <Animatable T>
 class Animation : public AnimationBase {
-
+public:
     using InterpolationFn = std::function<float(float)>;
 
-    const T m_start;
-    const T m_end;
-    const Duration m_duration;
-    const InterpolationFn m_fn;
-
-public:
     Animation(T start, T end, Duration duration, InterpolationFn fn = interpolators::linear)
         : m_start(std::move(start))
         , m_end(std::move(end))
@@ -96,7 +95,7 @@ public:
         return m_end;
     }
 
-    [[nodiscard]] std::chrono::duration<double> get_duration() const override {
+    [[nodiscard]] Duration get_duration() const override {
         return m_duration + m_dead_time;
     }
 
@@ -123,14 +122,18 @@ public:
         return gfx::lerp(m_start, m_end, m_fn(t));
     }
 
+private:
+    const T m_start;
+    const T m_end;
+    const Duration m_duration;
+    const InterpolationFn m_fn;
+
 };
 
 class AnimationSequence : public gfx::AnimationBase {
 
     template <typename T>
     using Ref = std::reference_wrapper<T>;
-
-    const std::vector<Ref<gfx::AnimationBase>> m_animations;
 
 public:
     explicit AnimationSequence(std::initializer_list<Ref<gfx::AnimationBase>> animations)
@@ -156,13 +159,12 @@ public:
         }
     }
 
-    [[nodiscard]] std::chrono::duration<double> get_duration() const override {
+    [[nodiscard]] Duration get_duration() const override {
         return m_animations.back().get().get_duration();
-        // TODO: assert that duration of last animation + deadtime is equal to this:
-        // return std::ranges::fold_left(m_animations, 0s, [](Duration acc, Ref<gfx::AnimationBase> anim) {
-        //     return acc + anim.get().get_duration();
-        // });
     }
+
+private:
+    const std::vector<Ref<gfx::AnimationBase>> m_animations;
 
 };
 
@@ -170,8 +172,6 @@ class AnimationBatch : public gfx::AnimationBase {
 
     template <typename T>
     using Ref = std::reference_wrapper<T>;
-
-    const std::vector<Ref<gfx::AnimationBase>> m_animations;
 
 public:
     explicit AnimationBatch(std::initializer_list<Ref<gfx::AnimationBase>> animations)
@@ -193,7 +193,7 @@ public:
         }
     }
 
-    [[nodiscard]] std::chrono::duration<double> get_duration() const override {
+    [[nodiscard]] Duration get_duration() const override {
         auto max = std::ranges::max_element(m_animations, [](Ref<gfx::AnimationBase> a, decltype(a) b) {
             return a.get().get_duration() < b.get().get_duration();
         });
@@ -201,6 +201,9 @@ public:
 
         return max->get().get_duration();
     }
+
+private:
+    const std::vector<Ref<gfx::AnimationBase>> m_animations;
 
 };
 
