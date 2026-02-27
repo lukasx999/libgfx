@@ -9,6 +9,7 @@
 
 ## Graphics
 
+- [ ] text measure_char_height(), fontsize only gives you the height until the baseline
 - [ ] implement draw_polygon()
 - [ ] segmented circles
 - [ ] shape morphing using GL_POLYGON and lerp()
