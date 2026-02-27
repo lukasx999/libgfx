@@ -13,12 +13,11 @@
 
 namespace gfx {
 
-struct WindowFlags {
-    bool m_enable_resizing  = false;
-    bool m_show_cursor      = true;
-    bool m_enable_vsync     = true;
-    bool m_enable_logging   = true;
-    bool m_enable_wireframe = false;
+class Window;
+
+class WindowFlags {
+public:
+    WindowFlags() = default;
 
     WindowFlags& enable_resizing(bool value) {
         m_enable_resizing = value;
@@ -45,6 +44,15 @@ struct WindowFlags {
         return *this;
     }
 
+private:
+    friend gfx::Window;
+
+    bool m_enable_resizing  = false;
+    bool m_show_cursor      = true;
+    bool m_enable_vsync     = true;
+    bool m_enable_logging   = true;
+    bool m_enable_wireframe = false;
+
 };
 
 class Window final : public gfx::Surface {
@@ -60,7 +68,7 @@ class Window final : public gfx::Surface {
 public:
     using DrawFn = std::function<void(gfx::Renderer&)>;
 
-    Window(int width, int height, const char* title, WindowFlags flags = {});
+    Window(int width, int height, const char* title, WindowFlags flags={});
     ~Window();
 
     [[nodiscard]] double get_frame_time() const {
