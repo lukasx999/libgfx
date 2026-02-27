@@ -26,6 +26,7 @@
 
 ## Misc
 
+- [ ] integrate WaylandWindow into libgfx
 - [ ] fix class member order
 - [ ] implement texture write to file
 - [ ] texture api for loading pixels to cpu

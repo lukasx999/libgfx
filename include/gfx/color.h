@@ -82,6 +82,10 @@ struct Color {
         };
     }
 
+    [[nodiscard]] static constexpr Color transparent() {
+        return {};
+    }
+
     [[nodiscard]] static constexpr Color black() {
         return 0x000000ff;
     }
