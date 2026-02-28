@@ -1,8 +1,8 @@
 build: configure
-    emmake make -C build -j$(nproc)
+    cmake --build build
 
 configure:
-    emcmake cmake -B build
+    emcmake cmake -Bbuild -GNinja
 
 serve: build
     cd build/ && python -m http.server
