@@ -8,10 +8,14 @@
 #include <gfx/rotation.h>
 #include "glyph.h"
 #include "font_impl.h"
+#include "opengl.h"
 
 namespace gfx {
 
-Font::Font(std::unique_ptr<Impl> pimpl) : m_pimpl(std::move(pimpl)) { }
+Font::Font(std::unique_ptr<Impl> pimpl) : m_pimpl(std::move(pimpl)) {
+    // BUG: glyph m_texture() ctor needs this call
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // disable byte-alignment restriction
+}
 
 Font::~Font() = default;
 

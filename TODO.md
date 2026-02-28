@@ -27,6 +27,7 @@
 
 ## Misc
 
+- [ ] fix glPixelStorei calls in glyph and text renderer
 - [ ] Vec constructor (single value for both fields)
 - [ ] integrate WaylandWindow into libgfx
 - [ ] fix class member order
