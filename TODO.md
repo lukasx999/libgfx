@@ -16,7 +16,6 @@
 - [ ] spritesheet example
 - [ ] splines
 - [ ] fix broken text rotation: every character gets rotated
-- [ ] do copying of textures on the gpu, so there's no need for glGetTexImage anymore
 - [ ] stencil buffer
 - [x] refactor animation code (put common functions into base class, find an alternative to dispatch() function)
 - [x] draw from spritesheet directly
@@ -27,8 +26,8 @@
 
 ## Misc
 
+- [ ] move texture impl static functions to texture src?
 - [ ] InputHandler class
-- [ ] fix glPixelStorei calls in glyph and text renderer
 - [ ] Vec constructor (single value for both fields)
 - [ ] integrate WaylandWindow into libgfx
 - [ ] fix class member order
@@ -48,4 +47,3 @@
 - [ ] make texture parameters configurable
 - [x] rect scale method
 - [x] generate shaders.h file in build folder
-- [x] let glPixelStorei() only affect texture ctor

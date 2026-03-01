@@ -30,15 +30,11 @@ void TextRenderer::draw(gfx::Vec pos, int fontsize, std::string_view text, const
     auto [x, y] = pos;
     int offset = 0;
 
-    // glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // disable byte-alignment restriction
-
     for (char c : text) {
         auto glyph = font.m_pimpl->load_glyph(c, fontsize);
         draw_char({ x+offset, y }, glyph, color, fontsize, rotation, view);
         offset += glyph.m_advance_x;
     }
-
-    // glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
 
 }
 

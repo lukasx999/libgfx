@@ -26,6 +26,10 @@ Texture::Format Texture::Impl::opengl_format_to_gfx_format(GLint format) {
 
 gl::Texture Texture::Impl::generate_texture(int width, int height, Format format, const unsigned char* data) {
 
+    if (format == Format::R)
+        // disable byte-alignment restriction
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
     gl::Texture texture;
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture);
@@ -40,6 +44,9 @@ gl::Texture Texture::Impl::generate_texture(int width, int height, Format format
     glGenerateMipmap(GL_TEXTURE_2D);
 
     glBindTexture(GL_TEXTURE_2D, 0);
+
+    // restore alignment
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
 
     return texture;
 }
