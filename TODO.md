@@ -9,7 +9,7 @@
 
 ## Graphics
 
-- [ ] text measure_char_height(), fontsize only gives you the height until the baseline
+- [ ] implement measure_char_total_height()
 - [ ] implement draw_polygon()
 - [ ] segmented circles
 - [ ] shape morphing using GL_POLYGON and lerp()
@@ -45,5 +45,6 @@
 - [ ] detect default font (via fontconfig)
 - [ ] cursor always starts out at 0 0
 - [ ] make texture parameters configurable
+- [ ] font glyph caching
 - [x] rect scale method
 - [x] generate shaders.h file in build folder

@@ -1,3 +1,5 @@
+#include <algorithm>
+#include <print>
 #include <string_view>
 
 #include <ft2build.h>
@@ -16,17 +18,19 @@ Font::Font(std::unique_ptr<Impl> pimpl) : m_pimpl(std::move(pimpl)) { }
 Font::~Font() = default;
 
 int Font::measure_char(char c, int size) const {
-    return m_pimpl->load_glyph(c, size).m_advance_x;
+    auto glyph = m_pimpl->load_glyph(c, size);
+    return glyph.m_advance_x;
 }
 
-[[nodiscard]] int Font::measure_text(std::string_view text, int size) const {
-    int result = 0;
+int Font::measure_text(std::string_view text, int size) const {
+    return std::ranges::fold_left(text, 0, [&](int acc, char c) {
+        return acc + measure_char(c, size);
+    });
+}
 
-    for (auto c : text) {
-        result += measure_char(c, size);
-    }
-
-    return result;
+int Font::measure_char_total_height(char c, int size) const {
+    auto glyph = m_pimpl->load_glyph(c, size);
+    return glyph.m_texture.get_height() - glyph.m_bearing_y;
 }
 
 } // namespace gfx
