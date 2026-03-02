@@ -4,10 +4,13 @@ namespace gfx {
 
 class KeyState {
 public:
+    // returns true if the key is being pressed right now
     [[nodiscard]] bool is_pressed() const;
+    // returns the rising edge of the key, meaning if its being held down, it
+    // will only be true once
+    [[nodiscard]] bool is_clicked() const;
     [[nodiscard]] bool is_released() const;
     [[nodiscard]] bool is_repeated() const;
-    [[nodiscard]] bool is_clicked() const;
 
 private:
     friend class Window;
