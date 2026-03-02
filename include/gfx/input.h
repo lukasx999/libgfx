@@ -3,17 +3,16 @@
 namespace gfx {
 
 class KeyState {
-    friend class Window;
-
-    int m_glfw_state;
-
-    explicit KeyState(int glfw_state) : m_glfw_state(glfw_state) { }
-
 public:
-    [[nodiscard]] bool pressed() const;
-    [[nodiscard]] bool released() const;
-    [[nodiscard]] bool repeated() const;
+    [[nodiscard]] bool is_pressed() const;
+    [[nodiscard]] bool is_released() const;
+    [[nodiscard]] bool is_repeated() const;
+    [[nodiscard]] bool is_clicked() const;
 
+private:
+    friend class Window;
+    int m_glfw_state;
+    explicit KeyState(int glfw_state) : m_glfw_state(glfw_state) { }
 };
 
 enum class MouseButton {
