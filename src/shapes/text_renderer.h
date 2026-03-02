@@ -43,7 +43,7 @@ public:
     void draw(gfx::Vec pos, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color, gfx::Rotation rotation, glm::mat4 view);
 
 private:
-    void draw_char(gfx::Vec pos, const Glyph& glyph, gfx::Color color, int fontsize, gfx::Rotation rotation, glm::mat4 view);
+    void draw_char(gfx::Vec pos, const Glyph& glyph, int largest_height, gfx::Color color, gfx::Rotation rotation, glm::mat4 view);
 
 };
 

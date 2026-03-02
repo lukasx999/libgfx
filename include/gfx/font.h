@@ -25,7 +25,7 @@ public:
 
     [[nodiscard]] int measure_char(char c, int size) const;
     [[nodiscard]] int measure_text(std::string_view text, int size) const;
-    [[nodiscard]] int measure_char_total_height(char c, int size) const;
+    [[nodiscard]] int get_height(int fontsize) const;
 
 };
 

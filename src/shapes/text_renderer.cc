@@ -2,6 +2,7 @@
 #include "text_renderer.h"
 #include "../font_impl.h"
 #include "../texture_impl.h"
+#include <print>
 
 TextRenderer::TextRenderer(const gfx::Surface& surface) : m_surface(surface) {
 
@@ -30,15 +31,19 @@ void TextRenderer::draw(gfx::Vec pos, int fontsize, std::string_view text, const
     auto [x, y] = pos;
     int offset = 0;
 
+    // TODO: find a cleaner font-agnostic way to do this
+    Glyph largest_glyph = font.m_pimpl->load_glyph('l', fontsize);
+    int largest_height = largest_glyph.m_texture.get_height();
+
     for (char c : text) {
         auto glyph = font.m_pimpl->load_glyph(c, fontsize);
-        draw_char({ x+offset, y }, glyph, color, fontsize, rotation, view);
+        draw_char({ x+offset, y }, glyph, largest_height, color, rotation, view);
         offset += glyph.m_advance_x;
     }
 
 }
 
-void TextRenderer::draw_char(gfx::Vec pos, const Glyph& glyph, gfx::Color color, int fontsize, gfx::Rotation rotation, glm::mat4 view) {
+void TextRenderer::draw_char(gfx::Vec pos, const Glyph& glyph, int largest_height, gfx::Color color, gfx::Rotation rotation, glm::mat4 view) {
 
     glUseProgram(m_program);
     glBindVertexArray(m_vertex_array);
@@ -54,7 +59,8 @@ void TextRenderer::draw_char(gfx::Vec pos, const Glyph& glyph, gfx::Color color,
     model = glm::rotate(model, rotation.get_radians(), glm::vec3(0.0f, 0.0f, 1.0f));
     model = glm::translate(model, glm::vec3(-x-width/2.0, -y-height/2.0, 0.0));
 
-    model = glm::translate(model, glm::vec3(x + glyph.m_bearing_x, y - glyph.m_bearing_y + fontsize, 0.0f));
+    int y_offset = largest_height - glyph.m_bearing_y;
+    model = glm::translate(model, glm::vec3(x + glyph.m_bearing_x, y + y_offset, 0.0f));
     model = glm::scale(model, glm::vec3(width, height, 0.0f));
 
     auto projection = gl::get_surface_projection(m_surface);
