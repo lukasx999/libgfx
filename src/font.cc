@@ -30,7 +30,7 @@ int Font::measure_text(std::string_view text, int size) const {
 
 int Font::measure_char_total_height(char c, int size) const {
     auto glyph = m_pimpl->load_glyph(c, size);
-    return glyph.m_texture.get_height() - glyph.m_bearing_y;
+    return size + size - glyph.m_bearing_y;
 }
 
 } // namespace gfx

@@ -9,7 +9,7 @@
 
 ## Graphics
 
-- [ ] implement measure_char_total_height()
+- [ ] implement measure_char_total_height() - fix font measurements
 - [ ] implement draw_polygon()
 - [ ] segmented circles
 - [ ] shape morphing using GL_POLYGON and lerp()
