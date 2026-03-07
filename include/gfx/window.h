@@ -67,6 +67,7 @@ class Window final : public gfx::Surface {
 
 public:
     using DrawFn = std::function<void(gfx::Renderer&)>;
+    using CharCallback = std::function<void(char c)>;
 
     Window(int width, int height, const char* title, WindowFlags flags={});
     ~Window();
@@ -102,6 +103,10 @@ public:
 
     // returns the current time in seconds
     [[nodiscard]] double get_time() const;
+
+    // TODO:
+    void set_char_callback(CharCallback callback);
+    void clear_char_callback();
 
     [[nodiscard]] KeyState get_mouse_button_state(MouseButton mb) const;
     [[nodiscard]] KeyState get_key_state(Key key) const;
