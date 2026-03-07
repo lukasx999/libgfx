@@ -13,22 +13,10 @@ namespace gfx {
 class Renderer;
 
 class Texture {
-    friend TextureRenderer;
-    friend TextRenderer;
-    friend gfx::Renderer;
-    struct Impl;
-    std::unique_ptr<Impl> m_pimpl;
-
 public:
     enum class Format { R, RG, RGB, RGBA };
     enum class Filetype { Png, Bmp, Tga, Jpg };
 
-private:
-    int m_width;
-    int m_height;
-    Format m_format;
-
-public:
     Texture();
 
     // construct a texture from a file
@@ -56,6 +44,17 @@ public:
     void write_to_file(Filetype filetype, const char* filename) const;
 
 private:
+    friend TextureRenderer;
+    friend TextRenderer;
+    friend gfx::Renderer;
+
+    struct Impl;
+    std::unique_ptr<Impl> m_pimpl;
+
+    int m_width;
+    int m_height;
+    Format m_format;
+
     void load_texture_from_file(const char* path);
     [[nodiscard]] static int format_to_channels(Format format);
     [[nodiscard]] static Format channels_to_format(int channels);

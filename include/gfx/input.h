@@ -16,6 +16,7 @@ private:
     friend class Window;
     int m_glfw_state;
     explicit KeyState(int glfw_state) : m_glfw_state(glfw_state) { }
+
 };
 
 enum class MouseButton {

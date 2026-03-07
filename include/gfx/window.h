@@ -56,15 +56,6 @@ private:
 };
 
 class Window final : public gfx::Surface {
-    struct Impl;
-    std::unique_ptr<Impl> m_pimpl;
-
-    double m_frame_time = 0.0;
-    double m_last_frame = 0.0;
-    double m_desired_fps = 0.0;
-
-    gfx::Renderer m_renderer;
-
 public:
     using DrawFn = std::function<void(gfx::Renderer&)>;
     using CharCallback = std::function<void(char c)>;
@@ -115,6 +106,15 @@ public:
     [[nodiscard]] gfx::Font load_font(const char* path) const;
 
 private:
+    struct Impl;
+    std::unique_ptr<Impl> m_pimpl;
+
+    double m_frame_time = 0.0;
+    double m_last_frame = 0.0;
+    double m_desired_fps = 0.0;
+
+    gfx::Renderer m_renderer;
+
     [[nodiscard]] static int gfx_mouse_button_to_glfw_mouse_button(MouseButton mb);
     [[nodiscard]] static int gfx_key_to_glfw_key(Key key);
     [[nodiscard]] bool should_close() const;

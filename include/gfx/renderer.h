@@ -18,11 +18,6 @@
 namespace gfx {
 
 class Renderer final {
-    const gfx::Surface& m_surface;
-
-    struct Impl;
-    std::unique_ptr<Impl> m_pimpl;
-
 public:
     using DrawFn = std::function<void()>;
 
@@ -128,6 +123,12 @@ public:
     void draw_polygon(std::span<const gfx::Vec> points, gfx::Color color);
 
     void clear_background(gfx::Color color);
+
+private:
+    const gfx::Surface& m_surface;
+
+    struct Impl;
+    std::unique_ptr<Impl> m_pimpl;
 
 };
 

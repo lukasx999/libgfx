@@ -11,10 +11,6 @@ namespace gfx {
 // render stuff into that context. the intended usage of this class is to enable
 // embedding into other applications.
 class ExternalContext : public gfx::Surface {
-    std::function<int()> m_get_width;
-    std::function<int()> m_get_height;
-    gfx::Renderer m_renderer;
-
 public:
     ExternalContext(std::function<int()> get_width, std::function<int()> get_height)
         : m_get_width(get_width)
@@ -37,6 +33,11 @@ public:
     void draw(std::function<void(gfx::Renderer&)> draw_fn) {
         draw_fn(m_renderer);
     }
+
+private:
+    std::function<int()> m_get_width;
+    std::function<int()> m_get_height;
+    gfx::Renderer m_renderer;
 
 };
 
