@@ -1,5 +1,6 @@
 #include <thread>
 #include <tuple>
+#include <string>
 
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
@@ -96,9 +97,11 @@ void Window::with_draw_loop_context(DrawCallback callback) {
 
 void Window::set_char_callback(CharCallback callback) {
     glfwSetWindowUserPointer(m_pimpl->m_window, &callback);
+
     glfwSetCharCallback(m_pimpl->m_window, [](GLFWwindow *window, unsigned int codepoint) {
         auto fn = static_cast<CharCallback*>(glfwGetWindowUserPointer(window));
-        (*fn)(codepoint);
+        auto str = codepoint_to_string(codepoint);
+        (*fn)(std::move(str), codepoint);
     });
 }
 
@@ -185,6 +188,21 @@ int gfx::Window::gfx_key_to_glfw_key(Key key) {
 
 gfx::Font Window::load_font(const char* path) const {
     return m_pimpl->load_font(path);
+}
+
+std::string Window::codepoint_to_string(char32_t codepoint) {
+    std::array<char, 4> buf;
+    char* buf_end;
+    const char32_t* from = &codepoint;
+
+    std::mbstate_t state;
+    std::codecvt_utf8<char32_t> ccv;
+
+    auto error = ccv.out(state, from, from+1, from, buf.data(), buf.data()+4, buf_end);
+    if (error)
+        throw gfx::Error("failed to parse unicode codepoint");
+
+    return {buf.data(), buf_end};
 }
 
 } // namespace gfx

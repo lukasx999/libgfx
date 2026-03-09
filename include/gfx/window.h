@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <functional>
+#include <codecvt>
 
 #include <gfx/surface.h>
 #include <gfx/renderer.h>
@@ -58,7 +59,7 @@ private:
 class Window final : public gfx::Surface {
 public:
     using DrawCallback = std::function<void(gfx::Renderer&)>;
-    using CharCallback = std::function<void(char c)>;
+    using CharCallback = std::function<void(std::string string, char32_t codepoint)>;
 
     Window(int width, int height, const char* title, WindowFlags flags={});
     ~Window();
@@ -116,6 +117,8 @@ private:
 
     [[nodiscard]] static int gfx_mouse_button_to_glfw_mouse_button(MouseButton mb);
     [[nodiscard]] static int gfx_key_to_glfw_key(Key key);
+    [[nodiscard]] static std::string codepoint_to_string(char32_t codepoint);
+
     [[nodiscard]] bool should_close() const;
 
 };
