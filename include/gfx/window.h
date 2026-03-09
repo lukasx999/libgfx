@@ -96,8 +96,8 @@ public:
     // returns the current time in seconds
     [[nodiscard]] double get_time() const;
 
-    void set_char_callback(CharCallback callback);
-    void clear_char_callback();
+    void set_char_callback(CharCallback callback) const;
+    void clear_char_callback() const;
 
     [[nodiscard]] KeyState get_mouse_button_state(MouseButton mb) const;
     [[nodiscard]] KeyState get_key_state(Key key) const;

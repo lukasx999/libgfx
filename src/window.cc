@@ -95,7 +95,7 @@ void Window::with_draw_loop_context(DrawCallback callback) {
     std::this_thread::sleep_for(duration);
 }
 
-void Window::set_char_callback(CharCallback callback) {
+void Window::set_char_callback(CharCallback callback) const {
     glfwSetWindowUserPointer(m_pimpl->m_window, &callback);
 
     glfwSetCharCallback(m_pimpl->m_window, [](GLFWwindow *window, unsigned int codepoint) {
@@ -105,7 +105,7 @@ void Window::set_char_callback(CharCallback callback) {
     });
 }
 
-void Window::clear_char_callback() {
+void Window::clear_char_callback() const {
     glfwSetCharCallback(m_pimpl->m_window, nullptr);
     glfwSetWindowUserPointer(m_pimpl->m_window, nullptr);
 }
