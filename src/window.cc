@@ -94,6 +94,19 @@ void Window::with_draw_loop_context(DrawCallback callback) {
     std::this_thread::sleep_for(duration);
 }
 
+void Window::set_char_callback(CharCallback callback) {
+    glfwSetWindowUserPointer(m_pimpl->m_window, &callback);
+    glfwSetCharCallback(m_pimpl->m_window, [](GLFWwindow *window, unsigned int codepoint) {
+        auto fn = static_cast<CharCallback*>(glfwGetWindowUserPointer(window));
+        (*fn)(codepoint);
+    });
+}
+
+void Window::clear_char_callback() {
+    glfwSetCharCallback(m_pimpl->m_window, nullptr);
+    glfwSetWindowUserPointer(m_pimpl->m_window, nullptr);
+}
+
 gfx::KeyState Window::get_mouse_button_state(MouseButton mb) const {
     return KeyState(glfwGetMouseButton(m_pimpl->m_window, gfx_mouse_button_to_glfw_mouse_button(mb)));
 }

@@ -95,7 +95,6 @@ public:
     // returns the current time in seconds
     [[nodiscard]] double get_time() const;
 
-    // TODO:
     void set_char_callback(CharCallback callback);
     void clear_char_callback();
 
