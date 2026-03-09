@@ -1,5 +1,6 @@
 #include <thread>
 #include <tuple>
+#include <print>
 #include <string>
 
 #define GLFW_INCLUDE_NONE
@@ -96,11 +97,12 @@ void Window::with_draw_loop_context(DrawCallback callback) {
 }
 
 void Window::set_char_callback(CharCallback callback) const {
-    glfwSetWindowUserPointer(m_pimpl->m_window, &callback);
+    static CharCallback char_callback = callback;
+    glfwSetWindowUserPointer(m_pimpl->m_window, &char_callback);
 
     glfwSetCharCallback(m_pimpl->m_window, [](GLFWwindow *window, unsigned int codepoint) {
         auto fn = static_cast<CharCallback*>(glfwGetWindowUserPointer(window));
-        auto str = codepoint_to_string(codepoint);
+        std::string str = codepoint_to_string(codepoint);
         (*fn)(std::move(str), codepoint);
     });
 }
