@@ -19,7 +19,7 @@ namespace gfx {
 
 class Renderer final {
 public:
-    using DrawFn = std::function<void()>;
+    using DrawCallback = std::function<void()>;
 
     // default constructing a renderer without an active GL context will
     // result in undefined behaviour.
@@ -31,9 +31,9 @@ public:
         return m_surface;
     }
 
-    [[nodiscard]] gfx::Texture to_texture(DrawFn draw_fn);
+    [[nodiscard]] gfx::Texture to_texture(DrawCallback callback);
 
-    void with_camera(DrawFn draw_fn);
+    void with_camera(DrawCallback callback);
 
     void set_camera(gfx::Vec center, gfx::Rotation rotation=0_deg, float scale=1.0f);
 

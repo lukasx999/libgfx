@@ -30,8 +30,8 @@ public:
         return m_get_height();
     }
 
-    void draw(std::function<void(gfx::Renderer&)> draw_fn) {
-        draw_fn(m_renderer);
+    void draw(std::function<void(gfx::Renderer&)> callback) {
+        callback(m_renderer);
     }
 
 private:

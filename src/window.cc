@@ -52,16 +52,16 @@ double Window::get_time() const {
     return glfwGetTime();
 }
 
-gfx::Texture Window::draw_offscreen(DrawFn draw_fn) {
+gfx::Texture Window::draw_offscreen(DrawCallback callback) {
     return m_renderer.to_texture([&] {
-        draw_fn(m_renderer);
+        callback(m_renderer);
     });
 }
 
-void Window::draw_loop(DrawFn draw_fn) {
+void Window::draw_loop(DrawCallback callback) {
 
 #ifdef __EMSCRIPTEN__
-    std::tuple<gfx::Window&, DrawFn> tuple(*this, draw_fn);
+    std::tuple<gfx::Window&, DrawFn> tuple(*this, callback);
 
     emscripten_set_main_loop_arg([](void* data) {
         auto& [window, fn] = *static_cast<decltype(tuple)*>(data);
@@ -69,18 +69,18 @@ void Window::draw_loop(DrawFn draw_fn) {
     }, &tuple, 0, true);
 #else
     while (!should_close())
-        with_draw_loop_context(draw_fn);
+        with_draw_loop_context(callback);
 #endif // __EMSCRIPTEN__
 
 }
 
-void Window::with_draw_loop_context(DrawFn draw_fn) {
+void Window::with_draw_loop_context(DrawCallback callback) {
 
     double frame_start = glfwGetTime();
     m_frame_time = frame_start - m_last_frame;
     m_last_frame = frame_start;
 
-    draw_fn(m_renderer);
+    callback(m_renderer);
 
     glfwSwapBuffers(m_pimpl->m_window);
     glfwPollEvents();

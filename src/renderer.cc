@@ -20,7 +20,7 @@ Renderer::Renderer(const gfx::Surface& surface)
 // type of the Impl structure
 Renderer::~Renderer() = default;
 
-gfx::Texture Renderer::to_texture(DrawFn draw_fn) {
+gfx::Texture Renderer::to_texture(DrawCallback callback) {
 
     gfx::Texture texture(m_surface.get_width(), m_surface.get_height(), gfx::Texture::Format::RGB);
 
@@ -30,15 +30,15 @@ gfx::Texture Renderer::to_texture(DrawFn draw_fn) {
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.m_pimpl->m_texture, 0);
     assert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
 
-    draw_fn();
+    callback();
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     return texture;
 }
 
-void Renderer::with_camera(DrawFn draw_fn) {
+void Renderer::with_camera(DrawCallback callback) {
     m_pimpl->m_view_active = m_pimpl->m_view_camera;
-    draw_fn();
+    callback();
     m_pimpl-> m_view_active = m_pimpl->m_view_default;
 }
 

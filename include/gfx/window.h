@@ -57,7 +57,7 @@ private:
 
 class Window final : public gfx::Surface {
 public:
-    using DrawFn = std::function<void(gfx::Renderer&)>;
+    using DrawCallback = std::function<void(gfx::Renderer&)>;
     using CharCallback = std::function<void(char c)>;
 
     Window(int width, int height, const char* title, WindowFlags flags={});
@@ -83,14 +83,14 @@ public:
     void close();
 
     // draw into a texture without opening a window
-    [[nodiscard]] gfx::Texture draw_offscreen(DrawFn draw_fn);
+    [[nodiscard]] gfx::Texture draw_offscreen(DrawCallback callback);
 
     // calls the given function in a draw context, issuing draw calls outside
     // of this context will result in undefined behavior
-    void with_draw_loop_context(DrawFn draw_fn);
+    void with_draw_loop_context(DrawCallback callback);
 
     // calls the given function in a draw loop
-    void draw_loop(DrawFn draw_fn);
+    void draw_loop(DrawCallback callback);
 
     // returns the current time in seconds
     [[nodiscard]] double get_time() const;
