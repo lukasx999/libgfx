@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.16)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+set(CMAKE_C_STANDARD 23)
+set(CMAKE_C_STANDARD_REQUIRED TRUE)
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 set(CMAKE_COLOR_DIAGNOSTICS ON)
 
@@ -51,7 +53,7 @@ add_custom_command(
   COMMAND wayland-scanner private-code ${PROJECT_SOURCE_DIR}/protocols/xdg-shell.xml xdg-shell.c
   DEPENDS protocols
 )
-target_sources(gfx PRIVATE xdg-shell.c)
+# target_sources(gfx PRIVATE xdg-shell.c)
 
 add_custom_command(
   OUTPUT xdg-shell.h
@@ -63,7 +65,7 @@ add_dependencies(gfx xdg-shell)
 
 add_custom_command(
   OUTPUT wlr-layer-shell-unstable-v1.h
-  COMMAND wayland-scanner client-header ${PROJECT_SOURCE_DIR}/protocols/xdg-shell.xml wlr-layer-shell-unstable-v1.h
+  COMMAND wayland-scanner client-header ${PROJECT_SOURCE_DIR}/protocols/wlr-layer-shell-unstable-v1.xml wlr-layer-shell-unstable-v1.h
   DEPENDS protocols
 )
 add_custom_target(wlr-layer-shell DEPENDS wlr-layer-shell-unstable-v1.h)
@@ -71,10 +73,10 @@ add_dependencies(gfx wlr-layer-shell)
 
 add_custom_command(
   OUTPUT wlr-layer-shell-unstable-v1.c
-  COMMAND wayland-scanner private-code ${PROJECT_SOURCE_DIR}/protocols/xdg-shell.xml wlr-layer-shell-unstable-v1.c
+  COMMAND wayland-scanner private-code ${PROJECT_SOURCE_DIR}/protocols/wlr-layer-shell-unstable-v1.xml wlr-layer-shell-unstable-v1.c
   DEPENDS protocols
 )
-target_sources(gfx PRIVATE wlr-layer-shell-unstable-v1.c)
+# target_sources(gfx PRIVATE wlr-layer-shell-unstable-v1.c)
 
 
 

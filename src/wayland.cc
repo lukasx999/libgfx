@@ -1,5 +1,6 @@
 #include <functional>
 #include <print>
+#include <optional>
 #include <cassert>
 
 #include <wayland-client.h>
