@@ -23,7 +23,7 @@ int main() {
 
         auto mouse = window.get_mouse_pos();
 
-        if (window.get_mouse_button_state(gfx::MouseButton::Left).pressed()) {
+        if (window.get_mouse_button_state(gfx::MouseButton::Left).is_pressed()) {
             if (mouse.distance(a) <= handle_radius)
                 moving_a = true;
 
@@ -50,7 +50,7 @@ int main() {
         if (moving_ctl2)
             ctl2 = mouse;
 
-        if (window.get_mouse_button_state(gfx::MouseButton::Left).released()) {
+        if (window.get_mouse_button_state(gfx::MouseButton::Left).is_released()) {
             moving_a = false;
             moving_b = false;
             moving_ctl1 = false;
@@ -67,7 +67,7 @@ int main() {
         rd.draw_circle(ctl1, handle_radius, gfx::Color::red());
         rd.draw_circle(ctl2, handle_radius, gfx::Color::red());
 
-        if (window.get_key_state(gfx::Key::Escape).pressed())
+        if (window.get_key_state(gfx::Key::Escape).is_pressed())
             window.close();
 
     });

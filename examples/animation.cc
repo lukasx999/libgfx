@@ -22,7 +22,7 @@ int main() {
         rd.draw_rectangle(rect, gfx::Color::gray());
         rd.draw_circle(pos, radius, color);
 
-        if (window.get_key_state(gfx::Key::Escape).pressed())
+        if (window.get_key_state(gfx::Key::Escape).is_pressed())
             window.close();
     });
 

@@ -152,7 +152,7 @@ int main() {
 
         clock.draw(rd);
 
-        if (window.get_key_state(gfx::Key::Escape).pressed())
+        if (window.get_key_state(gfx::Key::Escape).is_pressed())
             window.close();
     });
 

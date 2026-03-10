@@ -25,7 +25,7 @@ int main() {
         rd.draw_texture(t, texture);
         rd.draw_texture(0, 0, 100, 100, sprite);
 
-        if (window.get_key_state(gfx::Key::Escape).pressed())
+        if (window.get_key_state(gfx::Key::Escape).is_pressed())
             window.close();
     });
 

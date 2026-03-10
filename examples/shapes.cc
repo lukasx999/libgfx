@@ -26,7 +26,7 @@ int main() {
 
         rd.draw_circle(window.get_center(), 100, gfx::Color::white());
 
-        if (window.get_key_state(gfx::Key::Escape).pressed())
+        if (window.get_key_state(gfx::Key::Escape).is_pressed())
             window.close();
     });
 

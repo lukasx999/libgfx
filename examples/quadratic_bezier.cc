@@ -26,7 +26,7 @@ int main() {
         bool hovering_b = mouse.distance(b) <= handle_radius;
         bool hovering_ctl = mouse.distance(ctl) <= handle_radius;
 
-        if (window.get_mouse_button_state(gfx::MouseButton::Left).pressed()) {
+        if (window.get_mouse_button_state(gfx::MouseButton::Left).is_pressed()) {
             if (hovering_a)
                 moving_a = true;
 
@@ -37,7 +37,7 @@ int main() {
                 moving_ctl = true;
         }
 
-        if (window.get_mouse_button_state(gfx::MouseButton::Left).released()) {
+        if (window.get_mouse_button_state(gfx::MouseButton::Left).is_released()) {
             moving_a = false;
             moving_b = false;
             moving_ctl = false;
@@ -58,7 +58,7 @@ int main() {
         rd.draw_circle(b, hovering_b ? handle_radius_moving : handle_radius, gfx::Color::blue());
         rd.draw_circle(ctl, hovering_ctl ? handle_radius_moving : handle_radius, gfx::Color::red());
 
-        if (window.get_key_state(gfx::Key::Escape).pressed())
+        if (window.get_key_state(gfx::Key::Escape).is_pressed())
             window.close();
 
     });
