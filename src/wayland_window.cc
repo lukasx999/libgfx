@@ -15,7 +15,8 @@
 #include <GL/gl.h>
 #include <GL/glext.h>
 
-#include <gfx/gfx.h>
+#include <gfx/wayland_window.h>
+#include <gfx/renderer.h>
 
 namespace util {
 
@@ -109,10 +110,32 @@ consteval void test_overloaded_lambda() {
 
 } // namespace util
 
-class WaylandWindow : public gfx::Surface {
+namespace gfx {
 
-    using DrawFn = std::function<void(gfx::Renderer&)>;
-    DrawFn m_draw_fn;
+WaylandWindow::WaylandWindow(int width, int height, const char* title)
+: m_pimpl(std::make_unique<Impl>(width, height, title))
+{ }
+
+WaylandWindow::~WaylandWindow() = default;
+
+int WaylandWindow::get_width() const {
+    int width;
+    wl_egl_window_get_attached_size(m_egl_window, &width, nullptr);
+    return width;
+};
+
+int WaylandWindow::get_height() const {
+    int height;
+    wl_egl_window_get_attached_size(m_egl_window, nullptr, &height);
+    return height;
+};
+
+void WaylandWindow::draw_loop(DrawFn draw_fn) {
+    m_draw_fn = draw_fn;
+    while (wl_display_dispatch(m_wl_display) != -1);
+}
+
+struct WaylandWindow::Impl {
 
     wl_display*    m_wl_display    = nullptr;
     wl_surface*    m_wl_surface    = nullptr;
@@ -134,13 +157,9 @@ class WaylandWindow : public gfx::Surface {
     EGLContext m_egl_context = nullptr;
     EGLConfig  m_egl_config  = nullptr;
 
-    // TODO: initialize gl context in pimpl
-    std::optional<gfx::Renderer> m_renderer;
-
     enum class Type { Toplevel, LayerSurface } m_type = Type::LayerSurface;
 
-public:
-    WaylandWindow(int width, int height, const char* title) {
+    Impl(int width, int height, const char* title) {
 
         m_wl_display = wl_display_connect(nullptr);
         m_wl_registry = wl_display_get_registry(m_wl_display);
@@ -185,28 +204,10 @@ public:
         eglSwapBuffers(m_egl_display, m_egl_surface);
     }
 
-    ~WaylandWindow() {
+    ~Impl() {
         wl_display_disconnect(m_wl_display);
     }
 
-    [[nodiscard]] int get_width() const override {
-        int width;
-        wl_egl_window_get_attached_size(m_egl_window, &width, nullptr);
-        return width;
-    };
-
-    [[nodiscard]] int get_height() const override {
-        int height;
-        wl_egl_window_get_attached_size(m_egl_window, nullptr, &height);
-        return height;
-    };
-
-    void draw_loop(DrawFn draw_fn) {
-        m_draw_fn = draw_fn;
-        while (wl_display_dispatch(m_wl_display) != -1);
-    }
-
-private:
     static void bind_globals(void* data, struct wl_registry* wl_registry, uint32_t name, const char* interface, uint32_t version) {
         WaylandWindow& self = *static_cast<WaylandWindow*>(data);
 
@@ -353,3 +354,5 @@ private:
     };
 
 };
+
+} // namespace gfx
