@@ -9,6 +9,7 @@ font.cc
 texture.cc
 window_impl.cc
 opengl.cc
+wayland.cc
 test.cc
 )
 
