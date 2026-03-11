@@ -21,7 +21,20 @@ namespace gfx {
 Window::Window(int width, int height, const char* title, WindowFlags flags)
     : m_pimpl(std::make_unique<Window::Impl>(width, height, title, flags))
     , m_renderer(*this)
-{ }
+{
+
+    glfwSetWindowUserPointer(m_pimpl->m_window, &m_char_callbacks);
+
+    glfwSetCharCallback(m_pimpl->m_window, [](GLFWwindow *window, unsigned int codepoint) {
+        auto callbacks = static_cast<std::vector<std::pair<CharCallback, CallbackId>>*>(glfwGetWindowUserPointer(window));
+        std::string str = codepoint_to_string(codepoint);
+
+        for (auto& [callback, id] : *callbacks) {
+            callback(str, codepoint);
+        }
+    });
+
+}
 
 // the pimpl pattern requires the destructor to "see" the complete
 // type of the Impl structure
@@ -97,20 +110,21 @@ void Window::with_draw_loop_context(DrawCallback callback) {
     std::this_thread::sleep_for(duration);
 }
 
-void Window::set_char_callback(CharCallback callback) const {
-    static CharCallback char_callback = callback;
-    glfwSetWindowUserPointer(m_pimpl->m_window, &char_callback);
-
-    glfwSetCharCallback(m_pimpl->m_window, [](GLFWwindow *window, unsigned int codepoint) {
-        auto fn = static_cast<CharCallback*>(glfwGetWindowUserPointer(window));
-        std::string str = codepoint_to_string(codepoint);
-        (*fn)(std::move(str), codepoint);
-    });
+Window::CallbackId Window::add_char_callback(CharCallback callback) {
+    m_char_callbacks.push_back({callback, m_char_callback_id});
+    return m_char_callback_id++;
 }
 
-void Window::clear_char_callback() const {
-    glfwSetCharCallback(m_pimpl->m_window, nullptr);
-    glfwSetWindowUserPointer(m_pimpl->m_window, nullptr);
+void Window::remove_char_callback(CallbackId id) {
+    auto callback = std::ranges::find_if(m_char_callbacks, [&](auto& pair) {
+        auto& [callback, callback_id] = pair;
+        return callback_id == id;
+    });
+
+    if (callback == m_char_callbacks.end())
+        throw gfx::Error("id not found");
+
+    m_char_callbacks.erase(callback);
 }
 
 gfx::KeyState Window::get_mouse_button_state(MouseButton mb) const {

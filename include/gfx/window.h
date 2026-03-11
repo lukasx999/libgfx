@@ -59,6 +59,7 @@ class Window final : public gfx::Surface {
 public:
     using DrawCallback = std::function<void(gfx::Renderer&)>;
     using CharCallback = std::function<void(std::string string, char32_t codepoint)>;
+    using CallbackId = int;
 
     Window(int width, int height, const char* title, WindowFlags flags={});
     ~Window();
@@ -95,8 +96,8 @@ public:
     // returns the current time in seconds
     [[nodiscard]] double get_time() const;
 
-    void set_char_callback(CharCallback callback) const;
-    void clear_char_callback() const;
+    CallbackId add_char_callback(CharCallback callback);
+    void remove_char_callback(CallbackId id);
 
     [[nodiscard]] KeyState get_mouse_button_state(MouseButton mb) const;
     [[nodiscard]] KeyState get_key_state(Key key) const;
@@ -113,6 +114,8 @@ private:
     double m_desired_fps = 0.0;
 
     gfx::Renderer m_renderer;
+    std::vector<std::pair<CharCallback, CallbackId>> m_char_callbacks;
+    CallbackId m_char_callback_id = 0;
 
     [[nodiscard]] static int gfx_mouse_button_to_glfw_mouse_button(MouseButton mb);
     [[nodiscard]] static int gfx_key_to_glfw_key(Key key);
