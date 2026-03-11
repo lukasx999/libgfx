@@ -161,6 +161,7 @@ int gfx::Window::gfx_key_to_glfw_key(Key key) {
     switch (key) {
         using enum Key;
         case Escape: return GLFW_KEY_ESCAPE;
+        case Backspace: return GLFW_KEY_BACKSPACE;
         case Space: return GLFW_KEY_SPACE;
         case Num0: return GLFW_KEY_0;
         case Num1: return GLFW_KEY_1;

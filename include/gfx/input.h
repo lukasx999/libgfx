@@ -25,6 +25,7 @@ enum class MouseButton {
 
 enum class Key {
     Escape,
+    Backspace,
     Space,
     Num0, Num1, Num2, Num3, Num4, Num5, Num6, Num7, Num8, Num9,
     A, B, C, D, E, F, G, H, I, J, K, L, M,
