@@ -26,6 +26,7 @@
 
 ## Misc
 
+- [ ] fix utf8 text renderer bug
 - [ ] window: set_timeout/set_interval
 - [ ] window: move pimpl ctor into window ctor
 - [ ] move texture impl static functions to texture src?
