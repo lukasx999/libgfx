@@ -2,6 +2,7 @@
 #include <tuple>
 #include <print>
 #include <string>
+#include <codecvt>
 
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>

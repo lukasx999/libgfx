@@ -2,7 +2,6 @@
 
 #include <memory>
 #include <functional>
-#include <codecvt>
 
 #include <gfx/surface.h>
 #include <gfx/renderer.h>
