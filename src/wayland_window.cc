@@ -112,29 +112,6 @@ consteval void test_overloaded_lambda() {
 
 namespace gfx {
 
-WaylandWindow::WaylandWindow(int width, int height, const char* title)
-: m_pimpl(std::make_unique<Impl>(width, height, title))
-{ }
-
-WaylandWindow::~WaylandWindow() = default;
-
-int WaylandWindow::get_width() const {
-    int width;
-    wl_egl_window_get_attached_size(m_egl_window, &width, nullptr);
-    return width;
-};
-
-int WaylandWindow::get_height() const {
-    int height;
-    wl_egl_window_get_attached_size(m_egl_window, nullptr, &height);
-    return height;
-};
-
-void WaylandWindow::draw_loop(DrawFn draw_fn) {
-    m_draw_fn = draw_fn;
-    while (wl_display_dispatch(m_wl_display) != -1);
-}
-
 struct WaylandWindow::Impl {
 
     wl_display*    m_wl_display    = nullptr;
@@ -157,9 +134,12 @@ struct WaylandWindow::Impl {
     EGLContext m_egl_context = nullptr;
     EGLConfig  m_egl_config  = nullptr;
 
+    DrawFn m_draw_fn;
+    std::optional<gfx::Renderer> m_renderer;
+
     enum class Type { Toplevel, LayerSurface } m_type = Type::LayerSurface;
 
-    Impl(int width, int height, const char* title) {
+    Impl(int width, int height, const char* title, gfx::WaylandWindow& window) {
 
         m_wl_display = wl_display_connect(nullptr);
         m_wl_registry = wl_display_get_registry(m_wl_display);
@@ -172,7 +152,7 @@ struct WaylandWindow::Impl {
         if (!init_egl(width, height))
             throw std::runtime_error("failed to initialize EGL");
 
-        m_renderer.emplace(*this);
+        m_renderer.emplace(window);
 
         xdg_wm_base_add_listener(m_xdg_wm_base, &m_xdg_wm_base_listener, nullptr);
         wl_keyboard_add_listener(m_wl_keyboard, &m_wl_keyboard_listener, this);
@@ -209,7 +189,7 @@ struct WaylandWindow::Impl {
     }
 
     static void bind_globals(void* data, struct wl_registry* wl_registry, uint32_t name, const char* interface, uint32_t version) {
-        WaylandWindow& self = *static_cast<WaylandWindow*>(data);
+        Impl& self = *static_cast<Impl*>(data);
 
         using namespace std::placeholders;
         auto bind_global = std::bind(wl_registry_bind, wl_registry, name, _1, version);
@@ -240,7 +220,7 @@ struct WaylandWindow::Impl {
     }
 
     static void render_frame(void* data, struct wl_callback* wl_callback, [[maybe_unused]] uint32_t callback_data) {
-        WaylandWindow& self = *static_cast<WaylandWindow*>(data);
+        Impl& self = *static_cast<Impl*>(data);
 
         wl_callback_destroy(wl_callback);
 
@@ -252,14 +232,14 @@ struct WaylandWindow::Impl {
     }
 
     static void xdg_toplevel_configure(void* data, [[maybe_unused]] struct xdg_toplevel* xdg_toplevel, int32_t width, int32_t height, [[maybe_unused]] struct wl_array* states) {
-        WaylandWindow& self = *static_cast<WaylandWindow*>(data);
+        Impl& self = *static_cast<Impl*>(data);
         glViewport(0, 0, width, height);
         wl_egl_window_resize(self.m_egl_window, width, height, 0, 0);
     }
 
     static void zwlr_layer_surface_v1_configure(void* data, struct zwlr_layer_surface_v1* zwlr_layer_surface_v1, uint32_t serial, uint32_t width, uint32_t height) {
         zwlr_layer_surface_v1_ack_configure(zwlr_layer_surface_v1, serial);
-        WaylandWindow& self = *static_cast<WaylandWindow*>(data);
+        Impl& self = *static_cast<Impl*>(data);
         glViewport(0, 0, width, height);
         wl_egl_window_resize(self.m_egl_window, width, height, 0, 0);
     }
@@ -354,5 +334,28 @@ struct WaylandWindow::Impl {
     };
 
 };
+
+WaylandWindow::WaylandWindow(int width, int height, const char* title)
+: m_pimpl(std::make_unique<Impl>(width, height, title, *this))
+{ }
+
+WaylandWindow::~WaylandWindow() = default;
+
+int WaylandWindow::get_width() const {
+    int width;
+    wl_egl_window_get_attached_size(m_pimpl->m_egl_window, &width, nullptr);
+    return width;
+};
+
+int WaylandWindow::get_height() const {
+    int height;
+    wl_egl_window_get_attached_size(m_pimpl->m_egl_window, nullptr, &height);
+    return height;
+};
+
+void WaylandWindow::draw_loop(DrawFn draw_fn) {
+    m_pimpl->m_draw_fn = draw_fn;
+    while (wl_display_dispatch(m_pimpl->m_wl_display) != -1);
+}
 
 } // namespace gfx

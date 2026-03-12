@@ -18,3 +18,4 @@
 #include <gfx/lerp.h>
 #include <gfx/literals.h>
 #include <gfx/window.h>
+#include <gfx/wayland_window.h>

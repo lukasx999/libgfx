@@ -53,7 +53,7 @@ add_custom_command(
   COMMAND wayland-scanner private-code ${PROJECT_SOURCE_DIR}/protocols/xdg-shell.xml xdg-shell.c
   DEPENDS protocols
 )
-# target_sources(gfx PRIVATE xdg-shell.c)
+target_sources(gfx PRIVATE xdg-shell.c)
 
 add_custom_command(
   OUTPUT xdg-shell.h
@@ -76,7 +76,9 @@ add_custom_command(
   COMMAND wayland-scanner private-code ${PROJECT_SOURCE_DIR}/protocols/wlr-layer-shell-unstable-v1.xml wlr-layer-shell-unstable-v1.c
   DEPENDS protocols
 )
-# target_sources(gfx PRIVATE wlr-layer-shell-unstable-v1.c)
+target_sources(gfx PRIVATE wlr-layer-shell-unstable-v1.c)
+
+target_link_libraries(gfx PRIVATE EGL wayland-egl)
 
 
 

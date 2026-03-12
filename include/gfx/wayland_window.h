@@ -23,9 +23,6 @@ private:
     struct Impl;
     std::unique_ptr<Impl> m_pimpl;
 
-    DrawFn m_draw_fn;
-    std::optional<gfx::Renderer> m_renderer;
-
 };
 
 } // namespace gfx
