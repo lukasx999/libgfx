@@ -17,7 +17,7 @@ Font::Font(std::unique_ptr<Impl> pimpl) : m_pimpl(std::move(pimpl)) { }
 
 Font::~Font() = default;
 
-int Font::measure_char(char c, int size) const {
+int Font::measure_char(char32_t c, int size) const {
     auto glyph = m_pimpl->load_glyph(c, size);
     return glyph.m_advance_x;
 }

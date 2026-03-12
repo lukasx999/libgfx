@@ -3,6 +3,7 @@
 #include "../font_impl.h"
 #include "../texture_impl.h"
 #include <print>
+#include <utf8.h>
 
 TextRenderer::TextRenderer(const gfx::Surface& surface) : m_surface(surface) {
 
@@ -28,6 +29,9 @@ TextRenderer::TextRenderer(const gfx::Surface& surface) : m_surface(surface) {
 
 void TextRenderer::draw(gfx::Vec pos, int fontsize, std::string_view text, const gfx::Font& font, gfx::Color color, gfx::Rotation rotation, glm::mat4 view) {
 
+    if (!utf8::is_valid(text))
+        throw gfx::Error("text is not valid utf8");
+
     auto [x, y] = pos;
     int offset = 0;
 
@@ -35,8 +39,9 @@ void TextRenderer::draw(gfx::Vec pos, int fontsize, std::string_view text, const
     Glyph largest_glyph = font.m_pimpl->load_glyph('l', fontsize);
     int largest_height = largest_glyph.m_texture.get_height();
 
-    // BUG: not utf8 compatible
-    for (char c : text) {
+    auto text_it = text.begin();
+    while (text_it != text.end()) {
+        char32_t c = utf8::next(text_it, text.end());
         auto glyph = font.m_pimpl->load_glyph(c, fontsize);
         draw_char({ x+offset, y }, glyph, largest_height, color, rotation, view);
         offset += glyph.m_advance_x;

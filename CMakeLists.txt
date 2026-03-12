@@ -46,7 +46,7 @@ target_include_directories(gfx PRIVATE ${PROJECT_BINARY_DIR})
 target_compile_options(gfx PRIVATE -Wno-c23-extensions -Wall -Wextra -O3 -ggdb)
 
 # TODO: remove some unneeded includes
-list(APPEND include_dirs include/ deps/glad/include/ deps/stb/ deps/glm)
+list(APPEND include_dirs include/ deps/glad/include/ deps/stb/ deps/glm deps/utfcpp/source/)
 target_include_directories(gfx PRIVATE ${include_dirs} ${FREETYPE_INCLUDE_DIRS})
 link_directories(${FREETYPE_LIBRARY_DIRS})
 

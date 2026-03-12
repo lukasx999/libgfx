@@ -16,7 +16,7 @@ struct Font::Impl {
     Impl(const Impl&) = delete;
     Impl& operator=(const Impl&) = delete;
 
-    [[nodiscard]] Glyph load_glyph(char c, unsigned int size) const;
+    [[nodiscard]] Glyph load_glyph(char32_t c, unsigned int size) const;
 
 };
 

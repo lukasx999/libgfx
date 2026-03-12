@@ -16,7 +16,7 @@ public:
     Font& operator=(const Font&) = delete;
     Font& operator=(Font&&) = delete;
 
-    [[nodiscard]] int measure_char(char c, int size) const;
+    [[nodiscard]] int measure_char(char32_t c, int size) const;
     [[nodiscard]] int measure_text(std::string_view text, int size) const;
     [[nodiscard]] int get_height(int fontsize) const;
 

@@ -12,7 +12,7 @@ Font::Impl::~Impl() {
     FT_Done_Face(m_face);
 }
 
-Glyph Font::Impl::load_glyph(char c, unsigned int size) const {
+Glyph Font::Impl::load_glyph(char32_t c, unsigned int size) const {
 
     if (FT_Set_Pixel_Sizes(m_face, 0, size))
         throw gfx::Error("failed to load glyph: failed to set pixel size");

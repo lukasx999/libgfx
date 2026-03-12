@@ -26,7 +26,7 @@
 
 ## Misc
 
-- [ ] fix utf8 text renderer bug
+- [ ] move functions from pimpl that dont touch external types into main class
 - [ ] window: set_timeout/set_interval
 - [ ] window: move pimpl ctor into window ctor
 - [ ] move texture impl static functions to texture src?
@@ -39,7 +39,6 @@
 - [ ] fix gtkmm example
 - [ ] switch to pure gles3
 - [ ] gradients
-- [ ] utf-8 support for text renderer
 - [ ] cmake options for opengl function loaders
 - [ ] hot reloading
 - [ ] cmake fetchcontent for glm
