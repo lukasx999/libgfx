@@ -26,6 +26,7 @@
 
 ## Misc
 
+- [ ] fetchcontent if package not available
 - [ ] use glad on windows
 - [ ] move functions from pimpl that dont touch external types into main class
 - [ ] window: set_timeout/set_interval
