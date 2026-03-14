@@ -46,24 +46,12 @@ def split_shader_types(shaders_filenames: list[str]) -> tuple[list[str], list[st
 
 def main() -> int:
 
-    if len(sys.argv) != 2:
-        print("expected shader type as argument (`gl` or `es`)")
-        return 1
-
-    match sys.argv[1]:
-        case "gl":
-            subdir = "opengl4.5"
-        case "es":
-            subdir = "gles3"
-        case _:
-            print("unknown shader type (must be either `gl` or `es`)")
-            return 1
-
     file = open("shaders.h", "w")
     file.write("// THIS FILE IS GENERATED\n\n")
     file.write("#pragma once\n\n")
     file.write("namespace shaders {\n\n")
 
+    subdir = sys.argv[1]
     shaders = os.listdir(subdir)
     vertex, fragment = split_shader_types(shaders)
 

@@ -14,11 +14,9 @@ find_package(OpenGL REQUIRED)
 
 
 if (EMSCRIPTEN)
-    set(shader_type es)
     target_link_options(gfx INTERFACE -sUSE_FREETYPE=1 -sUSE_GLFW=3 -sMIN_WEBGL_VERSION=2)
 
 else()
-    set(shader_type gl)
     target_link_libraries(gfx PRIVATE glfw ${FREETYPE_LIBRARIES} OpenGL)
 endif()
 
@@ -27,12 +25,11 @@ endif()
 
 # SHADER CODEGEN
 
-file(COPY shaders/gles3 DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY shaders/opengl4.5 DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY shaders/shaders DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 add_custom_command(
   OUTPUT shaders.h
-  COMMAND python ${PROJECT_SOURCE_DIR}/shaders/generate.py ${shader_type}
+  COMMAND python ${PROJECT_SOURCE_DIR}/shaders/generate.py shaders
   DEPENDS shaders
 )
 
