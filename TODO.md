@@ -9,6 +9,7 @@
 
 ## Graphics
 
+- [ ] font measuring: dont use 'l', there are chars larger than that: ( and |
 - [ ] clean up font measurements
 - [ ] implement draw_polygon()
 - [ ] segmented circles
